@@ -1,0 +1,117 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: here16
+  # ---------- MySQL 数据库配置 ----------
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mall_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 719892144Qq
+  # ---------- Redis 缓存配置（阶段 0 用于 JWT 会话白名单） ----------
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      # timeout: 5s
+
+# ---------- MyBatis 配置 ----------
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.mall.entity
+  configuration:
+    # 数据库下划线字段 <-> Java 驼峰属性自动映射
+    map-underscore-to-camel-case: true
+
+# ---------- JWT 配置 ----------
+jwt:
+  # 签名密钥：必须 >= 32 字节（HS256 要求），生产环境务必更换为随机密钥
+  secret: here16-Mall-Jwt-Secret-Key-2026-ChangeMe-In-Production-0001
+  # token 有效期（毫秒），默认 24 小时
+  expiration: 86400000
+  # 请求头携带 token 的字段名
+  header: Authorization
+  # token 前缀（与前端约定为 "Bearer "）
+  prefix: "Bearer "
+
+# ---------- 文件上传配置（阶段 0 预留，后续商品图等使用） ----------
+file:
+  # 上传文件保存的根目录（本地开发用相对路径，部署时建议改为绝对路径）
+  upload-dir: ./uploads
+  # 单个文件大小上限（MB）
+  max-size: 10
+
+# ---------- 订单配置（阶段 5：超时未支付自动取消） ----------
+order:
+  # 待付款订单超时时间（分钟），超过后由 OrderTimeoutTask 自动取消并恢复库存
+  timeout-minutes: 30
+
+# ---------- 支付配置（阶段 4 启用；本地开发默认 mock 模式，接入真实支付时置 false 并填商户配置） ----------
+pay:
+  # 支付成功后异步回调地址（需为公网可访问地址，本地联调可用内网穿透工具）
+  callback-url: http://localhost:8080/api/pay/callback
+  # 模拟支付开关：true 时网关返回模拟凭证，前端可走通"模拟扫码→回调→订单已付款"闭环
+  mock-enabled: true
+  # 支付凭证有效期（秒），前端倒计时用
+  expire-seconds: 1800
+  # 模拟签名密钥（仅 mock 模式使用；真实模式由各支付 SDK 验签）
+  mock-key: mock-pay-key-2026
+  # ---------- 支付宝（真实接入时填写） ----------
+  alipay:
+    app-id: ""
+    private-key: ""
+    alipay-public-key: ""
+    gateway: https://openapi.alipay.com/gateway.do
+  # ---------- 微信支付（真实接入时填写，V3 版） ----------
+  wechat:
+    merchant-id: ""
+    api-key: ""
+    mch-serial-no: ""
+    private-key-path: ""
+
+# ---------- 物流查询配置（阶段 9；本地开发默认 mock 模式，对接真实快递 API 时填密钥并切 provider） ----------
+kuaidi:
+  # 轨迹同步供应商：mock（本地模拟演示）/ kuaidi100（快递100）/ kuaidibird（快递鸟）
+  provider: mock
+  # ---------- 快递100（真实接入时填写；即时查询接口 poll.kuaidi100.com） ----------
+  kuaidi100:
+    key: ""
+    customer: ""
+  # ---------- 快递鸟（真实接入时填写；即时查询接口 api.kdniao.com） ----------
+  kuaidibird:
+    e-business-id: ""
+    app-key: ""
+
+# ---------- 推荐系统配置（阶段 10；管理端"推荐位配置"可热更新覆盖以下默认值） ----------
+recommend:
+  # 热度统计窗口（天）：行为在此窗口内才参与热度/协同过滤计算
+  hot-days: 7
+  # 首页推荐位默认数量（管理端配置 homeLimit 覆盖后立即生效）
+  home-limit: 8
+  # 商品详情"相关推荐"数量
+  related-limit: 6
+  # 推荐结果缓存 TTL（秒），到期后按最新行为数据重新计算
+  cache-ttl-seconds: 600
+
+# ---------- AI 客服内部接口配置（阶段 11.4；供 Python AI 服务调用，须令牌+IP 白名单） ----------
+mall:
+  internal:
+    # 内部接口令牌：AI 服务调用 /api/internal/** 时须在请求头 X-Internal-Token 携带
+    # （与 ai-service/.env 的 INTERNAL_API_TOKEN 保持一致）
+    token: "mall-internal-token-2026"
+    # IP 白名单（逗号分隔）：仅允许可信来源调用内部接口。
+    # 本地联调为 127.0.0.1 / ::1；生产部署请改为 AI 服务所在机器内网 IP，
+    # 并移除对 X-Forwarded-For 的信任（见 InternalAuthInterceptor 注释）。
+    allowed-ips: "127.0.0.1,::1"
+  # ---------- AI 客服对话服务配置（阶段 11.5；Java 转发 Python SSE 流） ----------
+  ai-service:
+    # Python AI 服务（ai-service 项目，FastAPI）基础地址
+    base-url: http://localhost:8100
+    # 对话转发超时（毫秒）：覆盖从发出请求到 SSE 流结束的完整时长。
+    # 真实 LLM 生成慢，给足时间；本地无 Key 降级路径也远小于该值。
+    connect-timeout-ms: 5000
+    read-timeout-ms: 120000
+
