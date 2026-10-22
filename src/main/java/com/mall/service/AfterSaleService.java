@@ -299,7 +299,8 @@ public class AfterSaleService {
         AfterSaleVO vo = new AfterSaleVO();
         vo.setId(as.getId());
         vo.setAfterSaleNo(as.getAfterSaleNo());
-        vo.setOrderId(as.getOrderId());
+        // 雪花订单 ID 转字符串输出（防 JS 精度丢失，见 OrderVO.id 注释）
+        vo.setOrderId(String.valueOf(as.getOrderId()));
         vo.setOrderNo(as.getOrderNo());
         vo.setUserId(as.getUserId());
         vo.setUsername(as.getUsername());

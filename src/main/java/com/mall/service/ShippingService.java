@@ -2,6 +2,7 @@ package com.mall.service;
 
 import com.mall.common.BusinessException;
 import com.mall.common.PageResult;
+import com.mall.common.ShardingRouter;
 import com.mall.dto.ShippingCreateDTO;
 import com.mall.dto.ShippingVO;
 import com.mall.dto.TrackingVO;
@@ -75,6 +76,11 @@ public class ShippingService {
      */
     @Transactional
     public ShippingVO ship(Long adminId, ShippingCreateDTO dto) {
+        // 显式广播路由：selectById 只带 orderId 无 userId，分表拦截器兜底广播
+        // 依赖 SQL 文本改写，实测对 @Transactional 内首条 SQL 不生效（会查 base 表，
+        // 雪花订单不在 base → 误报"订单不存在"）。与 OrderService.selectByIdSharded
+        // 保持同一写法：先声明跨分片路由，再查询。
+        ShardingRouter.routeOrdersBroadcast();
         Order order = orderRepository.selectById(dto.getOrderId());
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
@@ -135,8 +141,22 @@ public class ShippingService {
         int offset = (page - 1) * pageSize;
         List<Shipping> list = shippingRepository.adminPage(status, offset, pageSize);
         long total = shippingRepository.adminCount(status);
+        // 批量补收货人：运单 SQL 不再 LEFT JOIN orders（会落到 base 表查不到雪花订单），
+        // 改为按 orderId 显式广播批量查订单后组装。
+        ShardingRouter.routeOrdersBroadcast();
+        List<Long> orderIds = list.stream().map(Shipping::getOrderId)
+                .filter(java.util.Objects::nonNull).distinct().toList();
+        Map<Long, Order> orderMap = orderIds.isEmpty() ? Map.of() :
+                orderRepository.selectByIds(orderIds).stream()
+                        .collect(java.util.stream.Collectors.toMap(Order::getId, o -> o, (a, b) -> a));
         List<ShippingVO> vos = new ArrayList<>();
         for (Shipping s : list) {
+            Order o = orderMap.get(s.getOrderId());
+            if (o != null) {
+                s.setReceiverName(o.getReceiverName());
+                s.setReceiverPhone(o.getReceiverPhone());
+                s.setReceiverAddress(o.getReceiverAddress());
+            }
             vos.add(toVO(s, null));
         }
         return new PageResult<>(total, vos);
@@ -147,6 +167,14 @@ public class ShippingService {
         Shipping shipping = shippingRepository.selectByIdWithOrder(id);
         if (shipping == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "运单不存在");
+        }
+        // 收货人信息单独广播查订单（LEFT JOIN orders 会落到 base 表，雪花订单查不到）
+        ShardingRouter.routeOrdersBroadcast();
+        Order order = orderRepository.selectById(shipping.getOrderId());
+        if (order != null) {
+            shipping.setReceiverName(order.getReceiverName());
+            shipping.setReceiverPhone(order.getReceiverPhone());
+            shipping.setReceiverAddress(order.getReceiverAddress());
         }
         return toVO(shipping, shippingTraceRepository.findByShippingId(id));
     }
@@ -250,7 +278,7 @@ public class ShippingService {
     private ShippingVO toVO(Shipping s, List<ShippingTrace> traces) {
         ShippingVO vo = new ShippingVO();
         vo.setId(s.getId());
-        vo.setOrderId(s.getOrderId());
+        vo.setOrderId(s.getOrderId() == null ? null : String.valueOf(s.getOrderId()));
         vo.setOrderNo(s.getOrderNo());
         vo.setShippingCompany(s.getShippingCompany());
         vo.setTrackingNo(s.getTrackingNo());

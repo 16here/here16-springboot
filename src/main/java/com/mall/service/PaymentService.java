@@ -1,5 +1,6 @@
 package com.mall.service;
 
+import com.mall.annotation.DS;
 import com.mall.common.BusinessException;
 import com.mall.common.OrderNoGenerator;
 import com.mall.config.PaymentConfig;
@@ -83,7 +84,8 @@ public class PaymentService {
 
         PaymentResponseVO vo = new PaymentResponseVO();
         vo.setPaymentNo(payment.getPaymentNo());
-        vo.setOrderId(orderId);
+        // 雪花订单 ID 转字符串输出（防 JS 精度丢失，见 OrderVO.id 注释）
+        vo.setOrderId(String.valueOf(orderId));
         vo.setOrderNo(order.getOrderNo());
         vo.setPayMethod(payMethod);
         vo.setAmount(payment.getAmount());
@@ -100,6 +102,11 @@ public class PaymentService {
     }
 
     /** 查询支付状态（归属校验：只能查自己的流水） */
+    /**
+     * 支付状态查询。强制主库读：支付回调/支付确认刚写完主库，
+     * 从库复制延迟会让用户看到"未支付"。
+     */
+    @DS("master")
     public PaymentResponseVO queryStatus(Long userId, String paymentNo) {
         Payment payment = paymentRepository.findByPaymentNo(paymentNo);
         if (payment == null || !payment.getUserId().equals(userId)) {
@@ -109,7 +116,8 @@ public class PaymentService {
 
         PaymentResponseVO vo = new PaymentResponseVO();
         vo.setPaymentNo(payment.getPaymentNo());
-        vo.setOrderId(payment.getOrderId());
+        // 雪花订单 ID 转字符串输出（防 JS 精度丢失）
+        vo.setOrderId(String.valueOf(payment.getOrderId()));
         vo.setOrderNo(order == null ? null : order.getOrderNo());
         vo.setPayMethod(payment.getPayMethod());
         vo.setAmount(payment.getAmount());

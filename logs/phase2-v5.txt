@@ -1,0 +1,58 @@
+﻿== Step0 登录 ==
+== Step1 加购 + 查看购物车与地址 ==
+  加购 resp=200 body={"code":200,"data":{"items":[{"cartId":92,"price":199.00,"productId":1,"productImage":"https://picsum.photos/seed/mall-d
+  cart items=1 第一项={'cartId': 92, 'price': 199.0, 'productId': 1, 'productImage': 'https://picsum.photos/seed/mall-dress-1/600/600', 'productName': '法式碎花连衣裙', 'quantity': 1, 'skuId': 1, 'skuName': '红色/M', 'stock': 47}
+  addresses=2 第一项id=5
+  cartId=92 addrId=5
+== Step2 下单（幂等键 requestId） ==
+  下单 resp=200 code=200 msg=success
+  orderId=79 orderNo=2026102020125500040008
+== Step3 mock 支付回调（链路②） ==
+  createPayment resp=200 code=400 body={'code': 400, 'data': None, 'message': 'payMethod: 支付方式不能为空', 'timestamp': 1792498375655}
+  paymentNo=None
+  未拿到 paymentNo，改查订单支付状态
+== Step4 数据库核对（链路②+③） ==
+  orders: (('2026102020125500040008', 0),)
+python : Traceback (most recent call last):
+所在位置 行:1 字符: 1
++ python D:\myproject\here16\here16-springboot\logs\phase2_verify3.py > ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "D:\myproject\here16\here16-springboot\logs\phase2_verify3.py", line 101, in <module>
+    main()
+    ~~~~^^
+  File "D:\myproject\here16\here16-springboot\logs\phase2_verify3.py", line 93, in main
+    cur.execute("SELECT payment_no, method, status FROM payments WHERE order_id=%s ORDER BY id DESC LIMIT 3", (oid,))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\cursors.py", line 170, in execute
+    result = self._query(query)
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\cursors.py", line 335, in _query
+    conn.query(q)
+    ~~~~~~~~~~^^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\connections.py", line 581, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\connections.py", line 857, in _read_query_result
+    result.read()
+    ~~~~~~~~~~~^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\connections.py", line 1290, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\connections.py", line 810, in _read_packet
+    packet.raise_for_error()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\liguanting\AppData\Local\Doubao\User Data\sandbox_runtime\bases\772984f6fd3a8ae0ae7d2422cd7c2bfa\pytho
+n\Lib\site-packages\pymysql\err.py", line 154, in raise_mysql_exception
+    raise errorclass(errno, errval, sqlstate=sqlstate)
+pymysql.err.OperationalError: (1054, "Unknown column 'method' in 'field list'")

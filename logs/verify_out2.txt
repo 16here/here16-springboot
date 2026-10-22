@@ -1,0 +1,9 @@
+﻿use product 2 sku 4 name=复古波点连衣裙
+addCart -> {"code": 200, "data": {"items": [{"cartId": 103, "price": 259.0, "productId": 2, "productImage": "https://picsum.photos/seed/mall-dress-2/600/600", "productName": "复古波点连衣裙", "quantity": 1, "skuId": 4, "skuName": "黑色/S", "stock": 37}], "totalCount": 1, "totalPrice": 259.0}, "message": "success", "tim
+cartId=103
+orderId=106350833871880192 status=0 payable=259.0
+pay -> paymentNo=PAY2026102119201400042375 amount=259.0
+callback -> success
+order final status=1 statusText=待发货
+GET /api/admin/orders?page=1&pageSize=5 -> HTTP 403: {"code":403,"message":"无权访问该资源","data":null,"timestamp":1792581615823}
+adminOrderList total=None first5=[]

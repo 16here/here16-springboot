@@ -1,0 +1,7 @@
+﻿[0] add cart code=200 msg=success
+[1] cart n=1
+[1] cartIds=[107]
+[2] create code=200 id=106376968890482688 type=str status=0 msg=success
+[3] detail code=200 status=0 id=106376968890482688 type=str
+[4] pay code=200 orderId=106376968890482688 type=str payNo=PAY2026102121040500047791 mock=True
+[5] paystatus code=200 status=0 orderId=106376968890482688 type=str

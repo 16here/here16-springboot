@@ -106,6 +106,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/internal/**").permitAll()
                         // Spring Boot 错误转发路径，避免错误页被 401 拦截
                         .requestMatchers("/error").permitAll()
+                        // 静态页资源（Phase 1 静态化）：定时生成的 home.json 等静态文件，
+                        // 本地走此映射访问、生产由 Nginx/CDN 托管，无需登录
+                        .requestMatchers("/static-page/**").permitAll()
                         // 用户中心、购物车、订单、收货地址、支付（回调除外）、评价发表、售后、物流、收藏夹：必须登录
                         .requestMatchers("/api/users/**", "/api/cart/**", "/api/orders/**", "/api/addresses/**",
                                 "/api/pay/**", "/api/reviews/**", "/api/after-sales/**",

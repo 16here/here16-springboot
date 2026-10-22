@@ -1,11 +1,15 @@
 package com.mall.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.mall.common.BusinessException;
 import com.mall.dto.CategoryTreeVO;
 import com.mall.entity.Category;
 import com.mall.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -15,9 +19,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 分类服务：分类树构建与管理端增删改。
+ *
+ * <p>Phase 1 起分类树走两级缓存（L1 Caffeine + L2 Redis）：
+ * 分类是"极少变更、极高频读取"的典型数据（每个页面都要拉一次），
+ * 管理端增删改时由 {@link CacheEvictService} 延迟双删保证一致性。
  */
 @Slf4j
 @Service
@@ -26,15 +35,58 @@ public class CategoryService {
 
     /** 顶级分类的 parent_id 约定值 */
     private static final long ROOT_PARENT_ID = 0L;
+    /** 分类树 Redis key（本地缓存与 Redis 共用） */
+    private static final String TREE_CACHE_KEY = "cache:category:tree";
+    /** 分类树缓存 TTL：极少变更，10 分钟足够；写操作会主动双删 */
+    private static final long TREE_CACHE_TTL_SECONDS = 600L;
 
     private final CategoryRepository categoryRepository;
+    // Phase 1：缓存组件
+    private final Cache<String, String> categoryTreeCache;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final ObjectMapper objectMapper;
+    private final CacheEvictService cacheEvictService;
 
     /**
      * 构建完整分类树（顶级分类为根，子分类递归挂载，按 sort 排序）。
      *
+     * <p>Phase 1：优先读两级缓存，双 miss 才查库组装并回填；
+     * 管理端增删改后走延迟双删，保证最迟 500ms 内前端拿到新分类树。
+     *
      * @return 顶级分类节点列表
      */
     public List<CategoryTreeVO> tree() {
+        // 1. 读 L1 本地缓存 → L2 Redis（命中即回填 L1）
+        String json = categoryTreeCache.getIfPresent(TREE_CACHE_KEY);
+        if (json == null) {
+            json = stringRedisTemplate.opsForValue().get(TREE_CACHE_KEY);
+            if (json != null) {
+                categoryTreeCache.put(TREE_CACHE_KEY, json);
+            }
+        }
+        // 2. 缓存命中 → 反序列化返回（缓存损坏则回源重建）
+        if (json != null) {
+            try {
+                return objectMapper.readValue(json, new TypeReference<List<CategoryTreeVO>>() {});
+            } catch (Exception e) {
+                log.warn("分类树缓存反序列化失败，回源数据库", e);
+            }
+        }
+
+        // 3. 双 miss → 查库组装并回填两级缓存（写缓存失败不影响主流程）
+        List<CategoryTreeVO> roots = buildTree();
+        try {
+            String s = objectMapper.writeValueAsString(roots);
+            stringRedisTemplate.opsForValue().set(TREE_CACHE_KEY, s, TREE_CACHE_TTL_SECONDS, TimeUnit.SECONDS);
+            categoryTreeCache.put(TREE_CACHE_KEY, s);
+        } catch (Exception e) {
+            log.warn("分类树缓存写入失败（不影响主流程）", e);
+        }
+        return roots;
+    }
+
+    /** 原 tree() 的纯数据库构建逻辑（缓存未命中时调用） */
+    private List<CategoryTreeVO> buildTree() {
         List<Category> all = categoryRepository.selectAll();
         if (all.isEmpty()) {
             return new ArrayList<>();
@@ -108,6 +160,8 @@ public class CategoryService {
         }
 
         categoryRepository.insert(category);
+        // Phase 1：分类树缓存双删（新增后前端导航立即可见新分类）
+        cacheEvictService.evictCategoryTree();
         log.info("新增分类: id={}, name={}", category.getId(), category.getName());
         return category;
     }
@@ -135,6 +189,8 @@ public class CategoryService {
         category.setId(id);
 
         categoryRepository.update(category);
+        // Phase 1：分类树缓存双删（改名/排序/挂载变更后前端立即生效）
+        cacheEvictService.evictCategoryTree();
         log.info("更新分类: id={}", id);
         return categoryRepository.findById(id);
     }
@@ -156,6 +212,8 @@ public class CategoryService {
             throw new BusinessException(3002, "该分类下仍有商品，请先迁移或删除商品");
         }
         categoryRepository.deleteById(id);
+        // Phase 1：分类树缓存双删（删除后前端导航立即消失）
+        cacheEvictService.evictCategoryTree();
         log.info("删除分类: id={}", id);
     }
 }

@@ -1,0 +1,10 @@
+﻿captcha: cid=c96809610354003355 text=None
+captcha from redis: tDRX
+login admin -> code=200 token_len=192
+adminOrderList total=54 items=5
+  order id=106350833871880192 no=2026102119201400046440 status=1 buyer=user6
+  order id=106350576538746880 no=2026102119191300040890 status=0 buyer=user6
+  order id=106350438218989568 no=2026102119184000042059 status=0 buyer=user6
+recon run -> {"code": 200, "data": {"bizDate": "2026-10-21", "checked": 2, "issueCount": 1, "issues": [{"issue": "订单已支付但缺少库存扣减(DEDUCT)流水，存在超卖风险", "itemType": "INVENTORY", "refId": 106348649994256384, "refNo": "2026102119113400047977", "status": "OPEN"}], "totalPaid": 21}, "message": "success", "timestamp": 1792581648483}
+recon latest -> {"code": 200, "data": {"bizDate": "2026-10-21", "checked": 0, "issueCount": 19, "issues": [{"issue": "订单已支付但缺少库存扣减(DEDUCT)流水，存在超卖风险", "itemType": "INVENTORY", "refId": 106348649994256384, "refNo": "2026102119113400047977", "status": "OPEN"}, {"issue": "订单已支付但缺少库存扣减(DEDUCT)流水，存在超卖风险", "itemType": "INVENTORY", "refId": 75, "refNo": "2026093017282300011308", "status": "OPEN"}, {"issue": "订单已支付但缺少库存扣减
+recon logs total=19 first=[(None, None, 'OPEN'), (None, None, 'OPEN'), (None, None, 'OPEN')]

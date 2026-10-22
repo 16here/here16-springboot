@@ -17,8 +17,8 @@ public class ReviewVO {
     /** 评价主键 */
     private Long id;
 
-    /** 订单 ID */
-    private Long orderId;
+    /** 订单 ID（雪花 ID，字符串输出防 JS 精度丢失，见 OrderVO.id 说明） */
+    private String orderId;
 
     /** 订单明细 ID */
     private Long orderItemId;

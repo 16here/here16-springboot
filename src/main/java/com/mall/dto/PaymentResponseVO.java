@@ -23,8 +23,11 @@ public class PaymentResponseVO {
     /** 支付流水号 */
     private String paymentNo;
 
-    /** 订单 ID */
-    private Long orderId;
+    /**
+     * 订单 ID（雪花 ID，19 位，输出为字符串）。
+     * 类型用 String 防 JS Number 精度丢失导致支付页/回调查不到订单（见 OrderVO.id 说明）。
+     */
+    private String orderId;
 
     /** 订单号 */
     private String orderNo;

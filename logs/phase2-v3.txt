@@ -1,0 +1,18 @@
+﻿== Step0 登录 ==
+  captchaId=c360584489056008178 redisCode='xjmS'
+  login resp code=200 msg=success
+  uid=4 tokenLen=190
+== Step1 链路③ 浏览行为异步落库 ==
+  browse resp=200 name=红枣蜜 散装500g
+  等待4s后查库 user_behaviors（用 python 查 DB，见下）
+== Step2 链路④ 缓存双删 ==
+  list resp=200
+  redis product keys: ['stock:product:225', 'cache:product:detail:255', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:255']
+  captchaId=c360631963240002461 redisCode='aCVM'
+  login resp code=200 msg=success
+  admin update product resp=200 body={"code":400,"data":null,"message":"sku: SKU 编码不能为空","timestamp":1792498203081}
+  redis product keys after update: ['stock:product:225', 'cache:product:detail:255', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:255']
+  双删结果: 残留缓存 key=['cache:product:detail:255'] （期望为空或已被删除）
+== Step3 链路② 支付回调异步 ==
+  orders resp code=200 total=39
+== DONE Step0-3 ==

@@ -41,8 +41,8 @@ public class UserCouponVO {
     /** 状态中文名 */
     private String statusText;
 
-    /** 锁定/核销关联订单 ID */
-    private Long orderId;
+    /** 锁定/核销关联订单 ID（雪花 ID，字符串输出防 JS 精度丢失） */
+    private String orderId;
 
     /** 领取时间 */
     private LocalDateTime receivedAt;

@@ -1,5 +1,7 @@
 package com.mall.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.mall.common.BusinessException;
 import com.mall.common.PageResult;
 import com.mall.dto.ProductCreateDTO;
@@ -18,6 +20,7 @@ import com.mall.repository.ProductRepository;
 import com.mall.repository.ProductSkuRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -25,6 +28,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 商品服务：用户端列表/详情/搜索/排序 + 管理端增删改查与上下架。
@@ -43,12 +47,25 @@ public class ProductService {
             "price_desc", "p.price DESC, p.id DESC"     // 价格降序
     );
 
+    // ---------- Phase 1 缓存：商品详情两级缓存 ----------
+    /** 商品详情 Redis key 前缀（本地缓存与 Redis 共用同一 key 字符串） */
+    private static final String DETAIL_CACHE_KEY_PREFIX = "cache:product:detail:";
+    /** 详情缓存 TTL：商品详情读多写少，5 分钟足够（写操作会主动双删，TTL 只是兜底） */
+    private static final long DETAIL_CACHE_TTL_SECONDS = 300L;
+
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final ProductSkuRepository productSkuRepository;
     private final CategoryRepository categoryRepository;
     private final RedisStockService redisStockService;
     private final RecommendService recommendService;
+    // 阶段 12：Elasticsearch 商品全文检索（关键词搜索分流 + 商品 CRUD 双写同步）
+    private final ProductSearchService productSearchService;
+    // Phase 1：缓存组件（L1 Caffeine 本地缓存 / Redis 读写 / JSON 序列化 / 延迟双删）
+    private final Cache<String, String> productDetailCache;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final ObjectMapper objectMapper;
+    private final CacheEvictService cacheEvictService;
 
     /**
      * 记录浏览行为（阶段 10 埋点：商品详情被访问时调用）。
@@ -123,10 +140,28 @@ public class ProductService {
                 ? SORT_WHITELIST.get("default")
                 : SORT_WHITELIST.getOrDefault(sortBy, SORT_WHITELIST.get("default"));
 
+        // 阶段 12：关键词非空 → 走 Elasticsearch 全文检索（BM25 相关性/价格排序 + 分页），
+        // ES 未启动或异常时 search() 返回 null → 降级回 MySQL LIKE（功能永远可用）
+        if (StringUtils.hasText(dto.getKeyword())) {
+            ProductSearchService.SearchResult hit = productSearchService.search(dto, status);
+            if (hit != null) {
+                if (hit.ids().isEmpty()) {
+                    return new PageResult<>(hit.total(), new ArrayList<>());
+                }
+                // ES 返回的 id 顺序即排序结果；MySQL 按 id 回查详情（数据权威 + 主图组装）
+                List<Product> products = productRepository.selectByIds(hit.ids());
+                return new PageResult<>(hit.total(), buildListVOs(products));
+            }
+            // hit == null：ES 异常，继续走下方 MySQL LIKE 路径（降级）
+        }
+
         long total = productRepository.count(dto, status);
         List<Product> products = productRepository.selectPage(dto, status, orderBy, offset, pageSize);
+        return new PageResult<>(total, buildListVOs(products));
+    }
 
-        // 列表 VO 组装：主图取该商品第一张图片
+    /** 商品列表 → 列表 VO（主图取第一张图片；搜索与普通列表共用） */
+    private List<ProductListVO> buildListVOs(List<Product> products) {
         List<ProductListVO> list = new ArrayList<>();
         for (Product p : products) {
             ProductListVO vo = new ProductListVO();
@@ -144,17 +179,84 @@ public class ProductService {
             vo.setCover(images.isEmpty() ? null : images.get(0).getImageUrl());
             list.add(vo);
         }
-        return new PageResult<>(total, list);
+        return list;
     }
 
     /**
-     * 商品详情（图片 + 规格）。
+     * 商品详情（图片 + 规格，Phase 1 起走两级缓存）。
+     *
+     * <p>读取路径：L1 Caffeine 本地缓存（微秒级）→ L2 Redis（毫秒级）→ MySQL（权威）。
+     * 缓存的是"基础信息 + 图片 + 规格"，<b>库存字段单独实时刷新</b>：
+     * 下单锁定/支付扣减会实时变更 Redis 库存 key，详情页必须展示最新可卖库存，
+     * 因此命中缓存后会用 {@link RedisStockService} 的实时值覆盖 stock（Redis 无 key 时
+     * 回落到缓存值，避免库存查询失败影响详情展示）。
+     *
+     * <p>一致性：商品新增/更新/删除/上下架时由 {@link CacheEvictService} 延迟双删
+     * （先删两级缓存，500ms 后再删一次 Redis），保证最迟 500ms 内读到新数据。
      *
      * @param id 商品 ID
      */
     public ProductDetailVO detail(Long id) {
+        String cacheKey = DETAIL_CACHE_KEY_PREFIX + id;
+
+        // 1. 读 L1 本地缓存
+        String json = productDetailCache.getIfPresent(cacheKey);
+        // 2. L1 未命中 → 读 L2 Redis，命中则回填 L1
+        if (json == null) {
+            json = stringRedisTemplate.opsForValue().get(cacheKey);
+            if (json != null) {
+                productDetailCache.put(cacheKey, json);
+            }
+        }
+        // 3. 任一缓存命中 → 反序列化 + 实时库存覆盖后直接返回
+        if (json != null) {
+            try {
+                ProductDetailVO vo = objectMapper.readValue(json, ProductDetailVO.class);
+                refreshRealTimeStock(vo);
+                return vo;
+            } catch (Exception e) {
+                // 缓存数据损坏（极少见）→ 回源数据库并重建缓存
+                log.warn("商品详情缓存反序列化失败，回源数据库: id={}", id, e);
+            }
+        }
+
+        // 4. 双 miss → 回源数据库组装，并回填两级缓存（写缓存失败不影响主流程）
         Product product = requireProduct(id);
-        return buildDetailVO(product);
+        ProductDetailVO vo = buildDetailVO(product);
+        refreshRealTimeStock(vo);
+        try {
+            String s = objectMapper.writeValueAsString(vo);
+            stringRedisTemplate.opsForValue().set(cacheKey, s, DETAIL_CACHE_TTL_SECONDS, TimeUnit.SECONDS);
+            productDetailCache.put(cacheKey, s);
+        } catch (Exception e) {
+            log.warn("商品详情缓存写入失败（不影响主流程）: id={}", id, e);
+        }
+        return vo;
+    }
+
+    /**
+     * 用 Redis 实时库存覆盖 VO 中的 stock（商品级 + 每个 SKU 级）。
+     *
+     * <p>库存是强实时数据，不能进长 TTL 缓存；这里用 RedisStockService 查
+     * "预减后的可卖库存"，Redis 无 key 时以缓存/DB 快照值兜底。
+     */
+    private void refreshRealTimeStock(ProductDetailVO vo) {
+        try {
+            vo.setStock(redisStockService.getAvailable(
+                    RedisStockService.productKey(vo.getId()), vo.getStock()));
+        } catch (Exception e) {
+            // 库存查询异常不阻断详情展示，沿用缓存中的快照值
+        }
+        if (vo.getSkus() != null) {
+            for (ProductDetailVO.SkuItemVO sku : vo.getSkus()) {
+                try {
+                    sku.setStock(redisStockService.getAvailable(
+                            RedisStockService.skuKey(sku.getId()), sku.getStock()));
+                } catch (Exception e) {
+                    // 单个 SKU 库存异常不影响其余展示
+                }
+            }
+        }
     }
 
     /**
@@ -179,6 +281,10 @@ public class ProductService {
 
         productRepository.insert(product); // 主键回填
         saveImagesAndSkus(product.getId(), dto.getImages(), dto.getSkus());
+        // 阶段 12：同步到 ES 索引（失败仅 warn，不影响事务；可全量重建恢复）
+        productSearchService.indexProduct(product);
+        // Phase 1：商品详情缓存双删（新增商品无旧缓存，但删除动作幂等无害）
+        cacheEvictService.evictProductDetail(product.getId());
         log.info("新增商品: id={}, sku={}", product.getId(), product.getSku());
         return product.getId();
     }
@@ -211,6 +317,10 @@ public class ProductService {
         productImageRepository.deleteByProductId(id);
         productSkuRepository.deleteByProductId(id);
         saveImagesAndSkus(id, dto.getImages(), dto.getSkus());
+        // 阶段 12：同步更新 ES 索引（商品改名/改价/改分类后搜索立即可见）
+        productSearchService.indexProduct(product);
+        // Phase 1：商品详情缓存延迟双删（改价/改名/改图后详情页最迟 500ms 内更新）
+        cacheEvictService.evictProductDetail(id);
         log.info("更新商品: id={}", id);
     }
 
@@ -223,6 +333,10 @@ public class ProductService {
         productRepository.deleteById(id);
         productImageRepository.deleteByProductId(id);
         productSkuRepository.deleteByProductId(id);
+        // 阶段 12：同步删除 ES 文档（下架删除后不再出现在搜索结果）
+        productSearchService.deleteProduct(id);
+        // Phase 1：商品详情缓存双删（删除后立即可见移除）
+        cacheEvictService.evictProductDetail(id);
         log.info("删除商品: id={}", id);
     }
 
@@ -234,11 +348,16 @@ public class ProductService {
      */
     @Transactional
     public void updateStatus(Long id, Integer status) {
-        requireProduct(id);
+        Product product = requireProduct(id);
         if (status == null || (status != 0 && status != 1)) {
             throw new BusinessException(BusinessException.PARAM_ERROR, "状态值不合法（0=下架，1=上架）");
         }
         productRepository.updateStatus(id, status);
+        // 阶段 12：上下架同步 ES（下架商品立即从用户端搜索结果消失）
+        product.setStatus(status);
+        productSearchService.indexProduct(product);
+        // Phase 1：上下架影响详情页展示（状态/可售性），同步双删缓存
+        cacheEvictService.evictProductDetail(id);
         log.info("商品上下架: id={}, status={}", id, status);
     }
 

@@ -1,0 +1,19 @@
+﻿docker : org.apache.rocketmq.tools.command.SubCommandException: QueryMsgByIdSubCommand command failed
+所在位置 行:1 字符: 1
++ docker exec rmqbroker sh -c "sh /home/rocketmq/rocketmq-4.9.7/bin/mqa ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (org.apache.rock... command failed:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+	at org.apache.rocketmq.tools.command.message.QueryMsgByIdSubCommand.execute(QueryMsgByIdSubCommand.java:253)
+	at org.apache.rocketmq.tools.command.MQAdminStartup.main0(MQAdminStartup.java:149)
+	at org.apache.rocketmq.tools.command.MQAdminStartup.main(MQAdminStartup.java:100)
+Caused by: org.apache.rocketmq.client.exception.MQClientException: CODE: 208  DESC: query message by id finished, but n
+o message.
+For more information, please visit the url, http://rocketmq.apache.org/docs/faq/
+	at org.apache.rocketmq.client.impl.MQAdminImpl.viewMessage(MQAdminImpl.java:265)
+	at org.apache.rocketmq.tools.admin.DefaultMQAdminExtImpl.viewMessage(DefaultMQAdminExtImpl.java:1123)
+	at org.apache.rocketmq.tools.admin.DefaultMQAdminExt.viewMessage(DefaultMQAdminExt.java:128)
+	at org.apache.rocketmq.tools.command.message.QueryMsgByIdSubCommand.queryById(QueryMsgByIdSubCommand.java:47)
+	at org.apache.rocketmq.tools.command.message.QueryMsgByIdSubCommand.execute(QueryMsgByIdSubCommand.java:247)
+	... 2 more

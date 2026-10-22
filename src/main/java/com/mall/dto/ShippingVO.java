@@ -16,8 +16,8 @@ public class ShippingVO {
     /** 运单 ID */
     private Long id;
 
-    /** 订单 ID */
-    private Long orderId;
+    /** 订单 ID（雪花 ID，字符串输出防 JS 精度丢失，见 OrderVO.id 说明） */
+    private String orderId;
 
     /** 订单号 */
     private String orderNo;

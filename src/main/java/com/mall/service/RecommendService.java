@@ -1,5 +1,7 @@
 package com.mall.service;
 
+import com.mall.common.ShardingRouter;
+import com.mall.config.ShardingTableManager;
 import com.mall.dto.ProductListVO;
 import com.mall.dto.RecommendVO;
 import com.mall.entity.Product;
@@ -53,6 +55,10 @@ public class RecommendService {
     private final ProductImageRepository productImageRepository;
     private final CategoryRepository categoryRepository;
     private final RedisRecommendService redisRecommendService;
+    /** Phase 2：RocketMQ 生产者（异步埋点用；MQ 不可用时 record() 自动回退同步写库） */
+    private final RocketMQProducerService rocketMQProducerService;
+    /** Phase 3：月分表自动建表器（user_behaviors 按月分表，写入前确保当月表存在） */
+    private final ShardingTableManager tableManager;
 
     /** 热度统计窗口（天，application.yml recommend.hot-days，可被管理端配置覆盖） */
     @Value("${recommend.hot-days:7}")
@@ -71,21 +77,46 @@ public class RecommendService {
     /**
      * 记录一条用户行为（浏览/收藏/加购/购买）。
      *
-     * <p>由各业务埋点调用：ProductService 浏览时记 VIEW、
-     * CartService 加购时记 CART、OrderService 支付成功时记 PURCHASE。
-     * 行为记录失败绝不阻断主业务（try/catch 吞掉并记 warn）。
+     * <p>Phase 2 起改为<b>异步埋点</b>：业务线程先把行为发到 RocketMQ 就返回，
+     * 由 BehaviorConsumer 异步落库——主接口（商品详情/加购）响应更快，
+     * 埋点写入也不拖累业务。MQ 不可用时自动<b>回退同步写库</b>（recordSync），
+     * 保证行为数据一条都不丢。
+     *
+     * <p>调用方：ProductService 浏览记 VIEW、CartService 加购记 CART、
+     * FavoriteService 收藏记 FAVORITE、PaySuccessConsumer 支付成功记 PURCHASE。
      */
     public void record(Long userId, Long productId, Long skuId, String type) {
+        if (productId == null) {
+            return;
+        }
+        // 1. 优先走 MQ 异步（快）；MQ 不可用/发送失败 → 2. 同步直写兜底
+        boolean queued = rocketMQProducerService.sendBehavior(userId, productId, skuId, type);
+        if (!queued) {
+            recordSync(userId, productId, skuId, type);
+        }
+    }
+
+    /**
+     * 同步写一条行为到数据库（兜底/消费者落库统一入口）。
+     *
+     * <p>两种场景调用：
+     * <ul>
+     *   <li>MQ 发送失败时，record() 用它兜底（行为不能丢）；</li>
+     *   <li>BehaviorConsumer / PaySuccessConsumer 消费消息后用它落库
+     *       （消费者不能再次发消息，否则会循环）。</li>
+     * </ul>
+     */
+    public void recordSync(Long userId, Long productId, Long skuId, String type) {
         try {
-            if (productId == null) {
-                return;
-            }
             UserBehavior behavior = new UserBehavior();
             behavior.setUserId(userId);   // NULL = 游客行为，仅参与热度统计
             behavior.setProductId(productId);
             behavior.setSkuId(skuId);
             behavior.setBehaviorType(type);
-            behaviorRepository.insert(behavior);
+            // Phase 3 分表：user_behaviors 按月分表，写入前确保当月分表存在并显式传表名
+            String suffix = ShardingRouter.currentMonthSuffix();
+            tableManager.ensureMonthTable(ShardingRouter.T_USER_BEHAVIORS, suffix.substring(1));
+            behaviorRepository.insert(ShardingRouter.tableName(ShardingRouter.T_USER_BEHAVIORS, suffix), behavior);
         } catch (Exception e) {
             log.warn("记录行为失败（不影响主业务）: userId={}, productId={}, type={}, err={}",
                     userId, productId, type, e.getMessage());

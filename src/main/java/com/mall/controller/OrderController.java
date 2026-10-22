@@ -3,6 +3,7 @@ package com.mall.controller;
 import com.mall.common.BusinessException;
 import com.mall.common.CurrentUser;
 import com.mall.common.PageResult;
+import com.mall.common.RateLimit;
 import com.mall.common.Result;
 import com.mall.dto.OrderCreateDTO;
 import com.mall.dto.OrderQueryDTO;
@@ -32,6 +33,7 @@ public class OrderController {
     private final OrderService orderService;
 
     /** 创建订单（校验库存、生成订单号、快照落库、扣库存、清购物车） */
+    @RateLimit(key = "order:create", limit = 20, windowSeconds = 60, message = "下单太频繁，请稍后再试")
     @PostMapping
     public Result<OrderVO> create(@Valid @RequestBody OrderCreateDTO dto) {
         return Result.success(orderService.create(currentUserId(), dto));

@@ -42,6 +42,30 @@ public class InternalController {
     private final AfterSaleService afterSaleService;
 
     /**
+     * 查询用户最近一笔订单（GET /api/internal/orders/recent?userId=）。
+     *
+     * <p>用户问"我的快递到哪了"但没提供订单号时，Python 工具先调本接口拿到
+     * 最近订单再查物流；用户没有任何订单时返回 data=null，AI 会引导提供订单号。
+     * 注意：/orders/recent 是精确路径，优先级高于 /orders/{orderId}，不会误匹配。
+     */
+    @GetMapping("/orders/recent")
+    public Result<OrderVO> recentOrder(@RequestParam Long userId) {
+        return Result.success(orderService.recent(userId));
+    }
+
+    /**
+     * 按订单号查询订单状态（GET /api/internal/orders/by-no/{orderNo}?userId=）。
+     *
+     * <p>用户聊天里发的是 19 位订单号（order_no），不是数据库主键 id；
+     * Python 工具提取到订单号后调本接口（精确路径，优先级高于 /orders/{orderId}），
+     * 服务层带 userId 归属校验，查不到返回 NOT_FOUND。
+     */
+    @GetMapping("/orders/by-no/{orderNo}")
+    public Result<OrderVO> orderByNo(@PathVariable String orderNo, @RequestParam Long userId) {
+        return Result.success(orderService.detailByOrderNo(userId, orderNo));
+    }
+
+    /**
      * 查询订单状态（GET /api/internal/orders/{orderId}?userId=）。
      *
      * <p>Python 工具 query_order_status 调用：返回 OrderVO（状态/金额/订单号/商品明细）。

@@ -1,8 +1,11 @@
 package com.mall.service;
 
+import com.mall.annotation.DS;
 import com.mall.common.BusinessException;
 import com.mall.common.OrderNoGenerator;
 import com.mall.common.PageResult;
+import com.mall.common.SensitiveUtil;
+import com.mall.common.ShardingRouter;
 import com.mall.dto.OrderCreateDTO;
 import com.mall.dto.OrderItemVO;
 import com.mall.dto.OrderQueryDTO;
@@ -25,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -69,6 +73,16 @@ public class OrderService {
     private final PromotionService promotionService;
     private final CouponService couponService;
     private final RecommendService recommendService;
+    // Phase 1：下单幂等（Redis SETNX 占位，防双击/重试重复下单）
+    private final IdempotentService idempotentService;
+    /** Phase 2：RocketMQ 生产者（订单超时延迟消息 + 支付成功异步通知） */
+    private final RocketMQProducerService rocketMQProducerService;
+
+    /** 待付款订单超时分钟数（application.yml order.timeout-minutes，默认 30 分钟） */
+    @org.springframework.beans.factory.annotation.Value("${order.timeout-minutes:30}")
+    private int timeoutMinutes;
+    // Phase 1：订单快照手机号加密存储（解密在 toVO 展示时进行）
+    private final SensitiveUtil sensitiveUtil;
 
     /**
      * 创建订单（核心流程，阶段 8 起支持营销优惠）：
@@ -87,6 +101,20 @@ public class OrderService {
      */
     @Transactional
     public OrderVO create(Long userId, OrderCreateDTO dto) {
+        // Phase 3 分表：本请求后续 SQL 按 userId 路由订单/明细分表（user_id % 4）。
+        // 路由信息线程内生效，HTTP 请求结束由 ShardingContextFilter 统一清理。
+        ShardingRouter.routeOrdersByUser(userId);
+        // 0. 幂等检查（Phase 1）：同一 userId + requestId 只允许成功一次。
+        //    前端每次提交生成新 UUID；重复请求（双击/重试）占位失败直接拒绝，
+        //    不进入后续任何业务逻辑。TTL 5 分钟，超时后自动释放允许重新下单。
+        if (StringUtils.hasText(dto.getRequestId())) {
+            String idemKey = "order:user:" + userId + ":" + dto.getRequestId();
+            if (!idempotentService.tryAcquire(idemKey, 300)) {
+                log.warn("检测到重复下单请求: userId={}, requestId={}", userId, dto.getRequestId());
+                throw new BusinessException(429, "订单已提交，请勿重复操作");
+            }
+        }
+
         // 1. 校验收货地址（必须属于当前用户）
         Address address = addressRepository.findByIdAndUserId(dto.getAddressId(), userId);
         if (address == null) {
@@ -152,7 +180,10 @@ public class OrderService {
         }
 
         // 8. 生成订单号并落库（金额快照 + 地址快照）
+        //    Phase 3 分表后：主键不用数据库自增（4 张分表各自自增会重复），
+        //    改由应用生成雪花 ID（全局唯一、趋势递增、索引友好）。
         Order order = new Order();
+        order.setId(orderNoGenerator.generateOrderId());
         order.setOrderNo(orderNoGenerator.generate(userId));
         order.setUserId(userId);
         order.setOriginalAmount(originalAmount);
@@ -162,11 +193,13 @@ public class OrderService {
         order.setTotalAmount(totalAmount);
         order.setStatus(OrderStatusEnum.UNPAID.getCode());
         order.setReceiverName(address.getReceiverName());
+        // Phase 1：订单快照手机号加密存储（地址手机号本身已加密，快照直接沿用密文；
+        // 展示时 toVO 统一解密）
         order.setReceiverPhone(address.getReceiverPhone());
         order.setReceiverAddress(address.getProvince() + address.getCity()
                 + address.getDistrict() + address.getDetail());
         order.setRemark(dto.getRemark());
-        orderRepository.insert(order);
+        orderRepository.insert(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), order);
 
         // 9. 锁优惠券（订单落库后绑定 orderId；条件 UPDATE，失败整体回滚）
         if (userCouponId != null) {
@@ -177,7 +210,7 @@ public class OrderService {
         for (OrderItem item : items) {
             item.setOrderId(order.getId());
         }
-        orderItemRepository.insertBatch(items);
+        orderItemRepository.insertBatch(ShardingRouter.routedTableName(ShardingRouter.T_ORDER_ITEMS), items);
 
         // 11. 锁定库存（阶段 6：预占式库存，不再直接扣减）
         //     Redis 预减（快速拦截超卖）→ 数据库条件锁定（最终防线）→ 写 LOCK 流水；
@@ -189,13 +222,25 @@ public class OrderService {
             cartRepository.deleteByIdAndUserId(cartId, userId);
         }
 
+        // 13. Phase 2：发送订单超时延迟消息（下单成功即"上闹钟"）。
+        //     消费者在延迟到点后检查该订单，仍未支付则自动取消并恢复库存；
+        //     发送失败不阻断下单（OrderTimeoutTask 定时任务仍会兜底扫描）。
+        rocketMQProducerService.sendOrderTimeout(order.getId(), order.getOrderNo(), timeoutMinutes);
+
         log.info("订单创建成功: orderNo={}, userId={}, original={}, promotion={}, coupon={}, payable={}",
                 order.getOrderNo(), userId, originalAmount, promotionAmount, couponAmount, totalAmount);
         return detail(userId, order.getId());
     }
 
-    /** 我的订单列表（分页 + 状态筛选；卡片带明细，批量查询避免 N+1） */
+    /**
+     * 我的订单列表（分页 + 状态筛选；卡片带明细，批量查询避免 N+1）。
+     * 强制主库读：下单/支付/取消后前端立即刷新列表，从库复制延迟会造成
+     * "刚下单却看不到订单/状态不对"的体验问题。
+     */
+    @DS("master")
     public PageResult<OrderVO> list(Long userId, OrderQueryDTO dto) {
+        // Phase 3 分表：按用户路由（列表 + 明细批量查询都落在同一张分片）
+        ShardingRouter.routeOrdersByUser(userId);
         int offset = (dto.getPage() - 1) * dto.getPageSize();
         List<Order> orders = orderRepository.selectPageByUser(userId, dto.getStatus(), offset, dto.getPageSize());
         long total = orderRepository.countByUser(userId, dto.getStatus());
@@ -214,8 +259,40 @@ public class OrderService {
         return new PageResult<>(total, vos);
     }
 
-    /** 订单详情（含明细；阶段 5：附状态时间轴日志） */
+    /**
+     * 查询用户最近一笔订单（供 AI 客服在用户未提供订单号时兜底）。
+     *
+     * <p>场景：用户问"我的快递到哪了"但不带订单号——意图识别能判断"查物流"，
+     * 但工具必须有一个 orderId 才能查。这里按 id 倒序取最近一笔，复用 detail
+     * 的归属校验与 VO 组装；没有任何订单时返回 null，AI 侧会引导用户提供订单号。
+     * 强制主库读（写后读一致性）。
+     */
+    @DS("master")
+    public OrderVO recent(Long userId) {
+        ShardingRouter.routeOrdersByUser(userId);
+        List<Order> orders = orderRepository.selectPageByUser(userId, null, 0, 1);
+        return orders.isEmpty() ? null : detail(userId, orders.get(0).getId());
+    }
+
+    /**
+     * 按订单号查详情（AI 客服工具用）：用户聊天里发的 19 位长数字是订单号 order_no，
+     * 先按 order_no + userId 精确查（归属校验），命中后复用 detail 组装完整 VO。
+     * 强制主库读（写后读一致性）。
+     */
+    @DS("master")
+    public OrderVO detailByOrderNo(Long userId, String orderNo) {
+        ShardingRouter.routeOrdersByUser(userId);
+        Order order = orderRepository.selectByOrderNoAndUserId(orderNo, userId);
+        if (order == null) {
+            throw new BusinessException(BusinessException.NOT_FOUND, "没有找到该订单号对应的订单");
+        }
+        return detail(userId, order.getId());
+    }
+
+    /** 订单详情（含明细；阶段 5：附状态时间轴日志）。强制主库读：下单/支付后立即跳详情。 */
+    @DS("master")
     public OrderVO detail(Long userId, Long orderId) {
+        ShardingRouter.routeOrdersByUser(userId);
         Order order = orderRepository.selectByIdAndUserId(orderId, userId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
@@ -232,6 +309,7 @@ public class OrderService {
      */
     @Transactional
     public OrderVO cancel(Long userId, Long orderId) {
+        ShardingRouter.routeOrdersByUser(userId);
         Order order = orderRepository.selectByIdAndUserId(orderId, userId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
@@ -239,7 +317,7 @@ public class OrderService {
         // 1. 状态机校验：当前状态 + CANCEL 是否合法（非法直接抛业务异常）
         int toStatus = orderStateMachine.transition(order, OrderEvent.CANCEL);
         // 2. 条件 UPDATE：状态前置（0/1）+ 归属，rows=0 说明并发下状态已变
-        if (orderRepository.cancelByUser(orderId, userId) == 0) {
+        if (orderRepository.cancelByUser(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId, userId) == 0) {
             throw new BusinessException(BusinessException.PARAM_ERROR, "订单状态已变化，请刷新后重试");
         }
         // 3. 库存处理（阶段 6，按取消前状态区分）：
@@ -262,12 +340,13 @@ public class OrderService {
      */
     @Transactional
     public OrderVO confirm(Long userId, Long orderId) {
+        ShardingRouter.routeOrdersByUser(userId);
         Order order = orderRepository.selectByIdAndUserId(orderId, userId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
         }
         int toStatus = orderStateMachine.transition(order, OrderEvent.CONFIRM);
-        if (orderRepository.confirm(orderId) == 0) {
+        if (orderRepository.confirm(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId) == 0) {
             throw new BusinessException(BusinessException.PARAM_ERROR, "订单状态已变化，请刷新后重试");
         }
         logStatus(order, toStatus, OrderEvent.CONFIRM, "USER", userId, "买家确认收货");
@@ -277,8 +356,11 @@ public class OrderService {
 
     // ==================== 管理端 ====================
 
-    /** 管理端订单列表（状态筛选 + 订单号搜索，带下单人用户名） */
+    /** 管理端订单列表（状态筛选 + 订单号搜索，带下单人用户名）。强制主库读（发货/关闭后即时刷新）。 */
+    @DS("master")
     public PageResult<OrderVO> adminList(OrderQueryDTO dto) {
+        // Phase 3 分表：管理端没有 userId，跨 4 张分片 UNION ALL 查询（广播）
+        ShardingRouter.routeOrdersBroadcast();
         int offset = (dto.getPage() - 1) * dto.getPageSize();
         List<Order> orders = orderRepository.adminPage(dto, offset, dto.getPageSize());
         long total = orderRepository.adminCount(dto);
@@ -286,12 +368,17 @@ public class OrderService {
         return new PageResult<>(total, vos);
     }
 
-    /** 管理端订单详情（含明细与状态时间轴日志） */
+    /** 管理端订单详情（含明细与状态时间轴日志）。强制主库读（发货/关闭后即时查看）。 */
+    @DS("master")
     public OrderVO adminDetail(Long orderId) {
+        // 第一步：广播查询定位订单（4 张分片 UNION ALL）
+        ShardingRouter.routeOrdersBroadcast();
         Order order = orderRepository.selectById(orderId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
         }
+        // 第二步：拿到 userId 后切单表路由，明细/日志查询落在同分片
+        ShardingRouter.routeOrdersByUser(order.getUserId());
         OrderVO vo = toVO(order);
         vo.setItems(toItemVOs(orderItemRepository.selectByOrderId(orderId)));
         vo.setStatusLogs(fillLogTexts(orderStatusLogRepository.selectByOrderId(orderId)));
@@ -311,12 +398,12 @@ public class OrderService {
      */
     @Transactional
     public void ship(Long orderId, String shippingNo) {
-        Order order = orderRepository.selectById(orderId);
+        Order order = selectByIdSharded(orderId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
         }
         int toStatus = orderStateMachine.transition(order, OrderEvent.SHIP);
-        if (orderRepository.shipWithNo(orderId, shippingNo) == 0) {
+        if (orderRepository.shipWithNo(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId, shippingNo) == 0) {
             throw new BusinessException(BusinessException.PARAM_ERROR, "订单状态已变化，请刷新后重试");
         }
         logStatus(order, toStatus, OrderEvent.SHIP, "ADMIN", null,
@@ -330,12 +417,12 @@ public class OrderService {
      */
     @Transactional
     public void close(Long orderId) {
-        Order order = orderRepository.selectById(orderId);
+        Order order = selectByIdSharded(orderId);
         if (order == null) {
             throw new BusinessException(BusinessException.NOT_FOUND, "订单不存在");
         }
         int toStatus = orderStateMachine.transition(order, OrderEvent.CLOSE);
-        if (orderRepository.cancelPending(orderId) == 0) {
+        if (orderRepository.cancelPending(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId) == 0) {
             throw new BusinessException(BusinessException.PARAM_ERROR, "仅待付款订单可关闭");
         }
         // 释放锁定库存（阶段 6：关闭未支付订单，预占库存回补可卖）
@@ -355,7 +442,7 @@ public class OrderService {
      */
     @Transactional
     public void refundClose(Long orderId, String remark) {
-        Order order = orderRepository.selectById(orderId);
+        Order order = selectByIdSharded(orderId);
         if (order == null) {
             return;
         }
@@ -364,7 +451,7 @@ public class OrderService {
                     orderId, OrderStatusEnum.textOf(order.getStatus()));
             return;
         }
-        if (orderRepository.refundClose(orderId) == 0) {
+        if (orderRepository.refundClose(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId) == 0) {
             log.warn("售后关闭订单未命中（并发状态已变）：orderId={}", orderId);
             return;
         }
@@ -386,7 +473,7 @@ public class OrderService {
      */
     @Transactional
     public void markPaid(Long orderId) {
-        Order order = orderRepository.selectById(orderId);
+        Order order = selectByIdSharded(orderId);
         if (order == null) {
             log.warn("支付回调：订单 {} 不存在", orderId);
             return;
@@ -401,7 +488,7 @@ public class OrderService {
             return;
         }
         int toStatus = orderStateMachine.transition(order, OrderEvent.PAY);
-        if (orderRepository.markPaid(orderId) == 0) {
+        if (orderRepository.markPaid(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId) == 0) {
             log.warn("支付回调：订单 {} 状态并发变化，本次回调忽略", orderId);
             return;
         }
@@ -410,15 +497,20 @@ public class OrderService {
         inventoryService.deduct(orderId);
         // 阶段 8：支付成功 → 核销下单时锁定的优惠券（幂等：只核销 status=1 的券）
         couponService.markUsed(orderId);
-        // 阶段 10 埋点：支付成功 → 给订单明细逐条记录购买行为（PURCHASE，权重 5），
-        // 推荐系统的"购买"信号（比浏览/加购强得多）；记录失败不影响支付主流程
-        try {
-            for (OrderItem item : orderItemRepository.selectByOrderId(orderId)) {
-                recommendService.record(order.getUserId(), item.getProductId(), item.getSkuId(),
-                        com.mall.repository.UserBehaviorRepository.TYPE_PURCHASE);
+        // Phase 2：支付成功 → 发异步通知消息（消费者负责记录 PURCHASE 购买行为 + 发送通知）。
+        // 回调主线程只做强一致性动作（状态/库存/券），收尾动作异步化后回调响应更快；
+        // 消息发送失败时降级为同步记录购买行为（行为一条不丢，通知丢失可接受）。
+        boolean payQueued = rocketMQProducerService.sendPaySuccess(
+                order.getId(), order.getUserId(), null, null);
+        if (!payQueued) {
+            try {
+                for (OrderItem item : orderItemRepository.selectByOrderId(orderId)) {
+                    recommendService.recordSync(order.getUserId(), item.getProductId(), item.getSkuId(),
+                            com.mall.repository.UserBehaviorRepository.TYPE_PURCHASE);
+                }
+            } catch (Exception e) {
+                log.warn("记录购买行为失败（不影响支付）: orderId={}, err={}", orderId, e.getMessage());
             }
-        } catch (Exception e) {
-            log.warn("记录购买行为失败（不影响支付）: orderId={}, err={}", orderId, e.getMessage());
         }
         logStatus(order, toStatus, OrderEvent.PAY, "SYSTEM", null, "支付成功（支付平台回调）");
     }
@@ -432,6 +524,8 @@ public class OrderService {
      * @return 待付款且创建时间超过阈值的订单 ID
      */
     public List<Long> findTimeoutOrderIds(int timeoutMinutes) {
+        // Phase 3 分表：跨 4 片广播查询超时订单
+        ShardingRouter.routeOrdersBroadcast();
         return orderRepository.selectTimeoutOrders(timeoutMinutes, 100)
                 .stream().map(Order::getId).toList();
     }
@@ -442,7 +536,7 @@ public class OrderService {
      */
     @Transactional
     public void timeoutCancel(Long orderId) {
-        Order order = orderRepository.selectById(orderId);
+        Order order = selectByIdSharded(orderId);
         if (order == null) {
             return;
         }
@@ -452,7 +546,7 @@ public class OrderService {
             return;
         }
         int toStatus = orderStateMachine.transition(order, OrderEvent.TIMEOUT);
-        if (orderRepository.cancelPending(orderId) == 0) {
+        if (orderRepository.cancelPending(ShardingRouter.routedTableName(ShardingRouter.T_ORDERS), orderId) == 0) {
             return; // 并发下状态已变（如已支付），跳过
         }
         // 阶段 6：超时取消 → 释放锁定库存（预占库存回补可卖）
@@ -463,7 +557,58 @@ public class OrderService {
         log.info("超时订单已自动取消并恢复库存: orderId={}", orderId);
     }
 
+    /**
+     * Phase 2：RocketMQ 延迟消息到点后的"检查并取消"入口。
+     *
+     * <p>为什么到点还要再校验时间：RocketMQ 4.9.x 延迟级别是固定档位
+     * （1s/5s/…/30m/1h/2h），如果配置的 {@code order.timeout-minutes} 与
+     * 发送时映射的档位不完全相等（如配置 40 分钟 → 消息 30 分钟就到点），
+     * 消费者必须按"真实配置阈值"再判断一次，未到阈值就跳过（下个兜底周期处理）。
+     *
+     * @param orderId        订单 ID
+     * @param timeoutMinutes 真实超时阈值（分钟，与 OrderTimeoutTask 一致）
+     */
+    @Transactional
+    public void timeoutCancelIfDue(Long orderId, int timeoutMinutes) {
+        Order order = selectByIdSharded(orderId);
+        if (order == null || order.getCreatedAt() == null) {
+            return;
+        }
+        if (order.getStatus() == null || order.getStatus() != OrderStatusEnum.UNPAID.getCode()) {
+            log.debug("超时延迟消息跳过（订单已处理）: orderId={}, status={}",
+                    orderId, OrderStatusEnum.textOf(order.getStatus()));
+            return;
+        }
+        if (order.getCreatedAt().isAfter(java.time.LocalDateTime.now().minusMinutes(timeoutMinutes))) {
+            log.debug("超时延迟消息跳过（未到超时阈值）: orderId={}, createdAt={}, threshold={}min",
+                    orderId, order.getCreatedAt(), timeoutMinutes);
+            return;
+        }
+        timeoutCancel(orderId);
+    }
+
     // ==================== 私有工具 ====================
+
+    /**
+     * Phase 3 分表：管理端/系统按订单 ID 查订单的统一入口。
+     *
+     * <p>调用方（ship/close/markPaid/timeoutCancel 等）只持有 orderId 没有 userId，
+     * 无法直接定位分片。分两步：
+     * <ol>
+     *   <li>广播查询（4 张分片 UNION ALL）定位订单，拿到 userId；</li>
+     *   <li>切单表路由（routeOrdersByUser）——保证同请求内后续的明细查询 /
+     *       条件 UPDATE 落在同一分片，不会写错表。</li>
+     * </ol>
+     * 订单不存在时返回 null（此时不切路由，调用方自行处理）。
+     */
+    private Order selectByIdSharded(Long orderId) {
+        ShardingRouter.routeOrdersBroadcast();
+        Order order = orderRepository.selectById(orderId);
+        if (order != null) {
+            ShardingRouter.routeOrdersByUser(order.getUserId());
+        }
+        return order;
+    }
 
     /**
      * 写一条状态变更日志（所有流转的统一出口）。
@@ -501,7 +646,8 @@ public class OrderService {
     /** 实体 → VO（含状态中文名与物流单号） */
     private OrderVO toVO(Order o) {
         OrderVO vo = new OrderVO();
-        vo.setId(o.getId());
+        // 雪花 ID 转字符串输出：19 位超 JS 精度，数字会被前端解析丢位（见 OrderVO.id 注释）
+        vo.setId(String.valueOf(o.getId()));
         vo.setOrderNo(o.getOrderNo());
         vo.setUserId(o.getUserId());
         vo.setUsername(o.getUsername());
@@ -512,7 +658,8 @@ public class OrderService {
         vo.setStatus(o.getStatus());
         vo.setStatusText(OrderStatusEnum.textOf(o.getStatus()));
         vo.setReceiverName(o.getReceiverName());
-        vo.setReceiverPhone(o.getReceiverPhone());
+        // Phase 1：订单快照手机号加密存储，展示时解密
+        vo.setReceiverPhone(sensitiveUtil.decrypt(o.getReceiverPhone()));
         vo.setReceiverAddress(o.getReceiverAddress());
         vo.setRemark(o.getRemark());
         vo.setShippingNo(o.getShippingNo());

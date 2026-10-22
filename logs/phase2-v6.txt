@@ -1,0 +1,15 @@
+﻿== Step5a 支付订单79（链路② 支付回调） ==
+  createPayment code=400 body={'code': 400, 'data': None, 'message': '不支持的支付方式：ALIPAY', 'timestamp': 1792498428375}
+  paymentNo=None
+== Step5b 数据库核对 ==
+  orders(79): (('2026102020125500040008', 0),)
+  payments(79): ()
+  user_behaviors(user4): (('VIEW', 6), ('CART', 2))
+== Step5c 新订单 -> 等待延迟关单（链路①） ==
+  加购2: {"code":200,"data":{"items":[{"cartId":93,"price":259.00,"productId":2,"productI
+  下单: code=200 data={'cancelledAt': None, 'completedAt': None, 'couponAmount': 0.0, 'createdAt': '2026-10-20T20:13:49', 'id': 80, 'items': [{'orderItemId': 80, 'price': 259.0, 'productId': 2, 'productImage': 'https://picsum.photos/seed/mall-dress-2/600/600', 'productName': '复古波点连衣裙', 'quantity': 1, 'skuId': 4, 'skuName': '黑色/S', 'subtotal': 259.0}], 'orderNo': '2026102020134900046617', 'originalAmount': 259.0, 'paidAt': None, 'promotionAmount': 0.0, 'receiverAddress': '安徽省马鞍山市雨山区湖东路 99 号', 'receiverName': '六六', 'receiverPhone': '13700003333', 'remark': 'delay-cancel-test', 'shippedAt': None, 'shippingNo': None, 'status': 0, 'statusLogs': [], 'statusText': '待付款', 'totalAmount': 259.0, 'userId': 4, 'username': None}
+  newOrderId=80 等待 ~80s（timeout-minutes=1，延迟级别约1分钟）...
+  orders(80) after wait: (('2026102020134900046617', 4, datetime.datetime(2026, 10, 20, 20, 14, 49)),)
+  inventory_logs(80): (2,)
+  （status=0待付款/4已取消；已取消则延迟消息链路生效）
+== DONE ==

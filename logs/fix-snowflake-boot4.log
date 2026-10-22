@@ -1,0 +1,375 @@
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.8)
+
+2026-10-21T20:47:39.521+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : Starting MallApplication using Java 21.0.12.1 with PID 19864 (D:\myproject\here16\here16-springboot\build\classes\java\main started by liguanting in D:\myproject\here16\here16-springboot)
+2026-10-21T20:47:39.524+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : No active profile set, falling back to 1 default profile: "default"
+2026-10-21T20:47:39.576+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-10-21T20:47:39.576+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-21T20:47:40.591+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-21T20:47:40.593+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-21T20:47:40.636+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2026-10-21T20:47:41.562+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-21T20:47:41.581+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-21T20:47:41.581+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-21T20:47:41.654+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2076 ms
+2026-10-21T20:47:42.802+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] c.mall.service.RocketMQProducerService   : RocketMQ 生产者初始化成功: namesrv=127.0.0.1:9876, group=mall-producer
+2026-10-21T20:47:42.891+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:43.372+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:43.372+08:00  WARN 19864 --- [here16-springboot] [  restartedMain] com.mall.mq.BehaviorConsumer             : RocketMQ 行为消费者启动失败（行为埋点降级为发送方同步写库）: org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to [127.0.0.1:9876] failed
+2026-10-21T20:47:43.382+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:43.382+08:00  WARN 19864 --- [here16-springboot] [  restartedMain] com.mall.mq.CacheEvictConsumer           : RocketMQ 缓存删除消费者启动失败（双删回退为本地定时线程）: org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to [127.0.0.1:9876] failed
+2026-10-21T20:47:43.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:43.392+08:00  WARN 19864 --- [here16-springboot] [  restartedMain] com.mall.mq.OrderTimeoutConsumer         : RocketMQ 订单超时消费者启动失败（由 OrderTimeoutTask 定时任务兜底）: org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to [127.0.0.1:9876] failed
+2026-10-21T20:47:43.394+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:43.394+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:48.405+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:48.415+08:00  WARN 19864 --- [here16-springboot] [  restartedMain] com.mall.mq.PaySuccessConsumer           : RocketMQ 支付成功消费者启动失败（收尾动作改为同步执行）: org.apache.rocketmq.remoting.exception.RemotingConnectException: connect to [127.0.0.1:9876] failed
+2026-10-21T20:47:48.415+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:48.426+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:47:48.453+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.mall.config.RedisListenerConfig      : Redis 订阅客服转人工通道: chat:transfer
+2026-10-21T20:47:48.610+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-10-21T20:47:49.320+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-21T20:47:49.398+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-21T20:47:49.754+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : Started MallApplication in 10.618 seconds (process running for 11.322)
+2026-10-21T20:47:49.798+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : mall-ds-master - Starting...
+2026-10-21T20:47:50.025+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : mall-ds-master - Added connection com.mysql.cj.jdbc.ConnectionImpl@1368269f
+2026-10-21T20:47:50.028+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : mall-ds-master - Start completed.
+2026-10-21T20:47:50.058+08:00  INFO 19864 --- [here16-springboot] [rvice-autostart] c.mall.config.AiServiceAutoStartConfig   : 开始自动启动 AI 服务：[D:/myproject/here16/here16-ai/ai-service/.venv/Scripts/python.exe, -m, uvicorn, app.main:app, --host, 127.0.0.1, --port, 8100]（工作目录：D:/myproject/here16/here16-ai/ai-service，日志：logs/ai-service.log）
+2026-10-21T20:47:50.108+08:00  INFO 19864 --- [here16-springboot] [  restartedMain] com.mall.service.ProductSearchService    : ES 商品索引已存在，跳过全量重建（增量由商品 CRUD 双写维护）
+2026-10-21T20:47:51.111+08:00 ERROR 19864 --- [here16-springboot] [rvice-autostart] c.mall.config.AiServiceAutoStartConfig   : AI 服务进程提前退出（90000ms 内），详见日志：logs/ai-service.log
+2026-10-21T20:48:00.019+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.zaxxer.hikari.HikariDataSource       : mall-ds-slave - Starting...
+2026-10-21T20:48:00.036+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.zaxxer.hikari.pool.HikariPool        : mall-ds-slave - Added connection com.mysql.cj.jdbc.ConnectionImpl@7296ba3f
+2026-10-21T20:48:00.037+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.zaxxer.hikari.HikariDataSource       : mall-ds-slave - Start completed.
+2026-10-21T20:48:00.038+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:48:00.050+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:48:00.067+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 1
+2026-10-21T20:48:00.070+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.task.InventoryReleaseTask       : 库存兜底释放任务：发现超时未支付订单 1 笔，开始核对
+2026-10-21T20:48:00.078+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.I.selectByOrderId                  : ==>  Preparing: SELECT * FROM inventory_logs_202610 WHERE order_id = ? ORDER BY id
+2026-10-21T20:48:00.079+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.I.selectByOrderId                  : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:00.082+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.I.selectByOrderId                  : <==      Total: 1
+2026-10-21T20:48:00.083+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : ==>  Preparing: SELECT * FROM (SELECT * FROM order_items_0 UNION ALL SELECT * FROM order_items_1 UNION ALL SELECT * FROM order_items_2 UNION ALL SELECT * FROM order_items_3 ) t WHERE order_id = ? ORDER BY id
+2026-10-21T20:48:00.083+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:00.090+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : <==      Total: 1
+2026-10-21T20:48:00.091+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : ==>  Preparing: UPDATE products SET locked_stock = locked_stock - ? WHERE id = ? AND locked_stock >= ?
+2026-10-21T20:48:00.091+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : ==> Parameters: 1(Integer), 208(Long), 1(Integer)
+2026-10-21T20:48:00.094+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : <==    Updates: 1
+2026-10-21T20:48:00.120+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.InventoryLogRepository.insert      : ==>  Preparing: INSERT INTO inventory_logs_202610 (sku_id, product_id, change_qty, type, order_id, order_no, remark, operator_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-10-21T20:48:00.122+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.InventoryLogRepository.insert      : ==> Parameters: 0(Long), 208(Long), 1(Integer), RELEASE(String), 106364654309081088(Long), null, 超时未支付，库存兜底释放(String), null
+2026-10-21T20:48:00.124+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.InventoryLogRepository.insert      : <==    Updates: 1
+2026-10-21T20:48:00.125+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.InventoryService        : 订单释放锁定库存完成: orderId=106364654309081088
+2026-10-21T20:48:00.125+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.InventoryService        : 库存兜底释放完成: orderId=106364654309081088
+2026-10-21T20:48:03.374+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:03.388+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:03.389+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:03.404+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:04.757+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:48:04.757+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:48:04.760+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 1
+2026-10-21T20:48:04.763+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.selectById         : ==>  Preparing: SELECT * FROM (SELECT o.*, u.username FROM orders_0 o LEFT JOIN users u ON o.user_id = u.id UNION ALL SELECT o.*, u.username FROM orders_1 o LEFT JOIN users u ON o.user_id = u.id UNION ALL SELECT o.*, u.username FROM orders_2 o LEFT JOIN users u ON o.user_id = u.id UNION ALL SELECT o.*, u.username FROM orders_3 o LEFT JOIN users u ON o.user_id = u.id ) t WHERE id = ?
+2026-10-21T20:48:04.764+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.selectById         : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:04.766+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.selectById         : <==      Total: 1
+2026-10-21T20:48:04.768+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.cancelPending      : ==>  Preparing: UPDATE orders_1 SET status = 4, cancelled_at = NOW() WHERE id = ? AND status = 0
+2026-10-21T20:48:04.768+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.cancelPending      : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:04.770+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderRepository.cancelPending      : <==    Updates: 1
+2026-10-21T20:48:04.770+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : ==>  Preparing: SELECT * FROM order_items_1 WHERE order_id = ? ORDER BY id
+2026-10-21T20:48:04.771+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:04.772+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectByOrderId                  : <==      Total: 1
+2026-10-21T20:48:04.773+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : ==>  Preparing: UPDATE products SET locked_stock = locked_stock - ? WHERE id = ? AND locked_stock >= ?
+2026-10-21T20:48:04.773+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : ==> Parameters: 1(Integer), 208(Long), 1(Integer)
+2026-10-21T20:48:04.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.releaseLocked    : <==    Updates: 0
+2026-10-21T20:48:04.775+08:00  WARN 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.InventoryService        : 释放锁定库存未命中（商品级）：orderId=106364654309081088, productId=208
+2026-10-21T20:48:04.775+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.InventoryService        : 订单释放锁定库存完成: orderId=106364654309081088
+2026-10-21T20:48:04.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.U.releaseByOrder                   : ==>  Preparing: UPDATE user_coupons SET status = 0, order_id = NULL WHERE order_id = ? AND status = 1
+2026-10-21T20:48:04.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.U.releaseByOrder                   : ==> Parameters: 106364654309081088(Long)
+2026-10-21T20:48:04.779+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.U.releaseByOrder                   : <==    Updates: 1
+2026-10-21T20:48:04.780+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderStatusLogRepository.insert    : ==>  Preparing: INSERT INTO order_status_log (order_id, order_no, from_status, to_status, event, operator_type, operator_id, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-10-21T20:48:04.781+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderStatusLogRepository.insert    : ==> Parameters: 106364654309081088(Long), 2026102120150900016452(String), 0(Integer), 4(Integer), TIMEOUT(String), SYSTEM(String), null, 超时未支付，系统自动取消(String)
+2026-10-21T20:48:04.784+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.OrderStatusLogRepository.insert    : <==    Updates: 1
+2026-10-21T20:48:04.786+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.OrderService            : 超时订单已自动取消并恢复库存: orderId=106364654309081088
+2026-10-21T20:48:04.791+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.task.OrderTimeoutTask           : 超时订单取消任务完成: 命中 1 单，成功 1 单，阈值 30 分钟
+2026-10-21T20:48:04.802+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.repository.ProductRepository.count   : ==>  Preparing: SELECT COUNT(*) FROM products p WHERE p.status = ?
+2026-10-21T20:48:04.802+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.repository.ProductRepository.count   : ==> Parameters: 1(Integer)
+2026-10-21T20:48:04.804+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.repository.ProductRepository.count   : <==      Total: 1
+2026-10-21T20:48:04.805+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.selectPage       : ==>  Preparing: SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.status = ? ORDER BY p.id DESC LIMIT ?, ?
+2026-10-21T20:48:04.805+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.selectPage       : ==> Parameters: 1(Integer), 0(Integer), 12(Integer)
+2026-10-21T20:48:04.810+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.selectPage       : <==      Total: 12
+2026-10-21T20:48:04.812+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.813+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 255(Long)
+2026-10-21T20:48:04.815+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.815+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.815+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 254(Long)
+2026-10-21T20:48:04.816+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.816+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.816+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 253(Long)
+2026-10-21T20:48:04.817+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.818+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.818+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 252(Long)
+2026-10-21T20:48:04.819+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.820+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.820+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 251(Long)
+2026-10-21T20:48:04.821+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.821+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.821+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 250(Long)
+2026-10-21T20:48:04.822+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.822+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.822+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 249(Long)
+2026-10-21T20:48:04.824+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.824+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.824+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 248(Long)
+2026-10-21T20:48:04.826+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.826+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.827+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 247(Long)
+2026-10-21T20:48:04.828+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.829+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.829+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 246(Long)
+2026-10-21T20:48:04.830+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.830+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.830+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 245(Long)
+2026-10-21T20:48:04.831+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.832+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:04.832+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 244(Long)
+2026-10-21T20:48:04.833+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:04.880+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.service.StaticPageService       : 首页静态页已生成: D:\myproject\here16\here16-springboot\static-page\home.json，共 157 件商品
+2026-10-21T20:48:08.421+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:08.422+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:12.812+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:13.383+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:13.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:13.401+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:18.425+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:19.755+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.S.selectPendingSync                : ==>  Preparing: SELECT * FROM shipping WHERE status < 2 ORDER BY id LIMIT ?
+2026-10-21T20:48:19.756+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.S.selectPendingSync                : ==> Parameters: 100(Integer)
+2026-10-21T20:48:19.758+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.S.selectPendingSync                : <==      Total: 0
+2026-10-21T20:48:19.765+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.UserBehaviorRepository.hotTop      : ==>  Preparing: SELECT product_id, SUM( CASE behavior_type WHEN 'VIEW' THEN 1 WHEN 'FAVORITE' THEN 2 WHEN 'CART' THEN 3 WHEN 'PURCHASE' THEN 5 ELSE 0 END ) AS score FROM user_behaviors_202610 WHERE created_at >= ? GROUP BY product_id ORDER BY score DESC, MAX(created_at) DESC LIMIT ?
+2026-10-21T20:48:19.766+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.UserBehaviorRepository.hotTop      : ==> Parameters: 2026-10-14T20:48:19.764967900(LocalDateTime), 20(Integer)
+2026-10-21T20:48:19.769+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.UserBehaviorRepository.hotTop      : <==      Total: 8
+2026-10-21T20:48:19.770+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.770+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 1(Long)
+2026-10-21T20:48:19.771+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.771+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.772+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 1(Long)
+2026-10-21T20:48:19.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.775+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 1(Long)
+2026-10-21T20:48:19.777+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 0
+2026-10-21T20:48:19.777+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.777+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 2(Long)
+2026-10-21T20:48:19.779+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.779+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.779+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 11(Long)
+2026-10-21T20:48:19.780+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.780+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.781+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 2(Long)
+2026-10-21T20:48:19.782+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.782+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.782+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 255(Long)
+2026-10-21T20:48:19.783+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.783+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.783+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 132(Long)
+2026-10-21T20:48:19.784+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.784+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.785+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 255(Long)
+2026-10-21T20:48:19.786+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.786+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.786+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 16(Long)
+2026-10-21T20:48:19.787+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.787+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.787+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 11(Long)
+2026-10-21T20:48:19.789+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.789+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.789+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 16(Long)
+2026-10-21T20:48:19.790+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.791+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.791+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 208(Long)
+2026-10-21T20:48:19.792+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.792+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.792+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 91(Long)
+2026-10-21T20:48:19.793+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.794+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.794+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 208(Long)
+2026-10-21T20:48:19.796+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.796+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.797+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 225(Long)
+2026-10-21T20:48:19.797+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.798+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.798+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 102(Long)
+2026-10-21T20:48:19.799+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.800+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.800+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 225(Long)
+2026-10-21T20:48:19.801+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.801+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.801+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 17(Long)
+2026-10-21T20:48:19.802+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.802+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.803+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 11(Long)
+2026-10-21T20:48:19.804+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.804+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.804+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 17(Long)
+2026-10-21T20:48:19.805+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.805+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==>  Preparing: SELECT * FROM products WHERE id = ?
+2026-10-21T20:48:19.805+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : ==> Parameters: 3(Long)
+2026-10-21T20:48:19.807+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.ProductRepository.findById         : <==      Total: 1
+2026-10-21T20:48:19.808+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==>  Preparing: SELECT * FROM categories WHERE id = ?
+2026-10-21T20:48:19.808+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : ==> Parameters: 12(Long)
+2026-10-21T20:48:19.809+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.CategoryRepository.findById        : <==      Total: 1
+2026-10-21T20:48:19.810+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==>  Preparing: SELECT * FROM product_images WHERE product_id = ? ORDER BY sort, id
+2026-10-21T20:48:19.810+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : ==> Parameters: 3(Long)
+2026-10-21T20:48:19.812+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.P.selectByProductId                : <==      Total: 1
+2026-10-21T20:48:19.823+08:00  INFO 19864 --- [here16-springboot] [   scheduling-1] com.mall.task.RecommendRefreshTask       : 推荐缓存已刷新：热度预热完成
+2026-10-21T20:48:23.378+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:23.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:23.393+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:23.408+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:28.428+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:28.429+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:42.810+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.382+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.396+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.396+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.403+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.403+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.409+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:43.410+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:48.424+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:48:48.433+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:00.001+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:49:00.002+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:49:00.004+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:49:03.388+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:03.398+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:03.401+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:03.412+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:03.412+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:04.794+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:49:04.795+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:49:04.796+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:49:08.435+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:12.812+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:13.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:13.390+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:13.401+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:14.997+08:00  INFO 19864 --- [here16-springboot] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-21T20:49:14.997+08:00  INFO 19864 --- [here16-springboot] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-21T20:49:14.999+08:00  INFO 19864 --- [here16-springboot] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-21T20:49:15.164+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.selectPageByUser   : ==>  Preparing: SELECT * FROM orders_0 WHERE user_id = ? ORDER BY id DESC LIMIT ?, ?
+2026-10-21T20:49:15.164+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.selectPageByUser   : ==> Parameters: 4(Long), 0(Integer), 1(Integer)
+2026-10-21T20:49:15.166+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.selectPageByUser   : <==      Total: 1
+2026-10-21T20:49:15.167+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.countByUser        : ==>  Preparing: SELECT COUNT(*) FROM orders_0 WHERE user_id = ?
+2026-10-21T20:49:15.168+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.countByUser        : ==> Parameters: 4(Long)
+2026-10-21T20:49:15.169+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.OrderRepository.countByUser        : <==      Total: 1
+2026-10-21T20:49:15.171+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.O.selectByOrderIds                 : ==>  Preparing: SELECT * FROM order_items_0 WHERE order_id IN ( ? ) ORDER BY id
+2026-10-21T20:49:15.171+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.O.selectByOrderIds                 : ==> Parameters: 106350833871880192(Long)
+2026-10-21T20:49:15.172+08:00 DEBUG 19864 --- [here16-springboot] [nio-8080-exec-1] c.m.r.O.selectByOrderIds                 : <==      Total: 1
+2026-10-21T20:49:18.425+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.390+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.390+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.402+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.402+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.414+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:23.414+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:28.437+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:28.438+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:42.811+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.391+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.400+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.403+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.403+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.404+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.417+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:43.417+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:48.425+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:48.438+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:49:48.439+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:00.001+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:50:00.001+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:50:00.006+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:50:03.406+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:03.407+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:03.407+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:03.407+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:03.430+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:03.430+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:04.798+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:50:04.799+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:50:04.800+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:50:08.443+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:12.812+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:13.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:13.391+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:13.416+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:18.426+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:23.409+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:23.409+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:23.439+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:23.440+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:28.445+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:28.445+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:42.811+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.380+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.403+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.410+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.411+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.411+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:43.443+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:48.425+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:48.446+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:50:48.448+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:00.002+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:51:00.003+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:51:00.004+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:51:03.414+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:03.414+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:03.415+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:03.446+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:03.447+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:04.803+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==>  Preparing: SELECT * FROM (SELECT * FROM orders_0 UNION ALL SELECT * FROM orders_1 UNION ALL SELECT * FROM orders_2 UNION ALL SELECT * FROM orders_3 ) t WHERE status = 0 AND created_at < DATE_SUB(NOW(), INTERVAL ? MINUTE) ORDER BY id LIMIT ?
+2026-10-21T20:51:04.803+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : ==> Parameters: 30(Integer), 100(Integer)
+2026-10-21T20:51:04.804+08:00 DEBUG 19864 --- [here16-springboot] [   scheduling-1] c.m.r.O.selectTimeoutOrders              : <==      Total: 0
+2026-10-21T20:51:08.450+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:08.450+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:12.813+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:13.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:13.392+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:13.402+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:18.426+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:23.416+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:23.417+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:23.417+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:23.449+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:28.452+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:28.452+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:42.811+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.381+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.391+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.400+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.418+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.419+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-21T20:51:43.451+08:00  INFO 19864 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+
+> Task :bootRun FAILED
+
+[Incubating] Problems report is available at: file:///D:/myproject/here16/here16-springboot/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+4 actionable tasks: 3 executed, 1 up-to-date

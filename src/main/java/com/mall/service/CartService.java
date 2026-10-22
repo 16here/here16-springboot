@@ -1,5 +1,6 @@
 package com.mall.service;
 
+import com.mall.annotation.DS;
 import com.mall.common.BusinessException;
 import com.mall.dto.CartAddDTO;
 import com.mall.dto.CartItemVO;
@@ -44,7 +45,12 @@ public class CartService {
 
     /**
      * 查询购物车：明细 + 总件数 + 总金额。
+     *
+     * <p>强制主库读（Phase 3 读写分离后）：加购/改数量写主库后，
+     * 前端立刻刷新购物车，若走从库会因复制延迟看到"空车/旧数量"。
+     * 购物车是强一致数据且量小，全程主库读性价比最高。
      */
+    @DS("master")
     public CartVO list(Long userId) {
         List<Cart> carts = cartRepository.selectByUserId(userId);
         List<CartItemVO> items = new ArrayList<>();

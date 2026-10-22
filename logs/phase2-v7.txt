@@ -1,0 +1,12 @@
+﻿  下单: code=200 data={'cancelledAt': None, 'completedAt': None, 'couponAmount': 0.0, 'createdAt': '2026-10-20T20:18:19', 'id': 84, 'items': [{'orderItemId': 84, 'price': 1
+  orderId=84
+  createPayment: code=200 msg=success data={'amount': 199.0, 'expireSeconds': 1800, 'mock': True, 'mockSign': '879fcbf906a7e92cf5889183cf353ee911e565dac2111fe422bb61a6188107fa', 'orderId': 84, 'orderNo': '2026102020181900045386', 'paidAt': None, 'payMethod': 'ali
+  paymentNo=PAY2026102020181900046609 amount=199.0
+  mockKey=mock-pay-key-2026
+  serverSign=879fcbf906a7e92cf5889183cf353ee911e565dac2111fe422bb61a6188107fa
+  mySign(199.00)=879fcbf906a7e92cf5889183cf353ee911e565dac2111fe422bb61a6188107fa
+  callback: resp=200 body=success
+  orders(84): (('2026102020181900045386', 1, datetime.datetime(2026, 10, 20, 20, 18, 19)),)  (status: 1=已付款)
+  payments(84): (('PAY2026102020181900046609', 'alipay', 1, Decimal('199.00')),)
+  PURCHASE count(user4): ((None, 0),)
+== DONE ==

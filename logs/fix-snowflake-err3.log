@@ -1,0 +1,30 @@
+D:\myproject\here16\here16-springboot\src\main\java\com\mall\config\JacksonConfig.java:9: 错误: 程序包org.springframework.boot.autoconfigure.jackson不存在
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+                                                     ^
+D:\myproject\here16\here16-springboot\src\main\java\com\mall\config\JacksonConfig.java:58: 错误: 找不到符号
+    public Jackson2ObjectMapperBuilderCustomizer longToStringCustomizer() {
+           ^
+  符号:   类 Jackson2ObjectMapperBuilderCustomizer
+  位置: 类 JacksonConfig
+2 个错误
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  D:\myproject\here16\here16-springboot\src\main\java\com\mall\config\JacksonConfig.java:58: 错误: 找不到符号
+      public Jackson2ObjectMapperBuilderCustomizer longToStringCustomizer() {
+             ^
+    符号:   类 Jackson2ObjectMapperBuilderCustomizer
+    位置: 类 JacksonConfig
+  D:\myproject\here16\here16-springboot\src\main\java\com\mall\config\JacksonConfig.java:9: 错误: 程序包org.springframework.boot.autoconfigure.jackson不存在
+  import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+                                                       ^
+  2 个错误
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 4s

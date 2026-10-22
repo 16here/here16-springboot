@@ -332,7 +332,7 @@ public class CouponService {
         vo.setDiscountRate(uc.getDiscountRate());
         vo.setStatus(uc.getStatus());
         vo.setStatusText(statusText(uc.getStatus()));
-        vo.setOrderId(uc.getOrderId());
+        vo.setOrderId(uc.getOrderId() == null ? null : String.valueOf(uc.getOrderId()));
         vo.setReceivedAt(uc.getReceivedAt());
         vo.setExpireAt(uc.getExpireAt());
         vo.setUsedAt(uc.getUsedAt());

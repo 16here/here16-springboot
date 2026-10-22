@@ -1,0 +1,18 @@
+# ============================================================
+# Phase 1 HTTPS 配置（本地开发/生产示例）
+# 用法：
+#   1. 生成自签证书（PowerShell 执行 scripts/gen-https-cert.ps1，生成 certs/keystore.p12）
+#   2. 以 https profile 启动：gradlew bootRun --args='--spring.profiles.active=https'
+#   3. 访问 https://localhost:8443/api/products（浏览器会提示证书不受信任，属正常）
+# 生产环境：购买 CA 签发的证书（或 Let's Encrypt），把证书转换为 PKCS12 后填入
+# key-store 路径即可，其余配置不变。
+# ============================================================
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    # PKCS12 密钥库（由 gen-https-cert.ps1 生成）
+    key-store: file:./certs/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: here16-mall
+    key-alias: here16-mall

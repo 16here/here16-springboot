@@ -2,6 +2,8 @@ package com.mall.service;
 
 import com.mall.common.BusinessException;
 import com.mall.common.PageResult;
+import com.mall.common.ShardingRouter;
+import com.mall.config.ShardingTableManager;
 import com.mall.dto.InventoryLogVO;
 import com.mall.dto.InventorySkuVO;
 import com.mall.dto.StockUpdateDTO;
@@ -57,6 +59,8 @@ public class InventoryService {
     private final InventoryLogRepository inventoryLogRepository;
     private final OrderItemRepository orderItemRepository;
     private final RedisStockService redisStockService;
+    /** Phase 3：月分表自动建表器（inventory_logs 按月分表，写入前确保当月表存在） */
+    private final ShardingTableManager tableManager;
 
     // ==================== 订单链路 ====================
 
@@ -339,7 +343,13 @@ public class InventoryService {
         return orderItemRepository.selectByOrderId(orderId);
     }
 
-    /** 写一条库存流水 */
+    /**
+     * 写一条库存流水（所有库存变更的统一出口）。
+     *
+     * <p>Phase 3 分表：inventory_logs 按月分表（_YYYYMM），写入前确保当月分表存在
+     * 并显式传表名。建表走 {@link ShardingTableManager} 的<b>独立连接</b>执行 DDL，
+     * 不会隐式提交调用方的事务（MySQL DDL 在独立连接上执行不影响业务事务）。
+     */
     private void writeLog(Long skuId, Long productId, int changeQty, String type,
                           Long orderId, String orderNo, String remark, Long operatorId) {
         InventoryLog log = new InventoryLog();
@@ -351,7 +361,9 @@ public class InventoryService {
         log.setOrderNo(orderNo);
         log.setRemark(remark);
         log.setOperatorId(operatorId);
-        inventoryLogRepository.insert(log);
+        String suffix = ShardingRouter.currentMonthSuffix();
+        tableManager.ensureMonthTable(ShardingRouter.T_INVENTORY_LOGS, suffix.substring(1));
+        inventoryLogRepository.insert(ShardingRouter.tableName(ShardingRouter.T_INVENTORY_LOGS, suffix), log);
     }
 
     /** 实体 → VO（补类型中文名） */

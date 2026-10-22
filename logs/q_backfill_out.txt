@@ -1,0 +1,3 @@
+﻿admin login ok=True
+admin shipping detail http=200 code=200 orderId=106378054632210432 trackNo=SF123456 company=顺丰速运 receiver=111
+admin shipping list http=200 total=26

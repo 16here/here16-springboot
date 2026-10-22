@@ -2,6 +2,7 @@ package com.mall.service;
 
 import com.mall.common.BusinessException;
 import com.mall.common.JwtUtil;
+import com.mall.common.SensitiveUtil;
 import com.mall.dto.LoginDTO;
 import com.mall.dto.LoginResult;
 import com.mall.dto.RegisterDTO;
@@ -38,6 +39,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final StringRedisTemplate stringRedisTemplate;
+    // Phase 1：登录图形验证码 + 手机号加密存储
+    private final CaptchaService captchaService;
+    private final SensitiveUtil sensitiveUtil;
 
     /** token 有效期（毫秒，由配置注入；写 Redis 时换算为秒） */
     @Value("${jwt.expiration}")
@@ -55,16 +59,18 @@ public class AuthService {
         if (userRepository.findByUsername(dto.getUsername()) != null) {
             throw new BusinessException(2001, "用户名已存在");
         }
-        // 2. 手机号唯一性校验（注册时填写了手机号才校验）
-        if (StringUtils.hasText(dto.getPhone()) && userRepository.findByPhone(dto.getPhone()) != null) {
+        // 2. 手机号唯一性校验（注册时填写了手机号才校验；
+        //    手机号加密存储，查重/登录查询都按"加密后的密文"等值匹配）
+        if (StringUtils.hasText(dto.getPhone())
+                && userRepository.findByPhone(sensitiveUtil.encrypt(dto.getPhone())) != null) {
             throw new BusinessException(2002, "手机号已被注册");
         }
 
-        // 3. 组装实体：密码 BCrypt 加密，默认状态为正常、角色为普通用户
+        // 3. 组装实体：密码 BCrypt 加密，手机号 AES 加密（Phase 1），默认状态为正常、角色为普通用户
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setPhone(dto.getPhone());
+        user.setPhone(sensitiveUtil.encrypt(dto.getPhone()));
         user.setEmail(dto.getEmail());
         user.setStatus(1);
         user.setRole("USER"); // 注册的账号一律为普通用户；管理员角色由数据库维护/另行授予
@@ -85,10 +91,16 @@ public class AuthService {
      * @return token 与用户信息
      */
     public LoginResult login(LoginDTO dto) {
-        // 1. 按账号（用户名或手机号）查找用户
+        // 0. 图形验证码校验（Phase 1：防密码爆破/撞库；校验通过即消耗，一次性）
+        if (!captchaService.verify(dto.getCaptchaId(), dto.getCaptchaCode())) {
+            throw new BusinessException(BusinessException.PARAM_ERROR, "验证码错误或已过期");
+        }
+
+        // 1. 按账号（用户名或手机号）查找用户；
+        //    手机号加密存储，查询前先对输入手机号做同样的加密（确定性加密保证等值命中）
         User user = userRepository.findByUsername(dto.getAccount());
         if (user == null && StringUtils.hasText(dto.getAccount())) {
-            user = userRepository.findByPhone(dto.getAccount());
+            user = userRepository.findByPhone(sensitiveUtil.encrypt(dto.getAccount()));
         }
 
         // 2. 统一提示"用户名或密码错误"，不暴露具体是哪种不存在（防枚举攻击）
@@ -142,13 +154,13 @@ public class AuthService {
     }
 
     /**
-     * 实体转 VO：剔除 password 等敏感字段。
+     * 实体转 VO：剔除 password 等敏感字段；手机号解密后返回（展示层明文）。
      */
     private UserVO toVO(User user) {
         UserVO vo = new UserVO();
         vo.setId(user.getId());
         vo.setUsername(user.getUsername());
-        vo.setPhone(user.getPhone());
+        vo.setPhone(sensitiveUtil.decrypt(user.getPhone()));
         vo.setEmail(user.getEmail());
         vo.setAvatar(user.getAvatar());
         vo.setStatus(user.getStatus());

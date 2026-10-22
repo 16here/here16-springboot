@@ -1,0 +1,2507 @@
+﻿Classfile /D:/myproject/here16/here16-springboot/build/classes/java/main/com/mall/dto/OrderVO.class
+  Last modified 2026��10��21��; size 14079 bytes
+  SHA-256 checksum 671996db89bb6f968b395631be9946bb2584689b5c96478975275b6f1e885ad1
+  Compiled from "OrderVO.java"
+public class com.mall.dto.OrderVO
+  minor version: 0
+  major version: 65
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // com/mall/dto/OrderVO
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 22, methods: 49, attributes: 3
+Constant pool:
+    #1 = Methodref          #2.#3         // java/lang/Object."<init>":()V
+    #2 = Class              #4            // java/lang/Object
+    #3 = NameAndType        #5:#6         // "<init>":()V
+    #4 = Utf8               java/lang/Object
+    #5 = Utf8               <init>
+    #6 = Utf8               ()V
+    #7 = Fieldref           #8.#9         // com/mall/dto/OrderVO.id:Ljava/lang/Long;
+    #8 = Class              #10           // com/mall/dto/OrderVO
+    #9 = NameAndType        #11:#12       // id:Ljava/lang/Long;
+   #10 = Utf8               com/mall/dto/OrderVO
+   #11 = Utf8               id
+   #12 = Utf8               Ljava/lang/Long;
+   #13 = Fieldref           #8.#14        // com/mall/dto/OrderVO.orderNo:Ljava/lang/String;
+   #14 = NameAndType        #15:#16       // orderNo:Ljava/lang/String;
+   #15 = Utf8               orderNo
+   #16 = Utf8               Ljava/lang/String;
+   #17 = Fieldref           #8.#18        // com/mall/dto/OrderVO.userId:Ljava/lang/Long;
+   #18 = NameAndType        #19:#12       // userId:Ljava/lang/Long;
+   #19 = Utf8               userId
+   #20 = Fieldref           #8.#21        // com/mall/dto/OrderVO.username:Ljava/lang/String;
+   #21 = NameAndType        #22:#16       // username:Ljava/lang/String;
+   #22 = Utf8               username
+   #23 = Fieldref           #8.#24        // com/mall/dto/OrderVO.totalAmount:Ljava/math/BigDecimal;
+   #24 = NameAndType        #25:#26       // totalAmount:Ljava/math/BigDecimal;
+   #25 = Utf8               totalAmount
+   #26 = Utf8               Ljava/math/BigDecimal;
+   #27 = Fieldref           #8.#28        // com/mall/dto/OrderVO.originalAmount:Ljava/math/BigDecimal;
+   #28 = NameAndType        #29:#26       // originalAmount:Ljava/math/BigDecimal;
+   #29 = Utf8               originalAmount
+   #30 = Fieldref           #8.#31        // com/mall/dto/OrderVO.promotionAmount:Ljava/math/BigDecimal;
+   #31 = NameAndType        #32:#26       // promotionAmount:Ljava/math/BigDecimal;
+   #32 = Utf8               promotionAmount
+   #33 = Fieldref           #8.#34        // com/mall/dto/OrderVO.couponAmount:Ljava/math/BigDecimal;
+   #34 = NameAndType        #35:#26       // couponAmount:Ljava/math/BigDecimal;
+   #35 = Utf8               couponAmount
+   #36 = Fieldref           #8.#37        // com/mall/dto/OrderVO.status:Ljava/lang/Integer;
+   #37 = NameAndType        #38:#39       // status:Ljava/lang/Integer;
+   #38 = Utf8               status
+   #39 = Utf8               Ljava/lang/Integer;
+   #40 = Fieldref           #8.#41        // com/mall/dto/OrderVO.statusText:Ljava/lang/String;
+   #41 = NameAndType        #42:#16       // statusText:Ljava/lang/String;
+   #42 = Utf8               statusText
+   #43 = Fieldref           #8.#44        // com/mall/dto/OrderVO.receiverName:Ljava/lang/String;
+   #44 = NameAndType        #45:#16       // receiverName:Ljava/lang/String;
+   #45 = Utf8               receiverName
+   #46 = Fieldref           #8.#47        // com/mall/dto/OrderVO.receiverPhone:Ljava/lang/String;
+   #47 = NameAndType        #48:#16       // receiverPhone:Ljava/lang/String;
+   #48 = Utf8               receiverPhone
+   #49 = Fieldref           #8.#50        // com/mall/dto/OrderVO.receiverAddress:Ljava/lang/String;
+   #50 = NameAndType        #51:#16       // receiverAddress:Ljava/lang/String;
+   #51 = Utf8               receiverAddress
+   #52 = Fieldref           #8.#53        // com/mall/dto/OrderVO.remark:Ljava/lang/String;
+   #53 = NameAndType        #54:#16       // remark:Ljava/lang/String;
+   #54 = Utf8               remark
+   #55 = Fieldref           #8.#56        // com/mall/dto/OrderVO.shippingNo:Ljava/lang/String;
+   #56 = NameAndType        #57:#16       // shippingNo:Ljava/lang/String;
+   #57 = Utf8               shippingNo
+   #58 = Fieldref           #8.#59        // com/mall/dto/OrderVO.createdAt:Ljava/time/LocalDateTime;
+   #59 = NameAndType        #60:#61       // createdAt:Ljava/time/LocalDateTime;
+   #60 = Utf8               createdAt
+   #61 = Utf8               Ljava/time/LocalDateTime;
+   #62 = Fieldref           #8.#63        // com/mall/dto/OrderVO.paidAt:Ljava/time/LocalDateTime;
+   #63 = NameAndType        #64:#61       // paidAt:Ljava/time/LocalDateTime;
+   #64 = Utf8               paidAt
+   #65 = Fieldref           #8.#66        // com/mall/dto/OrderVO.shippedAt:Ljava/time/LocalDateTime;
+   #66 = NameAndType        #67:#61       // shippedAt:Ljava/time/LocalDateTime;
+   #67 = Utf8               shippedAt
+   #68 = Fieldref           #8.#69        // com/mall/dto/OrderVO.completedAt:Ljava/time/LocalDateTime;
+   #69 = NameAndType        #70:#61       // completedAt:Ljava/time/LocalDateTime;
+   #70 = Utf8               completedAt
+   #71 = Fieldref           #8.#72        // com/mall/dto/OrderVO.cancelledAt:Ljava/time/LocalDateTime;
+   #72 = NameAndType        #73:#61       // cancelledAt:Ljava/time/LocalDateTime;
+   #73 = Utf8               cancelledAt
+   #74 = Fieldref           #8.#75        // com/mall/dto/OrderVO.items:Ljava/util/List;
+   #75 = NameAndType        #76:#77       // items:Ljava/util/List;
+   #76 = Utf8               items
+   #77 = Utf8               Ljava/util/List;
+   #78 = Fieldref           #8.#79        // com/mall/dto/OrderVO.statusLogs:Ljava/util/List;
+   #79 = NameAndType        #80:#77       // statusLogs:Ljava/util/List;
+   #80 = Utf8               statusLogs
+   #81 = Methodref          #8.#82        // com/mall/dto/OrderVO.canEqual:(Ljava/lang/Object;)Z
+   #82 = NameAndType        #83:#84       // canEqual:(Ljava/lang/Object;)Z
+   #83 = Utf8               canEqual
+   #84 = Utf8               (Ljava/lang/Object;)Z
+   #85 = Methodref          #8.#86        // com/mall/dto/OrderVO.getId:()Ljava/lang/Long;
+   #86 = NameAndType        #87:#88       // getId:()Ljava/lang/Long;
+   #87 = Utf8               getId
+   #88 = Utf8               ()Ljava/lang/Long;
+   #89 = Methodref          #2.#90        // java/lang/Object.equals:(Ljava/lang/Object;)Z
+   #90 = NameAndType        #91:#84       // equals:(Ljava/lang/Object;)Z
+   #91 = Utf8               equals
+   #92 = Methodref          #8.#93        // com/mall/dto/OrderVO.getUserId:()Ljava/lang/Long;
+   #93 = NameAndType        #94:#88       // getUserId:()Ljava/lang/Long;
+   #94 = Utf8               getUserId
+   #95 = Methodref          #8.#96        // com/mall/dto/OrderVO.getStatus:()Ljava/lang/Integer;
+   #96 = NameAndType        #97:#98       // getStatus:()Ljava/lang/Integer;
+   #97 = Utf8               getStatus
+   #98 = Utf8               ()Ljava/lang/Integer;
+   #99 = Methodref          #8.#100       // com/mall/dto/OrderVO.getOrderNo:()Ljava/lang/String;
+  #100 = NameAndType        #101:#102     // getOrderNo:()Ljava/lang/String;
+  #101 = Utf8               getOrderNo
+  #102 = Utf8               ()Ljava/lang/String;
+  #103 = Methodref          #8.#104       // com/mall/dto/OrderVO.getUsername:()Ljava/lang/String;
+  #104 = NameAndType        #105:#102     // getUsername:()Ljava/lang/String;
+  #105 = Utf8               getUsername
+  #106 = Methodref          #8.#107       // com/mall/dto/OrderVO.getTotalAmount:()Ljava/math/BigDecimal;
+  #107 = NameAndType        #108:#109     // getTotalAmount:()Ljava/math/BigDecimal;
+  #108 = Utf8               getTotalAmount
+  #109 = Utf8               ()Ljava/math/BigDecimal;
+  #110 = Methodref          #8.#111       // com/mall/dto/OrderVO.getOriginalAmount:()Ljava/math/BigDecimal;
+  #111 = NameAndType        #112:#109     // getOriginalAmount:()Ljava/math/BigDecimal;
+  #112 = Utf8               getOriginalAmount
+  #113 = Methodref          #8.#114       // com/mall/dto/OrderVO.getPromotionAmount:()Ljava/math/BigDecimal;
+  #114 = NameAndType        #115:#109     // getPromotionAmount:()Ljava/math/BigDecimal;
+  #115 = Utf8               getPromotionAmount
+  #116 = Methodref          #8.#117       // com/mall/dto/OrderVO.getCouponAmount:()Ljava/math/BigDecimal;
+  #117 = NameAndType        #118:#109     // getCouponAmount:()Ljava/math/BigDecimal;
+  #118 = Utf8               getCouponAmount
+  #119 = Methodref          #8.#120       // com/mall/dto/OrderVO.getStatusText:()Ljava/lang/String;
+  #120 = NameAndType        #121:#102     // getStatusText:()Ljava/lang/String;
+  #121 = Utf8               getStatusText
+  #122 = Methodref          #8.#123       // com/mall/dto/OrderVO.getReceiverName:()Ljava/lang/String;
+  #123 = NameAndType        #124:#102     // getReceiverName:()Ljava/lang/String;
+  #124 = Utf8               getReceiverName
+  #125 = Methodref          #8.#126       // com/mall/dto/OrderVO.getReceiverPhone:()Ljava/lang/String;
+  #126 = NameAndType        #127:#102     // getReceiverPhone:()Ljava/lang/String;
+  #127 = Utf8               getReceiverPhone
+  #128 = Methodref          #8.#129       // com/mall/dto/OrderVO.getReceiverAddress:()Ljava/lang/String;
+  #129 = NameAndType        #130:#102     // getReceiverAddress:()Ljava/lang/String;
+  #130 = Utf8               getReceiverAddress
+  #131 = Methodref          #8.#132       // com/mall/dto/OrderVO.getRemark:()Ljava/lang/String;
+  #132 = NameAndType        #133:#102     // getRemark:()Ljava/lang/String;
+  #133 = Utf8               getRemark
+  #134 = Methodref          #8.#135       // com/mall/dto/OrderVO.getShippingNo:()Ljava/lang/String;
+  #135 = NameAndType        #136:#102     // getShippingNo:()Ljava/lang/String;
+  #136 = Utf8               getShippingNo
+  #137 = Methodref          #8.#138       // com/mall/dto/OrderVO.getCreatedAt:()Ljava/time/LocalDateTime;
+  #138 = NameAndType        #139:#140     // getCreatedAt:()Ljava/time/LocalDateTime;
+  #139 = Utf8               getCreatedAt
+  #140 = Utf8               ()Ljava/time/LocalDateTime;
+  #141 = Methodref          #8.#142       // com/mall/dto/OrderVO.getPaidAt:()Ljava/time/LocalDateTime;
+  #142 = NameAndType        #143:#140     // getPaidAt:()Ljava/time/LocalDateTime;
+  #143 = Utf8               getPaidAt
+  #144 = Methodref          #8.#145       // com/mall/dto/OrderVO.getShippedAt:()Ljava/time/LocalDateTime;
+  #145 = NameAndType        #146:#140     // getShippedAt:()Ljava/time/LocalDateTime;
+  #146 = Utf8               getShippedAt
+  #147 = Methodref          #8.#148       // com/mall/dto/OrderVO.getCompletedAt:()Ljava/time/LocalDateTime;
+  #148 = NameAndType        #149:#140     // getCompletedAt:()Ljava/time/LocalDateTime;
+  #149 = Utf8               getCompletedAt
+  #150 = Methodref          #8.#151       // com/mall/dto/OrderVO.getCancelledAt:()Ljava/time/LocalDateTime;
+  #151 = NameAndType        #152:#140     // getCancelledAt:()Ljava/time/LocalDateTime;
+  #152 = Utf8               getCancelledAt
+  #153 = Methodref          #8.#154       // com/mall/dto/OrderVO.getItems:()Ljava/util/List;
+  #154 = NameAndType        #155:#156     // getItems:()Ljava/util/List;
+  #155 = Utf8               getItems
+  #156 = Utf8               ()Ljava/util/List;
+  #157 = Methodref          #8.#158       // com/mall/dto/OrderVO.getStatusLogs:()Ljava/util/List;
+  #158 = NameAndType        #159:#156     // getStatusLogs:()Ljava/util/List;
+  #159 = Utf8               getStatusLogs
+  #160 = Methodref          #2.#161       // java/lang/Object.hashCode:()I
+  #161 = NameAndType        #162:#163     // hashCode:()I
+  #162 = Utf8               hashCode
+  #163 = Utf8               ()I
+  #164 = Methodref          #165.#166     // java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+  #165 = Class              #167          // java/lang/String
+  #166 = NameAndType        #168:#169     // valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+  #167 = Utf8               java/lang/String
+  #168 = Utf8               valueOf
+  #169 = Utf8               (Ljava/lang/Object;)Ljava/lang/String;
+  #170 = InvokeDynamic      #0:#171       // #0:makeConcatWithConstants:(Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+  #171 = NameAndType        #172:#173     // makeConcatWithConstants:(Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+  #172 = Utf8               makeConcatWithConstants
+  #173 = Utf8               (Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+  #174 = Utf8               RuntimeVisibleAnnotations
+  #175 = Utf8               Lcom/fasterxml/jackson/databind/annotation/JsonSerialize;
+  #176 = Utf8               using
+  #177 = Utf8               Lcom/fasterxml/jackson/databind/ser/std/ToStringSerializer;
+  #178 = Utf8               Signature
+  #179 = Utf8               Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;
+  #180 = Utf8               Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;
+  #181 = Utf8               Code
+  #182 = Utf8               LineNumberTable
+  #183 = Utf8               LocalVariableTable
+  #184 = Utf8               this
+  #185 = Utf8               Lcom/mall/dto/OrderVO;
+  #186 = Utf8               RuntimeInvisibleAnnotations
+  #187 = Utf8               Llombok/Generated;
+  #188 = Utf8               ()Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;
+  #189 = Utf8               ()Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;
+  #190 = Utf8               setId
+  #191 = Utf8               (Ljava/lang/Long;)V
+  #192 = Utf8               MethodParameters
+  #193 = Utf8               setOrderNo
+  #194 = Utf8               (Ljava/lang/String;)V
+  #195 = Utf8               setUserId
+  #196 = Utf8               setUsername
+  #197 = Utf8               setTotalAmount
+  #198 = Utf8               (Ljava/math/BigDecimal;)V
+  #199 = Utf8               setOriginalAmount
+  #200 = Utf8               setPromotionAmount
+  #201 = Utf8               setCouponAmount
+  #202 = Utf8               setStatus
+  #203 = Utf8               (Ljava/lang/Integer;)V
+  #204 = Utf8               setStatusText
+  #205 = Utf8               setReceiverName
+  #206 = Utf8               setReceiverPhone
+  #207 = Utf8               setReceiverAddress
+  #208 = Utf8               setRemark
+  #209 = Utf8               setShippingNo
+  #210 = Utf8               setCreatedAt
+  #211 = Utf8               (Ljava/time/LocalDateTime;)V
+  #212 = Utf8               setPaidAt
+  #213 = Utf8               setShippedAt
+  #214 = Utf8               setCompletedAt
+  #215 = Utf8               setCancelledAt
+  #216 = Utf8               setItems
+  #217 = Utf8               (Ljava/util/List;)V
+  #218 = Utf8               LocalVariableTypeTable
+  #219 = Utf8               (Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;)V
+  #220 = Utf8               setStatusLogs
+  #221 = Utf8               (Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;)V
+  #222 = Utf8               o
+  #223 = Utf8               Ljava/lang/Object;
+  #224 = Utf8               other
+  #225 = Utf8               this$id
+  #226 = Utf8               other$id
+  #227 = Utf8               this$userId
+  #228 = Utf8               other$userId
+  #229 = Utf8               this$status
+  #230 = Utf8               other$status
+  #231 = Utf8               this$orderNo
+  #232 = Utf8               other$orderNo
+  #233 = Utf8               this$username
+  #234 = Utf8               other$username
+  #235 = Utf8               this$totalAmount
+  #236 = Utf8               other$totalAmount
+  #237 = Utf8               this$originalAmount
+  #238 = Utf8               other$originalAmount
+  #239 = Utf8               this$promotionAmount
+  #240 = Utf8               other$promotionAmount
+  #241 = Utf8               this$couponAmount
+  #242 = Utf8               other$couponAmount
+  #243 = Utf8               this$statusText
+  #244 = Utf8               other$statusText
+  #245 = Utf8               this$receiverName
+  #246 = Utf8               other$receiverName
+  #247 = Utf8               this$receiverPhone
+  #248 = Utf8               other$receiverPhone
+  #249 = Utf8               this$receiverAddress
+  #250 = Utf8               other$receiverAddress
+  #251 = Utf8               this$remark
+  #252 = Utf8               other$remark
+  #253 = Utf8               this$shippingNo
+  #254 = Utf8               other$shippingNo
+  #255 = Utf8               this$createdAt
+  #256 = Utf8               other$createdAt
+  #257 = Utf8               this$paidAt
+  #258 = Utf8               other$paidAt
+  #259 = Utf8               this$shippedAt
+  #260 = Utf8               other$shippedAt
+  #261 = Utf8               this$completedAt
+  #262 = Utf8               other$completedAt
+  #263 = Utf8               this$cancelledAt
+  #264 = Utf8               other$cancelledAt
+  #265 = Utf8               this$items
+  #266 = Utf8               other$items
+  #267 = Utf8               this$statusLogs
+  #268 = Utf8               other$statusLogs
+  #269 = Utf8               StackMapTable
+  #270 = Utf8               PRIME
+  #271 = Utf8               I
+  #272 = Utf8               result
+  #273 = Utf8               $id
+  #274 = Utf8               $userId
+  #275 = Utf8               $status
+  #276 = Utf8               $orderNo
+  #277 = Utf8               $username
+  #278 = Utf8               $totalAmount
+  #279 = Utf8               $originalAmount
+  #280 = Utf8               $promotionAmount
+  #281 = Utf8               $couponAmount
+  #282 = Utf8               $statusText
+  #283 = Utf8               $receiverName
+  #284 = Utf8               $receiverPhone
+  #285 = Utf8               $receiverAddress
+  #286 = Utf8               $remark
+  #287 = Utf8               $shippingNo
+  #288 = Utf8               $createdAt
+  #289 = Utf8               $paidAt
+  #290 = Utf8               $shippedAt
+  #291 = Utf8               $completedAt
+  #292 = Utf8               $cancelledAt
+  #293 = Utf8               $items
+  #294 = Utf8               $statusLogs
+  #295 = Utf8               toString
+  #296 = Utf8               SourceFile
+  #297 = Utf8               OrderVO.java
+  #298 = Utf8               BootstrapMethods
+  #299 = String             #300          // OrderVO(id=\u0001, orderNo=\u0001, userId=\u0001, username=\u0001, totalAmount=\u0001, originalAmount=\u0001, promotionAmount=\u0001, couponAmount=\u0001, status=\u0001, statusText=\u0001, receiverName=\u0001, receiverPhone=\u0001, receiverAddress=\u0001, remark=\u0001, shippingNo=\u0001, createdAt=\u0001, paidAt=\u0001, shippedAt=\u0001, completedAt=\u0001, cancelledAt=\u0001, items=\u0001, statusLogs=\u0001)
+  #300 = Utf8               OrderVO(id=\u0001, orderNo=\u0001, userId=\u0001, username=\u0001, totalAmount=\u0001, originalAmount=\u0001, promotionAmount=\u0001, couponAmount=\u0001, status=\u0001, statusText=\u0001, receiverName=\u0001, receiverPhone=\u0001, receiverAddress=\u0001, remark=\u0001, shippingNo=\u0001, createdAt=\u0001, paidAt=\u0001, shippedAt=\u0001, completedAt=\u0001, cancelledAt=\u0001, items=\u0001, statusLogs=\u0001)
+  #301 = MethodHandle       6:#302        // REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #302 = Methodref          #303.#304     // java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #303 = Class              #305          // java/lang/invoke/StringConcatFactory
+  #304 = NameAndType        #172:#306     // makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #305 = Utf8               java/lang/invoke/StringConcatFactory
+  #306 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #307 = Utf8               InnerClasses
+  #308 = Class              #309          // java/lang/invoke/MethodHandles$Lookup
+  #309 = Utf8               java/lang/invoke/MethodHandles$Lookup
+  #310 = Class              #311          // java/lang/invoke/MethodHandles
+  #311 = Utf8               java/lang/invoke/MethodHandles
+  #312 = Utf8               Lookup
+{
+  private java.lang.Long id;
+    descriptor: Ljava/lang/Long;
+    flags: (0x0002) ACC_PRIVATE
+    RuntimeVisibleAnnotations:
+      0: #175(#176=c#177)
+        com.fasterxml.jackson.databind.annotation.JsonSerialize(
+          using=class Lcom/fasterxml/jackson/databind/ser/std/ToStringSerializer;
+        )
+
+  private java.lang.String orderNo;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.Long userId;
+    descriptor: Ljava/lang/Long;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String username;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.math.BigDecimal totalAmount;
+    descriptor: Ljava/math/BigDecimal;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.math.BigDecimal originalAmount;
+    descriptor: Ljava/math/BigDecimal;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.math.BigDecimal promotionAmount;
+    descriptor: Ljava/math/BigDecimal;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.math.BigDecimal couponAmount;
+    descriptor: Ljava/math/BigDecimal;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.Integer status;
+    descriptor: Ljava/lang/Integer;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String statusText;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String receiverName;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String receiverPhone;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String receiverAddress;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String remark;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.lang.String shippingNo;
+    descriptor: Ljava/lang/String;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.time.LocalDateTime createdAt;
+    descriptor: Ljava/time/LocalDateTime;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.time.LocalDateTime paidAt;
+    descriptor: Ljava/time/LocalDateTime;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.time.LocalDateTime shippedAt;
+    descriptor: Ljava/time/LocalDateTime;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.time.LocalDateTime completedAt;
+    descriptor: Ljava/time/LocalDateTime;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.time.LocalDateTime cancelledAt;
+    descriptor: Ljava/time/LocalDateTime;
+    flags: (0x0002) ACC_PRIVATE
+
+  private java.util.List<com.mall.dto.OrderItemVO> items;
+    descriptor: Ljava/util/List;
+    flags: (0x0002) ACC_PRIVATE
+    Signature: #179                         // Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;
+
+  private java.util.List<com.mall.entity.OrderStatusLog> statusLogs;
+    descriptor: Ljava/util/List;
+    flags: (0x0002) ACC_PRIVATE
+    Signature: #180                         // Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;
+
+  public com.mall.dto.OrderVO();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.Long getId();
+    descriptor: ()Ljava/lang/Long;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #7                  // Field id:Ljava/lang/Long;
+         4: areturn
+      LineNumberTable:
+        line 30: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getOrderNo();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #13                 // Field orderNo:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 33: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.Long getUserId();
+    descriptor: ()Ljava/lang/Long;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #17                 // Field userId:Ljava/lang/Long;
+         4: areturn
+      LineNumberTable:
+        line 36: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getUsername();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #20                 // Field username:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 39: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.math.BigDecimal getTotalAmount();
+    descriptor: ()Ljava/math/BigDecimal;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #23                 // Field totalAmount:Ljava/math/BigDecimal;
+         4: areturn
+      LineNumberTable:
+        line 42: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.math.BigDecimal getOriginalAmount();
+    descriptor: ()Ljava/math/BigDecimal;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #27                 // Field originalAmount:Ljava/math/BigDecimal;
+         4: areturn
+      LineNumberTable:
+        line 45: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.math.BigDecimal getPromotionAmount();
+    descriptor: ()Ljava/math/BigDecimal;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #30                 // Field promotionAmount:Ljava/math/BigDecimal;
+         4: areturn
+      LineNumberTable:
+        line 48: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.math.BigDecimal getCouponAmount();
+    descriptor: ()Ljava/math/BigDecimal;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #33                 // Field couponAmount:Ljava/math/BigDecimal;
+         4: areturn
+      LineNumberTable:
+        line 51: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.Integer getStatus();
+    descriptor: ()Ljava/lang/Integer;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #36                 // Field status:Ljava/lang/Integer;
+         4: areturn
+      LineNumberTable:
+        line 54: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getStatusText();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #40                 // Field statusText:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 57: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getReceiverName();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #43                 // Field receiverName:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 60: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getReceiverPhone();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #46                 // Field receiverPhone:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 63: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getReceiverAddress();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #49                 // Field receiverAddress:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 66: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getRemark();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #52                 // Field remark:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 69: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String getShippingNo();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #55                 // Field shippingNo:Ljava/lang/String;
+         4: areturn
+      LineNumberTable:
+        line 72: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.time.LocalDateTime getCreatedAt();
+    descriptor: ()Ljava/time/LocalDateTime;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #58                 // Field createdAt:Ljava/time/LocalDateTime;
+         4: areturn
+      LineNumberTable:
+        line 75: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.time.LocalDateTime getPaidAt();
+    descriptor: ()Ljava/time/LocalDateTime;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #62                 // Field paidAt:Ljava/time/LocalDateTime;
+         4: areturn
+      LineNumberTable:
+        line 78: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.time.LocalDateTime getShippedAt();
+    descriptor: ()Ljava/time/LocalDateTime;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #65                 // Field shippedAt:Ljava/time/LocalDateTime;
+         4: areturn
+      LineNumberTable:
+        line 81: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.time.LocalDateTime getCompletedAt();
+    descriptor: ()Ljava/time/LocalDateTime;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #68                 // Field completedAt:Ljava/time/LocalDateTime;
+         4: areturn
+      LineNumberTable:
+        line 84: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.time.LocalDateTime getCancelledAt();
+    descriptor: ()Ljava/time/LocalDateTime;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #71                 // Field cancelledAt:Ljava/time/LocalDateTime;
+         4: areturn
+      LineNumberTable:
+        line 87: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.util.List<com.mall.dto.OrderItemVO> getItems();
+    descriptor: ()Ljava/util/List;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #74                 // Field items:Ljava/util/List;
+         4: areturn
+      LineNumberTable:
+        line 90: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    Signature: #188                         // ()Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.util.List<com.mall.entity.OrderStatusLog> getStatusLogs();
+    descriptor: ()Ljava/util/List;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: getfield      #78                 // Field statusLogs:Ljava/util/List;
+         4: areturn
+      LineNumberTable:
+        line 93: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+    Signature: #189                         // ()Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setId(java.lang.Long);
+    descriptor: (Ljava/lang/Long;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #7                  // Field id:Ljava/lang/Long;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1    id   Ljava/lang/Long;
+    MethodParameters:
+      Name                           Flags
+      id                             final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setOrderNo(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #13                 // Field orderNo:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 orderNo   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      orderNo                        final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setUserId(java.lang.Long);
+    descriptor: (Ljava/lang/Long;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #17                 // Field userId:Ljava/lang/Long;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 userId   Ljava/lang/Long;
+    MethodParameters:
+      Name                           Flags
+      userId                         final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setUsername(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #20                 // Field username:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 username   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      username                       final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setTotalAmount(java.math.BigDecimal);
+    descriptor: (Ljava/math/BigDecimal;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #23                 // Field totalAmount:Ljava/math/BigDecimal;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 totalAmount   Ljava/math/BigDecimal;
+    MethodParameters:
+      Name                           Flags
+      totalAmount                    final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setOriginalAmount(java.math.BigDecimal);
+    descriptor: (Ljava/math/BigDecimal;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #27                 // Field originalAmount:Ljava/math/BigDecimal;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 originalAmount   Ljava/math/BigDecimal;
+    MethodParameters:
+      Name                           Flags
+      originalAmount                 final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setPromotionAmount(java.math.BigDecimal);
+    descriptor: (Ljava/math/BigDecimal;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #30                 // Field promotionAmount:Ljava/math/BigDecimal;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 promotionAmount   Ljava/math/BigDecimal;
+    MethodParameters:
+      Name                           Flags
+      promotionAmount                final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setCouponAmount(java.math.BigDecimal);
+    descriptor: (Ljava/math/BigDecimal;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #33                 // Field couponAmount:Ljava/math/BigDecimal;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 couponAmount   Ljava/math/BigDecimal;
+    MethodParameters:
+      Name                           Flags
+      couponAmount                   final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setStatus(java.lang.Integer);
+    descriptor: (Ljava/lang/Integer;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #36                 // Field status:Ljava/lang/Integer;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 status   Ljava/lang/Integer;
+    MethodParameters:
+      Name                           Flags
+      status                         final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setStatusText(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #40                 // Field statusText:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 statusText   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      statusText                     final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setReceiverName(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #43                 // Field receiverName:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 receiverName   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      receiverName                   final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setReceiverPhone(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #46                 // Field receiverPhone:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 receiverPhone   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      receiverPhone                  final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setReceiverAddress(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #49                 // Field receiverAddress:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 receiverAddress   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      receiverAddress                final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setRemark(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #52                 // Field remark:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 remark   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      remark                         final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setShippingNo(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #55                 // Field shippingNo:Ljava/lang/String;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 shippingNo   Ljava/lang/String;
+    MethodParameters:
+      Name                           Flags
+      shippingNo                     final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setCreatedAt(java.time.LocalDateTime);
+    descriptor: (Ljava/time/LocalDateTime;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #58                 // Field createdAt:Ljava/time/LocalDateTime;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 createdAt   Ljava/time/LocalDateTime;
+    MethodParameters:
+      Name                           Flags
+      createdAt                      final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setPaidAt(java.time.LocalDateTime);
+    descriptor: (Ljava/time/LocalDateTime;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #62                 // Field paidAt:Ljava/time/LocalDateTime;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 paidAt   Ljava/time/LocalDateTime;
+    MethodParameters:
+      Name                           Flags
+      paidAt                         final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setShippedAt(java.time.LocalDateTime);
+    descriptor: (Ljava/time/LocalDateTime;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #65                 // Field shippedAt:Ljava/time/LocalDateTime;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 shippedAt   Ljava/time/LocalDateTime;
+    MethodParameters:
+      Name                           Flags
+      shippedAt                      final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setCompletedAt(java.time.LocalDateTime);
+    descriptor: (Ljava/time/LocalDateTime;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #68                 // Field completedAt:Ljava/time/LocalDateTime;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 completedAt   Ljava/time/LocalDateTime;
+    MethodParameters:
+      Name                           Flags
+      completedAt                    final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setCancelledAt(java.time.LocalDateTime);
+    descriptor: (Ljava/time/LocalDateTime;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #71                 // Field cancelledAt:Ljava/time/LocalDateTime;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 cancelledAt   Ljava/time/LocalDateTime;
+    MethodParameters:
+      Name                           Flags
+      cancelledAt                    final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setItems(java.util.List<com.mall.dto.OrderItemVO>);
+    descriptor: (Ljava/util/List;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #74                 // Field items:Ljava/util/List;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 items   Ljava/util/List;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+            0       6     1 items   Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;
+    MethodParameters:
+      Name                           Flags
+      items                          final
+    Signature: #219                         // (Ljava/util/List<Lcom/mall/dto/OrderItemVO;>;)V
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public void setStatusLogs(java.util.List<com.mall.entity.OrderStatusLog>);
+    descriptor: (Ljava/util/List;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: putfield      #78                 // Field statusLogs:Ljava/util/List;
+         5: return
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       6     0  this   Lcom/mall/dto/OrderVO;
+            0       6     1 statusLogs   Ljava/util/List;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+            0       6     1 statusLogs   Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;
+    MethodParameters:
+      Name                           Flags
+      statusLogs                     final
+    Signature: #221                         // (Ljava/util/List<Lcom/mall/entity/OrderStatusLog;>;)V
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=47, args_size=2
+         0: aload_1
+         1: aload_0
+         2: if_acmpne     7
+         5: iconst_1
+         6: ireturn
+         7: aload_1
+         8: instanceof    #8                  // class com/mall/dto/OrderVO
+        11: ifne          16
+        14: iconst_0
+        15: ireturn
+        16: aload_1
+        17: checkcast     #8                  // class com/mall/dto/OrderVO
+        20: astore_2
+        21: aload_2
+        22: aload_0
+        23: invokevirtual #81                 // Method canEqual:(Ljava/lang/Object;)Z
+        26: ifne          31
+        29: iconst_0
+        30: ireturn
+        31: aload_0
+        32: invokevirtual #85                 // Method getId:()Ljava/lang/Long;
+        35: astore_3
+        36: aload_2
+        37: invokevirtual #85                 // Method getId:()Ljava/lang/Long;
+        40: astore        4
+        42: aload_3
+        43: ifnonnull     54
+        46: aload         4
+        48: ifnull        65
+        51: goto          63
+        54: aload_3
+        55: aload         4
+        57: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        60: ifne          65
+        63: iconst_0
+        64: ireturn
+        65: aload_0
+        66: invokevirtual #92                 // Method getUserId:()Ljava/lang/Long;
+        69: astore        5
+        71: aload_2
+        72: invokevirtual #92                 // Method getUserId:()Ljava/lang/Long;
+        75: astore        6
+        77: aload         5
+        79: ifnonnull     90
+        82: aload         6
+        84: ifnull        102
+        87: goto          100
+        90: aload         5
+        92: aload         6
+        94: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        97: ifne          102
+       100: iconst_0
+       101: ireturn
+       102: aload_0
+       103: invokevirtual #95                 // Method getStatus:()Ljava/lang/Integer;
+       106: astore        7
+       108: aload_2
+       109: invokevirtual #95                 // Method getStatus:()Ljava/lang/Integer;
+       112: astore        8
+       114: aload         7
+       116: ifnonnull     127
+       119: aload         8
+       121: ifnull        139
+       124: goto          137
+       127: aload         7
+       129: aload         8
+       131: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       134: ifne          139
+       137: iconst_0
+       138: ireturn
+       139: aload_0
+       140: invokevirtual #99                 // Method getOrderNo:()Ljava/lang/String;
+       143: astore        9
+       145: aload_2
+       146: invokevirtual #99                 // Method getOrderNo:()Ljava/lang/String;
+       149: astore        10
+       151: aload         9
+       153: ifnonnull     164
+       156: aload         10
+       158: ifnull        176
+       161: goto          174
+       164: aload         9
+       166: aload         10
+       168: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       171: ifne          176
+       174: iconst_0
+       175: ireturn
+       176: aload_0
+       177: invokevirtual #103                // Method getUsername:()Ljava/lang/String;
+       180: astore        11
+       182: aload_2
+       183: invokevirtual #103                // Method getUsername:()Ljava/lang/String;
+       186: astore        12
+       188: aload         11
+       190: ifnonnull     201
+       193: aload         12
+       195: ifnull        213
+       198: goto          211
+       201: aload         11
+       203: aload         12
+       205: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       208: ifne          213
+       211: iconst_0
+       212: ireturn
+       213: aload_0
+       214: invokevirtual #106                // Method getTotalAmount:()Ljava/math/BigDecimal;
+       217: astore        13
+       219: aload_2
+       220: invokevirtual #106                // Method getTotalAmount:()Ljava/math/BigDecimal;
+       223: astore        14
+       225: aload         13
+       227: ifnonnull     238
+       230: aload         14
+       232: ifnull        250
+       235: goto          248
+       238: aload         13
+       240: aload         14
+       242: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       245: ifne          250
+       248: iconst_0
+       249: ireturn
+       250: aload_0
+       251: invokevirtual #110                // Method getOriginalAmount:()Ljava/math/BigDecimal;
+       254: astore        15
+       256: aload_2
+       257: invokevirtual #110                // Method getOriginalAmount:()Ljava/math/BigDecimal;
+       260: astore        16
+       262: aload         15
+       264: ifnonnull     275
+       267: aload         16
+       269: ifnull        287
+       272: goto          285
+       275: aload         15
+       277: aload         16
+       279: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       282: ifne          287
+       285: iconst_0
+       286: ireturn
+       287: aload_0
+       288: invokevirtual #113                // Method getPromotionAmount:()Ljava/math/BigDecimal;
+       291: astore        17
+       293: aload_2
+       294: invokevirtual #113                // Method getPromotionAmount:()Ljava/math/BigDecimal;
+       297: astore        18
+       299: aload         17
+       301: ifnonnull     312
+       304: aload         18
+       306: ifnull        324
+       309: goto          322
+       312: aload         17
+       314: aload         18
+       316: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       319: ifne          324
+       322: iconst_0
+       323: ireturn
+       324: aload_0
+       325: invokevirtual #116                // Method getCouponAmount:()Ljava/math/BigDecimal;
+       328: astore        19
+       330: aload_2
+       331: invokevirtual #116                // Method getCouponAmount:()Ljava/math/BigDecimal;
+       334: astore        20
+       336: aload         19
+       338: ifnonnull     349
+       341: aload         20
+       343: ifnull        361
+       346: goto          359
+       349: aload         19
+       351: aload         20
+       353: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       356: ifne          361
+       359: iconst_0
+       360: ireturn
+       361: aload_0
+       362: invokevirtual #119                // Method getStatusText:()Ljava/lang/String;
+       365: astore        21
+       367: aload_2
+       368: invokevirtual #119                // Method getStatusText:()Ljava/lang/String;
+       371: astore        22
+       373: aload         21
+       375: ifnonnull     386
+       378: aload         22
+       380: ifnull        398
+       383: goto          396
+       386: aload         21
+       388: aload         22
+       390: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       393: ifne          398
+       396: iconst_0
+       397: ireturn
+       398: aload_0
+       399: invokevirtual #122                // Method getReceiverName:()Ljava/lang/String;
+       402: astore        23
+       404: aload_2
+       405: invokevirtual #122                // Method getReceiverName:()Ljava/lang/String;
+       408: astore        24
+       410: aload         23
+       412: ifnonnull     423
+       415: aload         24
+       417: ifnull        435
+       420: goto          433
+       423: aload         23
+       425: aload         24
+       427: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       430: ifne          435
+       433: iconst_0
+       434: ireturn
+       435: aload_0
+       436: invokevirtual #125                // Method getReceiverPhone:()Ljava/lang/String;
+       439: astore        25
+       441: aload_2
+       442: invokevirtual #125                // Method getReceiverPhone:()Ljava/lang/String;
+       445: astore        26
+       447: aload         25
+       449: ifnonnull     460
+       452: aload         26
+       454: ifnull        472
+       457: goto          470
+       460: aload         25
+       462: aload         26
+       464: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       467: ifne          472
+       470: iconst_0
+       471: ireturn
+       472: aload_0
+       473: invokevirtual #128                // Method getReceiverAddress:()Ljava/lang/String;
+       476: astore        27
+       478: aload_2
+       479: invokevirtual #128                // Method getReceiverAddress:()Ljava/lang/String;
+       482: astore        28
+       484: aload         27
+       486: ifnonnull     497
+       489: aload         28
+       491: ifnull        509
+       494: goto          507
+       497: aload         27
+       499: aload         28
+       501: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       504: ifne          509
+       507: iconst_0
+       508: ireturn
+       509: aload_0
+       510: invokevirtual #131                // Method getRemark:()Ljava/lang/String;
+       513: astore        29
+       515: aload_2
+       516: invokevirtual #131                // Method getRemark:()Ljava/lang/String;
+       519: astore        30
+       521: aload         29
+       523: ifnonnull     534
+       526: aload         30
+       528: ifnull        546
+       531: goto          544
+       534: aload         29
+       536: aload         30
+       538: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       541: ifne          546
+       544: iconst_0
+       545: ireturn
+       546: aload_0
+       547: invokevirtual #134                // Method getShippingNo:()Ljava/lang/String;
+       550: astore        31
+       552: aload_2
+       553: invokevirtual #134                // Method getShippingNo:()Ljava/lang/String;
+       556: astore        32
+       558: aload         31
+       560: ifnonnull     571
+       563: aload         32
+       565: ifnull        583
+       568: goto          581
+       571: aload         31
+       573: aload         32
+       575: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       578: ifne          583
+       581: iconst_0
+       582: ireturn
+       583: aload_0
+       584: invokevirtual #137                // Method getCreatedAt:()Ljava/time/LocalDateTime;
+       587: astore        33
+       589: aload_2
+       590: invokevirtual #137                // Method getCreatedAt:()Ljava/time/LocalDateTime;
+       593: astore        34
+       595: aload         33
+       597: ifnonnull     608
+       600: aload         34
+       602: ifnull        620
+       605: goto          618
+       608: aload         33
+       610: aload         34
+       612: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       615: ifne          620
+       618: iconst_0
+       619: ireturn
+       620: aload_0
+       621: invokevirtual #141                // Method getPaidAt:()Ljava/time/LocalDateTime;
+       624: astore        35
+       626: aload_2
+       627: invokevirtual #141                // Method getPaidAt:()Ljava/time/LocalDateTime;
+       630: astore        36
+       632: aload         35
+       634: ifnonnull     645
+       637: aload         36
+       639: ifnull        657
+       642: goto          655
+       645: aload         35
+       647: aload         36
+       649: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       652: ifne          657
+       655: iconst_0
+       656: ireturn
+       657: aload_0
+       658: invokevirtual #144                // Method getShippedAt:()Ljava/time/LocalDateTime;
+       661: astore        37
+       663: aload_2
+       664: invokevirtual #144                // Method getShippedAt:()Ljava/time/LocalDateTime;
+       667: astore        38
+       669: aload         37
+       671: ifnonnull     682
+       674: aload         38
+       676: ifnull        694
+       679: goto          692
+       682: aload         37
+       684: aload         38
+       686: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       689: ifne          694
+       692: iconst_0
+       693: ireturn
+       694: aload_0
+       695: invokevirtual #147                // Method getCompletedAt:()Ljava/time/LocalDateTime;
+       698: astore        39
+       700: aload_2
+       701: invokevirtual #147                // Method getCompletedAt:()Ljava/time/LocalDateTime;
+       704: astore        40
+       706: aload         39
+       708: ifnonnull     719
+       711: aload         40
+       713: ifnull        731
+       716: goto          729
+       719: aload         39
+       721: aload         40
+       723: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       726: ifne          731
+       729: iconst_0
+       730: ireturn
+       731: aload_0
+       732: invokevirtual #150                // Method getCancelledAt:()Ljava/time/LocalDateTime;
+       735: astore        41
+       737: aload_2
+       738: invokevirtual #150                // Method getCancelledAt:()Ljava/time/LocalDateTime;
+       741: astore        42
+       743: aload         41
+       745: ifnonnull     756
+       748: aload         42
+       750: ifnull        768
+       753: goto          766
+       756: aload         41
+       758: aload         42
+       760: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       763: ifne          768
+       766: iconst_0
+       767: ireturn
+       768: aload_0
+       769: invokevirtual #153                // Method getItems:()Ljava/util/List;
+       772: astore        43
+       774: aload_2
+       775: invokevirtual #153                // Method getItems:()Ljava/util/List;
+       778: astore        44
+       780: aload         43
+       782: ifnonnull     793
+       785: aload         44
+       787: ifnull        805
+       790: goto          803
+       793: aload         43
+       795: aload         44
+       797: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       800: ifne          805
+       803: iconst_0
+       804: ireturn
+       805: aload_0
+       806: invokevirtual #157                // Method getStatusLogs:()Ljava/util/List;
+       809: astore        45
+       811: aload_2
+       812: invokevirtual #157                // Method getStatusLogs:()Ljava/util/List;
+       815: astore        46
+       817: aload         45
+       819: ifnonnull     830
+       822: aload         46
+       824: ifnull        842
+       827: goto          840
+       830: aload         45
+       832: aload         46
+       834: invokevirtual #89                 // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+       837: ifne          842
+       840: iconst_0
+       841: ireturn
+       842: iconst_1
+       843: ireturn
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     844     0  this   Lcom/mall/dto/OrderVO;
+            0     844     1     o   Ljava/lang/Object;
+           21     823     2 other   Lcom/mall/dto/OrderVO;
+           36     808     3 this$id   Ljava/lang/Object;
+           42     802     4 other$id   Ljava/lang/Object;
+           71     773     5 this$userId   Ljava/lang/Object;
+           77     767     6 other$userId   Ljava/lang/Object;
+          108     736     7 this$status   Ljava/lang/Object;
+          114     730     8 other$status   Ljava/lang/Object;
+          145     699     9 this$orderNo   Ljava/lang/Object;
+          151     693    10 other$orderNo   Ljava/lang/Object;
+          182     662    11 this$username   Ljava/lang/Object;
+          188     656    12 other$username   Ljava/lang/Object;
+          219     625    13 this$totalAmount   Ljava/lang/Object;
+          225     619    14 other$totalAmount   Ljava/lang/Object;
+          256     588    15 this$originalAmount   Ljava/lang/Object;
+          262     582    16 other$originalAmount   Ljava/lang/Object;
+          293     551    17 this$promotionAmount   Ljava/lang/Object;
+          299     545    18 other$promotionAmount   Ljava/lang/Object;
+          330     514    19 this$couponAmount   Ljava/lang/Object;
+          336     508    20 other$couponAmount   Ljava/lang/Object;
+          367     477    21 this$statusText   Ljava/lang/Object;
+          373     471    22 other$statusText   Ljava/lang/Object;
+          404     440    23 this$receiverName   Ljava/lang/Object;
+          410     434    24 other$receiverName   Ljava/lang/Object;
+          441     403    25 this$receiverPhone   Ljava/lang/Object;
+          447     397    26 other$receiverPhone   Ljava/lang/Object;
+          478     366    27 this$receiverAddress   Ljava/lang/Object;
+          484     360    28 other$receiverAddress   Ljava/lang/Object;
+          515     329    29 this$remark   Ljava/lang/Object;
+          521     323    30 other$remark   Ljava/lang/Object;
+          552     292    31 this$shippingNo   Ljava/lang/Object;
+          558     286    32 other$shippingNo   Ljava/lang/Object;
+          589     255    33 this$createdAt   Ljava/lang/Object;
+          595     249    34 other$createdAt   Ljava/lang/Object;
+          626     218    35 this$paidAt   Ljava/lang/Object;
+          632     212    36 other$paidAt   Ljava/lang/Object;
+          663     181    37 this$shippedAt   Ljava/lang/Object;
+          669     175    38 other$shippedAt   Ljava/lang/Object;
+          700     144    39 this$completedAt   Ljava/lang/Object;
+          706     138    40 other$completedAt   Ljava/lang/Object;
+          737     107    41 this$cancelledAt   Ljava/lang/Object;
+          743     101    42 other$cancelledAt   Ljava/lang/Object;
+          774      70    43 this$items   Ljava/lang/Object;
+          780      64    44 other$items   Ljava/lang/Object;
+          811      33    45 this$statusLogs   Ljava/lang/Object;
+          817      27    46 other$statusLogs   Ljava/lang/Object;
+      StackMapTable: number_of_entries = 69
+        frame_type = 7 /* same */
+        frame_type = 8 /* same */
+        frame_type = 252 /* append */
+          offset_delta = 14
+          locals = [ class com/mall/dto/OrderVO ]
+        frame_type = 253 /* append */
+          offset_delta = 22
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 8 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+        frame_type = 253 /* append */
+          offset_delta = 24
+          locals = [ class java/lang/Object, class java/lang/Object ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+    MethodParameters:
+      Name                           Flags
+      o                              final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  protected boolean canEqual(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    flags: (0x0004) ACC_PROTECTED
+    Code:
+      stack=1, locals=2, args_size=2
+         0: aload_1
+         1: instanceof    #8                  // class com/mall/dto/OrderVO
+         4: ireturn
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/mall/dto/OrderVO;
+            0       5     1 other   Ljava/lang/Object;
+    MethodParameters:
+      Name                           Flags
+      other                          final
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public int hashCode();
+    descriptor: ()I
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=2, locals=25, args_size=1
+         0: bipush        59
+         2: istore_1
+         3: iconst_1
+         4: istore_2
+         5: aload_0
+         6: invokevirtual #85                 // Method getId:()Ljava/lang/Long;
+         9: astore_3
+        10: iload_2
+        11: bipush        59
+        13: imul
+        14: aload_3
+        15: ifnonnull     23
+        18: bipush        43
+        20: goto          27
+        23: aload_3
+        24: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+        27: iadd
+        28: istore_2
+        29: aload_0
+        30: invokevirtual #92                 // Method getUserId:()Ljava/lang/Long;
+        33: astore        4
+        35: iload_2
+        36: bipush        59
+        38: imul
+        39: aload         4
+        41: ifnonnull     49
+        44: bipush        43
+        46: goto          54
+        49: aload         4
+        51: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+        54: iadd
+        55: istore_2
+        56: aload_0
+        57: invokevirtual #95                 // Method getStatus:()Ljava/lang/Integer;
+        60: astore        5
+        62: iload_2
+        63: bipush        59
+        65: imul
+        66: aload         5
+        68: ifnonnull     76
+        71: bipush        43
+        73: goto          81
+        76: aload         5
+        78: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+        81: iadd
+        82: istore_2
+        83: aload_0
+        84: invokevirtual #99                 // Method getOrderNo:()Ljava/lang/String;
+        87: astore        6
+        89: iload_2
+        90: bipush        59
+        92: imul
+        93: aload         6
+        95: ifnonnull     103
+        98: bipush        43
+       100: goto          108
+       103: aload         6
+       105: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       108: iadd
+       109: istore_2
+       110: aload_0
+       111: invokevirtual #103                // Method getUsername:()Ljava/lang/String;
+       114: astore        7
+       116: iload_2
+       117: bipush        59
+       119: imul
+       120: aload         7
+       122: ifnonnull     130
+       125: bipush        43
+       127: goto          135
+       130: aload         7
+       132: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       135: iadd
+       136: istore_2
+       137: aload_0
+       138: invokevirtual #106                // Method getTotalAmount:()Ljava/math/BigDecimal;
+       141: astore        8
+       143: iload_2
+       144: bipush        59
+       146: imul
+       147: aload         8
+       149: ifnonnull     157
+       152: bipush        43
+       154: goto          162
+       157: aload         8
+       159: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       162: iadd
+       163: istore_2
+       164: aload_0
+       165: invokevirtual #110                // Method getOriginalAmount:()Ljava/math/BigDecimal;
+       168: astore        9
+       170: iload_2
+       171: bipush        59
+       173: imul
+       174: aload         9
+       176: ifnonnull     184
+       179: bipush        43
+       181: goto          189
+       184: aload         9
+       186: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       189: iadd
+       190: istore_2
+       191: aload_0
+       192: invokevirtual #113                // Method getPromotionAmount:()Ljava/math/BigDecimal;
+       195: astore        10
+       197: iload_2
+       198: bipush        59
+       200: imul
+       201: aload         10
+       203: ifnonnull     211
+       206: bipush        43
+       208: goto          216
+       211: aload         10
+       213: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       216: iadd
+       217: istore_2
+       218: aload_0
+       219: invokevirtual #116                // Method getCouponAmount:()Ljava/math/BigDecimal;
+       222: astore        11
+       224: iload_2
+       225: bipush        59
+       227: imul
+       228: aload         11
+       230: ifnonnull     238
+       233: bipush        43
+       235: goto          243
+       238: aload         11
+       240: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       243: iadd
+       244: istore_2
+       245: aload_0
+       246: invokevirtual #119                // Method getStatusText:()Ljava/lang/String;
+       249: astore        12
+       251: iload_2
+       252: bipush        59
+       254: imul
+       255: aload         12
+       257: ifnonnull     265
+       260: bipush        43
+       262: goto          270
+       265: aload         12
+       267: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       270: iadd
+       271: istore_2
+       272: aload_0
+       273: invokevirtual #122                // Method getReceiverName:()Ljava/lang/String;
+       276: astore        13
+       278: iload_2
+       279: bipush        59
+       281: imul
+       282: aload         13
+       284: ifnonnull     292
+       287: bipush        43
+       289: goto          297
+       292: aload         13
+       294: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       297: iadd
+       298: istore_2
+       299: aload_0
+       300: invokevirtual #125                // Method getReceiverPhone:()Ljava/lang/String;
+       303: astore        14
+       305: iload_2
+       306: bipush        59
+       308: imul
+       309: aload         14
+       311: ifnonnull     319
+       314: bipush        43
+       316: goto          324
+       319: aload         14
+       321: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       324: iadd
+       325: istore_2
+       326: aload_0
+       327: invokevirtual #128                // Method getReceiverAddress:()Ljava/lang/String;
+       330: astore        15
+       332: iload_2
+       333: bipush        59
+       335: imul
+       336: aload         15
+       338: ifnonnull     346
+       341: bipush        43
+       343: goto          351
+       346: aload         15
+       348: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       351: iadd
+       352: istore_2
+       353: aload_0
+       354: invokevirtual #131                // Method getRemark:()Ljava/lang/String;
+       357: astore        16
+       359: iload_2
+       360: bipush        59
+       362: imul
+       363: aload         16
+       365: ifnonnull     373
+       368: bipush        43
+       370: goto          378
+       373: aload         16
+       375: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       378: iadd
+       379: istore_2
+       380: aload_0
+       381: invokevirtual #134                // Method getShippingNo:()Ljava/lang/String;
+       384: astore        17
+       386: iload_2
+       387: bipush        59
+       389: imul
+       390: aload         17
+       392: ifnonnull     400
+       395: bipush        43
+       397: goto          405
+       400: aload         17
+       402: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       405: iadd
+       406: istore_2
+       407: aload_0
+       408: invokevirtual #137                // Method getCreatedAt:()Ljava/time/LocalDateTime;
+       411: astore        18
+       413: iload_2
+       414: bipush        59
+       416: imul
+       417: aload         18
+       419: ifnonnull     427
+       422: bipush        43
+       424: goto          432
+       427: aload         18
+       429: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       432: iadd
+       433: istore_2
+       434: aload_0
+       435: invokevirtual #141                // Method getPaidAt:()Ljava/time/LocalDateTime;
+       438: astore        19
+       440: iload_2
+       441: bipush        59
+       443: imul
+       444: aload         19
+       446: ifnonnull     454
+       449: bipush        43
+       451: goto          459
+       454: aload         19
+       456: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       459: iadd
+       460: istore_2
+       461: aload_0
+       462: invokevirtual #144                // Method getShippedAt:()Ljava/time/LocalDateTime;
+       465: astore        20
+       467: iload_2
+       468: bipush        59
+       470: imul
+       471: aload         20
+       473: ifnonnull     481
+       476: bipush        43
+       478: goto          486
+       481: aload         20
+       483: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       486: iadd
+       487: istore_2
+       488: aload_0
+       489: invokevirtual #147                // Method getCompletedAt:()Ljava/time/LocalDateTime;
+       492: astore        21
+       494: iload_2
+       495: bipush        59
+       497: imul
+       498: aload         21
+       500: ifnonnull     508
+       503: bipush        43
+       505: goto          513
+       508: aload         21
+       510: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       513: iadd
+       514: istore_2
+       515: aload_0
+       516: invokevirtual #150                // Method getCancelledAt:()Ljava/time/LocalDateTime;
+       519: astore        22
+       521: iload_2
+       522: bipush        59
+       524: imul
+       525: aload         22
+       527: ifnonnull     535
+       530: bipush        43
+       532: goto          540
+       535: aload         22
+       537: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       540: iadd
+       541: istore_2
+       542: aload_0
+       543: invokevirtual #153                // Method getItems:()Ljava/util/List;
+       546: astore        23
+       548: iload_2
+       549: bipush        59
+       551: imul
+       552: aload         23
+       554: ifnonnull     562
+       557: bipush        43
+       559: goto          567
+       562: aload         23
+       564: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       567: iadd
+       568: istore_2
+       569: aload_0
+       570: invokevirtual #157                // Method getStatusLogs:()Ljava/util/List;
+       573: astore        24
+       575: iload_2
+       576: bipush        59
+       578: imul
+       579: aload         24
+       581: ifnonnull     589
+       584: bipush        43
+       586: goto          594
+       589: aload         24
+       591: invokevirtual #160                // Method java/lang/Object.hashCode:()I
+       594: iadd
+       595: istore_2
+       596: iload_2
+       597: ireturn
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     598     0  this   Lcom/mall/dto/OrderVO;
+            3     595     1 PRIME   I
+            5     593     2 result   I
+           10     588     3   $id   Ljava/lang/Object;
+           35     563     4 $userId   Ljava/lang/Object;
+           62     536     5 $status   Ljava/lang/Object;
+           89     509     6 $orderNo   Ljava/lang/Object;
+          116     482     7 $username   Ljava/lang/Object;
+          143     455     8 $totalAmount   Ljava/lang/Object;
+          170     428     9 $originalAmount   Ljava/lang/Object;
+          197     401    10 $promotionAmount   Ljava/lang/Object;
+          224     374    11 $couponAmount   Ljava/lang/Object;
+          251     347    12 $statusText   Ljava/lang/Object;
+          278     320    13 $receiverName   Ljava/lang/Object;
+          305     293    14 $receiverPhone   Ljava/lang/Object;
+          332     266    15 $receiverAddress   Ljava/lang/Object;
+          359     239    16 $remark   Ljava/lang/Object;
+          386     212    17 $shippingNo   Ljava/lang/Object;
+          413     185    18 $createdAt   Ljava/lang/Object;
+          440     158    19 $paidAt   Ljava/lang/Object;
+          467     131    20 $shippedAt   Ljava/lang/Object;
+          494     104    21 $completedAt   Ljava/lang/Object;
+          521      77    22 $cancelledAt   Ljava/lang/Object;
+          548      50    23 $items   Ljava/lang/Object;
+          575      23    24 $statusLogs   Ljava/lang/Object;
+      StackMapTable: number_of_entries = 44
+        frame_type = 255 /* full_frame */
+          offset_delta = 23
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 3
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class com/mall/dto/OrderVO, int, int, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object, class java/lang/Object ]
+          stack = [ int, int ]
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=22, locals=1, args_size=1
+         0: aload_0
+         1: invokevirtual #85                 // Method getId:()Ljava/lang/Long;
+         4: aload_0
+         5: invokevirtual #99                 // Method getOrderNo:()Ljava/lang/String;
+         8: aload_0
+         9: invokevirtual #92                 // Method getUserId:()Ljava/lang/Long;
+        12: aload_0
+        13: invokevirtual #103                // Method getUsername:()Ljava/lang/String;
+        16: aload_0
+        17: invokevirtual #106                // Method getTotalAmount:()Ljava/math/BigDecimal;
+        20: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        23: aload_0
+        24: invokevirtual #110                // Method getOriginalAmount:()Ljava/math/BigDecimal;
+        27: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        30: aload_0
+        31: invokevirtual #113                // Method getPromotionAmount:()Ljava/math/BigDecimal;
+        34: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        37: aload_0
+        38: invokevirtual #116                // Method getCouponAmount:()Ljava/math/BigDecimal;
+        41: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        44: aload_0
+        45: invokevirtual #95                 // Method getStatus:()Ljava/lang/Integer;
+        48: aload_0
+        49: invokevirtual #119                // Method getStatusText:()Ljava/lang/String;
+        52: aload_0
+        53: invokevirtual #122                // Method getReceiverName:()Ljava/lang/String;
+        56: aload_0
+        57: invokevirtual #125                // Method getReceiverPhone:()Ljava/lang/String;
+        60: aload_0
+        61: invokevirtual #128                // Method getReceiverAddress:()Ljava/lang/String;
+        64: aload_0
+        65: invokevirtual #131                // Method getRemark:()Ljava/lang/String;
+        68: aload_0
+        69: invokevirtual #134                // Method getShippingNo:()Ljava/lang/String;
+        72: aload_0
+        73: invokevirtual #137                // Method getCreatedAt:()Ljava/time/LocalDateTime;
+        76: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        79: aload_0
+        80: invokevirtual #141                // Method getPaidAt:()Ljava/time/LocalDateTime;
+        83: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        86: aload_0
+        87: invokevirtual #144                // Method getShippedAt:()Ljava/time/LocalDateTime;
+        90: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        93: aload_0
+        94: invokevirtual #147                // Method getCompletedAt:()Ljava/time/LocalDateTime;
+        97: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       100: aload_0
+       101: invokevirtual #150                // Method getCancelledAt:()Ljava/time/LocalDateTime;
+       104: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       107: aload_0
+       108: invokevirtual #153                // Method getItems:()Ljava/util/List;
+       111: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       114: aload_0
+       115: invokevirtual #157                // Method getStatusLogs:()Ljava/util/List;
+       118: invokestatic  #164                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       121: invokedynamic #170,  0            // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/Long;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+       126: areturn
+      LineNumberTable:
+        line 17: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     127     0  this   Lcom/mall/dto/OrderVO;
+    RuntimeInvisibleAnnotations:
+      0: #187()
+        lombok.Generated
+}
+SourceFile: "OrderVO.java"
+BootstrapMethods:
+  0: #301 REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #299 OrderVO(id=\u0001, orderNo=\u0001, userId=\u0001, username=\u0001, totalAmount=\u0001, originalAmount=\u0001, promotionAmount=\u0001, couponAmount=\u0001, status=\u0001, statusText=\u0001, receiverName=\u0001, receiverPhone=\u0001, receiverAddress=\u0001, remark=\u0001, shippingNo=\u0001, createdAt=\u0001, paidAt=\u0001, shippedAt=\u0001, completedAt=\u0001, cancelledAt=\u0001, items=\u0001, statusLogs=\u0001)
+InnerClasses:
+  public static final #312= #308 of #310; // Lookup=class java/lang/invoke/MethodHandles$Lookup of class java/lang/invoke/MethodHandles

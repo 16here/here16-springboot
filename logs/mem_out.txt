@@ -1,0 +1,3 @@
+﻿class=com.sun.management.internal.OperatingSystemImpl
+com.sun.management available: true
+mem=16907100160

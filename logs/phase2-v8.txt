@@ -1,0 +1,8 @@
+﻿== 核对 PURCHASE 行为落库（链路② 消费者已执行） ==
+  user_behaviors(user4): (('VIEW', 6), ('CART', 7), ('PURCHASE', 1))
+  PURCHASE 明细: ((1, 'PURCHASE'),)
+== 完整双删：admin 成功更新商品1 -> 重建缓存 -> 1s后延迟再删 ==
+  更新前缓存: ['stock:product:2', 'stock:product:225', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:1', 'stock:product:255', 'stock:product:3', 'cache:product:detail:1']
+  update resp=200 body={"code":200,"data":null,"message":"success","timestamp":1792498776732}
+  更新后3s缓存: ['stock:product:2', 'stock:product:225', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:1', 'stock:product:255', 'stock:product:3']
+  双删结论: cache 残留=[] （期望 []：先删+延迟再删都执行）

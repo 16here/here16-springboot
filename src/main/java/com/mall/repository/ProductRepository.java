@@ -205,16 +205,19 @@ public interface ProductRepository {
     int restoreStock(@Param("id") Long id, @Param("quantity") int quantity);
 
     /**
-     * 按 ID 批量查询商品（收藏夹列表用）。
-     * 保持传入顺序（ORDER BY FIELD），即"最新收藏在前"。
+     * 按 ID 批量查询商品（收藏夹列表用 / 阶段 12 ES 搜索命中后回查详情）。
+     * 保持传入顺序（ORDER BY FIELD），即调用方传入的顺序。
+     * LEFT JOIN categories 带出分类名（填充 Product.categoryName）。
      * 调用方必须保证 ids 非空。
      */
     @Select("""
             <script>
-            SELECT * FROM products
-            WHERE id IN
+            SELECT p.*, c.name AS category_name
+            FROM products p
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE p.id IN
             <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
-            ORDER BY FIELD(id,
+            ORDER BY FIELD(p.id,
             <foreach collection="ids" item="id" separator=",">#{id}</foreach>)
             </script>
             """)

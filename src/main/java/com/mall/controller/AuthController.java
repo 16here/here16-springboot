@@ -8,6 +8,7 @@ import com.mall.dto.LoginResult;
 import com.mall.dto.RegisterDTO;
 import com.mall.dto.UserVO;
 import com.mall.service.AuthService;
+import com.mall.service.CaptchaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * 认证接口：注册、登录、登出、当前登录用户。
@@ -31,6 +34,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final CaptchaService captchaService;
+
+    /** 获取登录图形验证码（Phase 1：返回 captchaId + Base64 图片，答案只存 Redis） */
+    @GetMapping("/captcha")
+    public Result<Map<String, String>> captcha() {
+        return Result.success(captchaService.generate());
+    }
 
     /** 用户注册 */
     @PostMapping("/register")

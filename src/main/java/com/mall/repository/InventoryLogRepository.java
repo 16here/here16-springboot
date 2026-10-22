@@ -17,14 +17,19 @@ import java.util.List;
 @Mapper
 public interface InventoryLogRepository {
 
-    /** 插入一条库存流水（InventoryService 所有库存变更的统一出口） */
+    /**
+     * 插入一条库存流水（InventoryService 所有库存变更的统一出口）。
+     * Phase 3：inventory_logs 按月分表，写操作必须显式指定分表名
+     * （${tableName}，来自 ShardingRouter.routedTableName，内部常量拼接无注入风险）。
+     * 注意：方法有两个参数，流水字段占位符需带 {@code log.} 前缀。
+     */
     @Insert("""
-            INSERT INTO inventory_logs
+            INSERT INTO ${tableName}
               (sku_id, product_id, change_qty, type, order_id, order_no, remark, operator_id)
             VALUES
-              (#{skuId}, #{productId}, #{changeQty}, #{type}, #{orderId}, #{orderNo}, #{remark}, #{operatorId})
+              (#{log.skuId}, #{log.productId}, #{log.changeQty}, #{log.type}, #{log.orderId}, #{log.orderNo}, #{log.remark}, #{log.operatorId})
             """)
-    int insert(InventoryLog log);
+    int insert(@Param("tableName") String tableName, @Param("log") InventoryLog log);
 
     /** 按规格查流水（管理端库存流水查询；skuId=0 查商品级流水） */
     @Select("""

@@ -2,6 +2,7 @@ package com.mall.controller;
 
 import com.mall.common.CurrentUser;
 import com.mall.common.PageResult;
+import com.mall.common.RateLimit;
 import com.mall.common.Result;
 import com.mall.dto.ProductDetailVO;
 import com.mall.dto.ProductListVO;
@@ -33,7 +34,8 @@ public class ProductController {
 
     private final ProductService productService;
 
-    /** 商品分页查询（仅上架商品） */
+    /** 商品分页查询（仅上架商品；全站最高频读接口，限流防爬虫打爆数据库） */
+    @RateLimit(key = "product:search", limit = 60, windowSeconds = 10, message = "搜索太频繁，请稍后再试")
     @GetMapping("/products")
     public Result<PageResult<ProductListVO>> page(@Valid ProductQueryDTO query) {
         return Result.success(productService.page(query));

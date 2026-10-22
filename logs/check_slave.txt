@@ -1,0 +1,10 @@
+﻿== slave 复制状态 ==
+  Slave_IO_Running: Yes
+  Slave_SQL_Running: Yes
+  Last_Error: 
+  Seconds_Behind_Master: 0
+  Last_IO_Error: 
+  Last_SQL_Error: 
+== slave 表验证 ==
+  orders count: ((50,),)
+  products count: ((157,),)

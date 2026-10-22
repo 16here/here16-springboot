@@ -35,21 +35,15 @@ public interface ShippingRepository {
     @Select("SELECT * FROM shipping WHERE id = #{id}")
     Shipping selectById(@Param("id") Long id);
 
-    /** 按运单主键查（管理端详情用，LEFT JOIN 带出收货人信息） */
-    @Select("""
-            SELECT s.*, o.receiver_name, o.receiver_phone, o.receiver_address
-            FROM shipping s
-            LEFT JOIN orders o ON s.order_id = o.id
-            WHERE s.id = #{id}
-            """)
+    /** 按运单主键查（管理端详情用，收货人信息由 Service 层广播查订单补上，
+     *  避免 LEFT JOIN orders 落到 base 表查不到雪花订单） */
+    @Select("SELECT * FROM shipping WHERE id = #{id}")
     Shipping selectByIdWithOrder(@Param("id") Long id);
 
-    /** 管理端运单分页（LEFT JOIN orders 带出收货人信息；支持物流状态筛选） */
+    /** 管理端运单分页（支持物流状态筛选；收货人信息由 Service 层批量补查） */
     @Select("""
             <script>
-            SELECT s.*, o.receiver_name, o.receiver_phone, o.receiver_address
-            FROM shipping s
-            LEFT JOIN orders o ON s.order_id = o.id
+            SELECT * FROM shipping s
             <where>
               <if test="status != null">
                 AND s.status = #{status}

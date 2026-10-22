@@ -1,0 +1,23 @@
+﻿/home/rocketmq/logs/rocketmqlogs/broker_default.log:0
+/home/rocketmq/logs/rocketmqlogs/broker.log:0
+/home/rocketmq/logs/rocketmqlogs/broker_traffic.log:0
+/home/rocketmq/logs/rocketmqlogs/coldctr.log:0
+/home/rocketmq/logs/rocketmqlogs/commercial.log:0
+/home/rocketmq/logs/rocketmqlogs/filter.log:0
+/home/rocketmq/logs/rocketmqlogs/lock.log:0
+/home/rocketmq/logs/rocketmqlogs/pop.log:0
+/home/rocketmq/logs/rocketmqlogs/protection.log:0
+/home/rocketmq/logs/rocketmqlogs/proxy.log:0
+/home/rocketmq/logs/rocketmqlogs/proxy_metric.log:0
+/home/rocketmq/logs/rocketmqlogs/proxy_watermark.log:0
+/home/rocketmq/logs/rocketmqlogs/remoting.log:575
+/home/rocketmq/logs/rocketmqlogs/stats.log:0
+/home/rocketmq/logs/rocketmqlogs/storeerror.log:0
+/home/rocketmq/logs/rocketmqlogs/store.log:0
+/home/rocketmq/logs/rocketmqlogs/transaction.log:0
+/home/rocketmq/logs/rocketmqlogs/watermark.log:0
+/home/rocketmq/logs/rocketmqlogs/remoting.log:9172:java.lang.NoClassDefFoundError: Could not initialize class org.apache.rocketmq.store.StoreUtil
+/home/rocketmq/logs/rocketmqlogs/remoting.log:9188:java.lang.NoClassDefFoundError: Could not initialize class org.apache.rocketmq.store.StoreUtil
+/home/rocketmq/logs/rocketmqlogs/remoting.log:9204:java.lang.NoClassDefFoundError: Could not initialize class org.apache.rocketmq.store.StoreUtil
+/home/rocketmq/logs/rocketmqlogs/remoting.log:9220:java.lang.NoClassDefFoundError: Could not initialize class org.apache.rocketmq.store.StoreUtil
+/home/rocketmq/logs/rocketmqlogs/remoting.log:9236:java.lang.NoClassDefFoundError: Could not initialize class org.apache.rocketmq.store.StoreUtil

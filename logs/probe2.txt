@@ -1,0 +1,65 @@
+﻿===== user_behaviors =====
+CREATE TABLE `user_behaviors` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '行为主键',
+  `user_id` bigint DEFAULT NULL COMMENT '用户 ID（NULL=游客行为，仅参与热度统计）',
+  `product_id` bigint NOT NULL COMMENT '商品 ID',
+  `sku_id` bigint DEFAULT NULL COMMENT 'SKU ID（可空：无规格商品或浏览行为）',
+  `behavior_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '行为类型：VIEW 浏览 / FAVORITE 收藏 / CART 加购 / PURCHASE 购买',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '行为发生时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_user` (`user_id`,`created_at`) COMMENT '按用户查历史行为（个性化推荐）',
+  KEY `idx_product` (`product_id`,`created_at`) COMMENT '按商品查行为（相关推荐/热度统计）',
+  KEY `idx_type` (`behavior_type`) COMMENT '按类型统计（管理端推荐效果统计）'
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户行为表（阶段 10：推荐系统）'
+
+===== inventory_logs =====
+CREATE TABLE `inventory_logs` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '流水主键',
+  `sku_id` bigint NOT NULL DEFAULT '0' COMMENT '规格 ID（0=商品级）',
+  `product_id` bigint NOT NULL COMMENT '商品 ID',
+  `change_qty` int NOT NULL COMMENT '变更数量（正=增加/释放，负=锁定/扣减）',
+  `type` varchar(20) NOT NULL COMMENT '类型：LOCK/DEDUCT/RELEASE/ADJUST',
+  `order_id` bigint DEFAULT NULL COMMENT '关联订单 ID（人工调整为 NULL）',
+  `order_no` varchar(32) DEFAULT NULL COMMENT '订单号（冗余）',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注（如调整原因）',
+  `operator_id` bigint DEFAULT NULL COMMENT '操作人 ID（SYSTEM 为 NULL）',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '流水时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_sku` (`sku_id`),
+  KEY `idx_product` (`product_id`),
+  KEY `idx_order` (`order_id`),
+  KEY `idx_type` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='库存流水表'
+
+===== order_items =====
+CREATE TABLE `order_items` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '明细主键',
+  `order_id` bigint NOT NULL COMMENT '所属订单',
+  `product_id` bigint NOT NULL COMMENT '商品 ID',
+  `product_name` varchar(200) NOT NULL COMMENT '商品名（快照）',
+  `product_image` varchar(500) DEFAULT NULL COMMENT '商品主图（快照）',
+  `sku_id` bigint NOT NULL DEFAULT '0' COMMENT '规格 ID，0=无规格',
+  `sku_name` varchar(100) DEFAULT NULL COMMENT '规格名（快照）',
+  `price` decimal(10,2) NOT NULL COMMENT '成交单价（快照）',
+  `quantity` int NOT NULL COMMENT '购买数量',
+  PRIMARY KEY (`id`),
+  KEY `idx_order` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='订单明细表'
+
+===== order_status_log =====
+CREATE TABLE `order_status_log` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `order_id` bigint NOT NULL COMMENT '订单 ID',
+  `order_no` varchar(32) NOT NULL COMMENT '订单号（冗余，便于直接按单号检索）',
+  `from_status` tinyint NOT NULL COMMENT '变更前状态',
+  `to_status` tinyint NOT NULL COMMENT '变更后状态',
+  `event` varchar(20) NOT NULL COMMENT '触发事件：PAY/SHIP/CONFIRM/CANCEL/TIMEOUT/CLOSE',
+  `operator_type` varchar(20) NOT NULL DEFAULT 'USER' COMMENT '操作方：USER/ADMIN/SYSTEM',
+  `operator_id` bigint DEFAULT NULL COMMENT '操作人 ID（SYSTEM 为 NULL）',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注（如取消原因、物流单号）',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '变更时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_order` (`order_id`),
+  KEY `idx_order_no` (`order_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='订单状态变更日志表'
+

@@ -1,0 +1,1 @@
+﻿{"categoryId": 132, "categoryName": "健康滋补", "description": "养蜂人自产红枣蜂蜜，不含任何添加剂，冲温水喝。", "id": 255, "images": ["https://aka.doubaocdn.com/s/sWYaZ99EO1"], "name": "红枣蜜 散装500g", "price": 35.0, "sku": "ZP-005", "skus": [], "status": 1, "stock": 210}

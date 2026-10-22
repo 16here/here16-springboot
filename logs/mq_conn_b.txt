@@ -1,0 +1,11 @@
+﻿#ClientId                            #ClientAddr            #Language  #Version
+26.230.47.56@16232#25227968721100    172.18.0.1:52152       JAVA       V4_9_7
+
+Below is subscription:
+#Topic               #SubExpression
+mall-behavior        *
+%RETRY%mall-consumer-behavior *
+
+ConsumeType: CONSUME_PASSIVELY
+MessageModel: CLUSTERING
+ConsumeFromWhere: CONSUME_FROM_FIRST_OFFSET

@@ -27,8 +27,25 @@ dependencies {
     // WebFlux：阶段 11.5 使用 WebClient 转发 Python AI 服务的 SSE 流
     // （WebClient 属于 spring-webflux；与 webmvc 共存时 servlet 处理链仍优先）
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    // AOP：Phase 1 接口限流注解 @RateLimit 的切面依赖。
+    // 注：本项目定制版 Boot 未提供 spring-boot-starter-aop，
+    // 直接用 aspectjweaver（spring-aop 已由 spring-context 传递提供）启用 @Aspect
+    implementation 'org.aspectj:aspectjweaver:1.9.22'
+    // Caffeine：Phase 1 本地缓存（商品详情/分类树二级缓存 L1）
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.2.4'
+    // Jackson：Phase 1 缓存序列化（商品详情/分类树/静态页 JSON 读写）。
+    // 注：定制版 Boot 未随 webmvc 提供 jackson，需显式引入（REST 序列化走内置实现，互不影响）
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.3'
+    // RocketMQ：Phase 2 消息化与异步化。
+    // 直接用官方 rocketmq-client（非 spring-boot starter，避免与定制版 Boot 4.0.8 的兼容风险），
+    // Producer/Consumer 生命周期由本项目自封装（RocketMQProducerService + mq/*Consumer）。
+    // 注：4.9.7 为稳定版；延迟消息使用固定 18 级（1s/5s/10s/30s/1m~2h），本阶段订单超时用 level 16=30m
+    implementation 'org.apache.rocketmq:rocketmq-client:4.9.7'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.1'
+    // ElasticSearch 官方 Java 客户端（阶段 12 商品全文检索；显式指定版本，
+    // 不依赖 Spring Boot 的 spring-data-elasticsearch 版本矩阵，避免兼容性风险）
+    implementation 'co.elastic.clients:elasticsearch-java:8.15.5'
     // JWT：jjwt 官方库（api 编译期、impl/jackson 运行期）
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'

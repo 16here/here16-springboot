@@ -15,8 +15,18 @@ import java.util.List;
 @Data
 public class OrderVO {
 
-    /** 订单主键 */
-    private Long id;
+    /**
+     * 订单主键（雪花 ID，19 位，输出为字符串）。
+     *
+     * <p>Phase 3 分表后订单主键由应用生成雪花 ID；19 位数字超出
+     * JavaScript Number 安全整数范围（2^53 ≈ 9e15），若 JSON 输出为数字，
+     * 前端解析会丢精度（末尾位变 0），再把该 ID 传回后端就查不到订单
+     * （表现为"订单不存在"）。故这里字段类型直接用 String：
+     * 定制 Boot 的 REST 序列化链不读取 Jackson 注解/配置，只有类型即输出，
+     * String 字段无论走什么序列化器都是字符串——前端原样透传，
+     * 后端反序列化 String→Long 自动转换。
+     */
+    private String id;
 
     /** 订单号 */
     private String orderNo;

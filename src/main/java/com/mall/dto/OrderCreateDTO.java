@@ -31,4 +31,11 @@ public class OrderCreateDTO {
 
     /** 使用的用户优惠券 ID（user_coupons.id，阶段 8；不传 = 不使用优惠券） */
     private Long userCouponId;
+
+    /**
+     * 幂等键（Phase 1）：前端每次"提交订单"生成一次 UUID 并携带。
+     * 后端以 userId + requestId 做 Redis 占位去重，防止双击/重试重复下单。
+     * 可空（兼容旧前端）；为空时后端不启用幂等检查。
+     */
+    private String requestId;
 }

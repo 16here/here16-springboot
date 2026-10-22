@@ -37,12 +37,15 @@ public interface UserBehaviorRepository {
     /**
      * 记录一条行为（浏览/收藏/加购/购买）。
      * 幂等性由业务层保证（如重复浏览允许累加，但加购只记一次由调用方控制）。
+     * Phase 3：user_behaviors 按月分表，写操作必须显式指定分表名
+     * （${tableName}，来自 ShardingRouter.routedTableName，内部常量拼接无注入风险）。
+     * 注意：方法有两个参数，行为字段占位符需带 {@code behavior.} 前缀。
      */
     @Insert("""
-            INSERT INTO user_behaviors (user_id, product_id, sku_id, behavior_type)
-            VALUES (#{userId}, #{productId}, #{skuId}, #{behaviorType})
+            INSERT INTO ${tableName} (user_id, product_id, sku_id, behavior_type)
+            VALUES (#{behavior.userId}, #{behavior.productId}, #{behavior.skuId}, #{behavior.behaviorType})
             """)
-    int insert(UserBehavior behavior);
+    int insert(@Param("tableName") String tableName, @Param("behavior") UserBehavior behavior);
 
     /**
      * 热度推荐：近 {@code days} 天按行为权重聚合，取总分 Top N。
@@ -180,12 +183,14 @@ public interface UserBehaviorRepository {
      * 取消收藏（收藏功能，阶段 11 需求 3）：
      * 删除某用户对某商品的一条 FAVORITE 行为记录。
      * 未收藏时删除 0 行，业务层视为幂等成功。
+     * Phase 3：tableName 显式指定分表。
      */
     @Delete("""
-            DELETE FROM user_behaviors
+            DELETE FROM ${tableName}
             WHERE user_id = #{userId} AND product_id = #{productId} AND behavior_type = #{type}
             """)
-    int deleteByUserAndProductAndType(@Param("userId") Long userId,
+    int deleteByUserAndProductAndType(@Param("tableName") String tableName,
+                                      @Param("userId") Long userId,
                                       @Param("productId") Long productId,
                                       @Param("type") String type);
 

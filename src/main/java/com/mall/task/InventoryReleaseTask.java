@@ -37,18 +37,23 @@ public class InventoryReleaseTask {
      */
     @Scheduled(cron = "0 * * * * *")
     public void releaseTimeoutLockedStock() {
-        List<Long> timeoutIds = orderService.findTimeoutOrderIds(timeoutMinutes);
-        if (timeoutIds.isEmpty()) {
-            return;
-        }
-        log.info("库存兜底释放任务：发现超时未支付订单 {} 笔，开始核对", timeoutIds.size());
-        for (Long orderId : timeoutIds) {
-            try {
-                inventoryService.releaseIfLocked(orderId);
-            } catch (Exception e) {
-                // 单笔失败不影响其他订单
-                log.error("库存兜底释放失败: orderId={}, err={}", orderId, e.getMessage());
+        try {
+            List<Long> timeoutIds = orderService.findTimeoutOrderIds(timeoutMinutes);
+            if (timeoutIds.isEmpty()) {
+                return;
             }
+            log.info("库存兜底释放任务：发现超时未支付订单 {} 笔，开始核对", timeoutIds.size());
+            for (Long orderId : timeoutIds) {
+                try {
+                    inventoryService.releaseIfLocked(orderId);
+                } catch (Exception e) {
+                    // 单笔失败不影响其他订单
+                    log.error("库存兜底释放失败: orderId={}, err={}", orderId, e.getMessage());
+                }
+            }
+        } finally {
+            // Phase 3 分表：定时任务线程常驻，清理分表路由防串号
+            com.mall.common.ShardingContext.clear();
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿#Topic                                                            #Broker Name                      #QID  #Broker Offset        #Consumer Offset      #Diff                 #LastTime
+%RETRY%mall-consumer-order-timeout                                broker-a                          0     0                     0                     0                     N/A
+mall-order-timeout                                                broker-a                          0     0                     0                     0                     N/A
+mall-order-timeout                                                broker-a                          1     0                     0                     0                     N/A
+mall-order-timeout                                                broker-a                          2     1                     0                     1                     N/A
+mall-order-timeout                                                broker-a                          3     2                     0                     2                     N/A
+
+Consume TPS: 0.00
+Diff Total: 3

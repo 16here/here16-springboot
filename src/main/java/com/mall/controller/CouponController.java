@@ -3,6 +3,7 @@ package com.mall.controller;
 import com.mall.common.BusinessException;
 import com.mall.common.CurrentUser;
 import com.mall.common.PageResult;
+import com.mall.common.RateLimit;
 import com.mall.common.Result;
 import com.mall.dto.CouponUseDTO;
 import com.mall.dto.CouponVO;
@@ -41,7 +42,8 @@ public class CouponController {
         return Result.success(couponService.listCenter(tryUserId()));
     }
 
-    /** 领取优惠券（需登录） */
+    /** 领取优惠券（需登录；限流防脚本批量刷券） */
+    @RateLimit(key = "coupon:receive", limit = 10, windowSeconds = 60, message = "领券太频繁，请稍后再试")
     @PostMapping("/{couponId}/receive")
     public Result<UserCouponVO> receive(@PathVariable Long couponId) {
         return Result.success(couponService.receive(currentUserId(), couponId));

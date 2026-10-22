@@ -1,0 +1,62 @@
+﻿Starting a Gradle Daemon, 33 busy and 1 incompatible Daemons could not be reused, use --status for details
+> Task :compileJava UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.8)
+
+2026-10-20T20:21:19.666+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : Starting MallApplication using Java 21.0.12.1 with PID 11796 (D:\myproject\here16\here16-springboot\build\classes\java\main started by liguanting in D:\myproject\here16\here16-springboot)
+2026-10-20T20:21:19.678+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : No active profile set, falling back to 1 default profile: "default"
+2026-10-20T20:21:19.725+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-10-20T20:21:19.725+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-20T20:21:20.615+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-20T20:21:20.618+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-20T20:21:20.654+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+2026-10-20T20:21:21.443+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-20T20:21:21.460+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-20T20:21:21.460+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-20T20:21:21.527+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1801 ms
+2026-10-20T20:21:22.534+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] c.mall.service.RocketMQProducerService   : RocketMQ 生产者初始化成功: namesrv=127.0.0.1:9876, group=mall-producer
+2026-10-20T20:21:23.042+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.mq.BehaviorConsumer             : RocketMQ 行为消费者启动成功: topic=mall-behavior
+2026-10-20T20:21:23.060+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.mq.CacheEvictConsumer           : RocketMQ 缓存删除消费者启动成功: topic=mall-cache-evict
+2026-10-20T20:21:23.084+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.mq.OrderTimeoutConsumer         : RocketMQ 订单超时消费者启动成功: topic=mall-order-timeout
+2026-10-20T20:21:23.105+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.mq.PaySuccessConsumer           : RocketMQ 支付成功消费者启动成功: topic=mall-pay-success
+2026-10-20T20:21:23.130+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.config.RedisListenerConfig      : Redis 订阅客服转人工通道: chat:transfer
+2026-10-20T20:21:23.273+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2026-10-20T20:21:23.913+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-10-20T20:21:23.964+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-20T20:21:24.313+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.mall.MallApplication                 : Started MallApplication in 5.002 seconds (process running for 5.639)
+2026-10-20T20:21:24.355+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-20T20:21:24.574+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b262aef
+2026-10-20T20:21:24.577+08:00  INFO 11796 --- [here16-springboot] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-20T20:21:24.602+08:00  INFO 11796 --- [here16-springboot] [rvice-autostart] c.mall.config.AiServiceAutoStartConfig   : 开始自动启动 AI 服务：[D:/myproject/here16/here16-ai/ai-service/.venv/Scripts/python.exe, -m, uvicorn, app.main:app, --host, 127.0.0.1, --port, 8100]（工作目录：D:/myproject/here16/here16-ai/ai-service，日志：logs/ai-service.log）
+2026-10-20T20:21:24.628+08:00  WARN 11796 --- [here16-springboot] [  restartedMain] com.mall.service.ProductSearchService    : ES 初始化失败（搜索将降级为 MySQL LIKE）: Connection refused: getsockopt
+2026-10-20T20:21:25.656+08:00 ERROR 11796 --- [here16-springboot] [rvice-autostart] c.mall.config.AiServiceAutoStartConfig   : AI 服务进程提前退出（90000ms 内），详见日志：logs/ai-service.log
+2026-10-20T20:21:39.439+08:00  INFO 11796 --- [here16-springboot] [   scheduling-1] com.mall.service.StaticPageService       : 首页静态页已生成: D:\myproject\here16\here16-springboot\static-page\home.json，共 157 件商品
+2026-10-20T20:21:54.348+08:00  INFO 11796 --- [here16-springboot] [   scheduling-1] com.mall.task.RecommendRefreshTask       : 推荐缓存已刷新：热度预热完成
+2026-10-20T20:26:05.031+08:00  INFO 11796 --- [here16-springboot] [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-20T20:26:05.032+08:00  INFO 11796 --- [here16-springboot] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-20T20:26:05.033+08:00  INFO 11796 --- [here16-springboot] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-20T20:26:39.495+08:00  INFO 11796 --- [here16-springboot] [   scheduling-1] com.mall.service.StaticPageService       : 首页静态页已生成: D:\myproject\here16\here16-springboot\static-page\home.json，共 157 件商品
+2026-10-20T20:31:39.540+08:00  INFO 11796 --- [here16-springboot] [   scheduling-1] com.mall.service.StaticPageService       : 首页静态页已生成: D:\myproject\here16\here16-springboot\static-page\home.json，共 157 件商品
+2026-10-20T20:31:54.434+08:00  INFO 11796 --- [here16-springboot] [   scheduling-1] com.mall.task.RecommendRefreshTask       : 推荐缓存已刷新：热度预热完成
+2026-10-20T20:32:16.952+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:16.952+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:16.952+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:16.952+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:16.952+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:22.633+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:23.122+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:23.138+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:23.160+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2026-10-20T20:32:23.184+08:00  INFO 11796 --- [here16-springboot] [lientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[127.0.0.1:9876] result: true

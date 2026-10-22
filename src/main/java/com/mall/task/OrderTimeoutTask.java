@@ -44,21 +44,27 @@ public class OrderTimeoutTask {
      */
     @Scheduled(fixedDelay = 60_000, initialDelay = 15_000)
     public void cancelTimeoutOrders() {
-        List<Long> orderIds = orderService.findTimeoutOrderIds(timeoutMinutes);
-        if (orderIds.isEmpty()) {
-            return;
-        }
-        int success = 0;
-        for (Long orderId : orderIds) {
-            try {
-                orderService.timeoutCancel(orderId);
-                success++;
-            } catch (Exception e) {
-                // 单笔失败不影响批次；记日志便于排查
-                log.error("超时取消订单 {} 失败: {}", orderId, e.getMessage());
+        try {
+            List<Long> orderIds = orderService.findTimeoutOrderIds(timeoutMinutes);
+            if (orderIds.isEmpty()) {
+                return;
             }
+            int success = 0;
+            for (Long orderId : orderIds) {
+                try {
+                    orderService.timeoutCancel(orderId);
+                    success++;
+                } catch (Exception e) {
+                    // 单笔失败不影响批次；记日志便于排查
+                    log.error("超时取消订单 {} 失败: {}", orderId, e.getMessage());
+                }
+            }
+            log.info("超时订单取消任务完成: 命中 {} 单，成功 {} 单，阈值 {} 分钟",
+                    orderIds.size(), success, timeoutMinutes);
+        } finally {
+            // Phase 3 分表：定时任务线程常驻，必须清理本任务设置的分表路由，
+            // 防止串到下一次任务执行
+            com.mall.common.ShardingContext.clear();
         }
-        log.info("超时订单取消任务完成: 命中 {} 单，成功 {} 单，阈值 {} 分钟",
-                orderIds.size(), success, timeoutMinutes);
     }
 }

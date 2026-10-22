@@ -1,0 +1,11 @@
+﻿#ClientId                            #ClientAddr            #Language  #Version
+26.230.47.56@16232#25227991888400    172.18.0.1:52166       JAVA       V4_9_7
+
+Below is subscription:
+#Topic               #SubExpression
+mall-cache-evict     *
+%RETRY%mall-consumer-cache-evict *
+
+ConsumeType: CONSUME_PASSIVELY
+MessageModel: CLUSTERING
+ConsumeFromWhere: CONSUME_FROM_LAST_OFFSET

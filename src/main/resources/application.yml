@@ -4,13 +4,20 @@ server:
 spring:
   application:
     name: here16
-  # ---------- MySQL 数据库配置 ----------
+  # ---------- MySQL 数据库配置（Phase 3 读写分离：spring.datasource = 主库） ----------
+  # 主库：Docker 容器 mysql-master（宿主端口 3307，binlog ROW + GTID），所有写操作 + 强一致性读
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mall_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3307/mall_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 719892144Qq
-  # ---------- Redis 缓存配置（阶段 0 用于 JWT 会话白名单） ----------
+    password: Mall@2026Root
+    hikari:
+      # 连接池参数：主库连接数略小（写并发远低于读并发）
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  # ---------- 从库配置（Phase 3 读写分离：自定义段，非 Spring Boot 标准属性） ----------
+  # 从库：Docker 容器 mysql-slave（宿主端口 3308，read_only=1），只读 + 可容忍秒级延迟
   data:
     redis:
       host: localhost
@@ -26,6 +33,17 @@ mybatis:
     # 数据库下划线字段 <-> Java 驼峰属性自动映射
     map-underscore-to-camel-case: true
 
+# ---------- 日志级别（Phase 3 排障用：打印 MyBatis 实际执行的 SQL） ----------
+logging:
+  level:
+    com.mall.repository: debug
+
+# ---------- Elasticsearch 配置（阶段 12：商品全文检索） ----------
+elasticsearch:
+  # ES 服务地址（本机 Docker 单节点）；未启动时搜索自动降级为 MySQL LIKE
+  host: 127.0.0.1
+  port: 9200
+
 # ---------- JWT 配置 ----------
 jwt:
   # 签名密钥：必须 >= 32 字节（HS256 要求），生产环境务必更换为随机密钥
@@ -37,6 +55,15 @@ jwt:
   # token 前缀（与前端约定为 "Bearer "）
   prefix: "Bearer "
 
+# ---------- Phase 1 安全加固配置 ----------
+security:
+  # 登录图形验证码开关：true 启用（前端登录页需先拉取验证码）；
+  # false 跳过校验（自动化测试/纯接口联调用）
+  captcha-enabled: true
+  # 敏感字段（手机号）AES 加密密钥：32 字节随机值经 Base64 编码。
+  # 生产环境务必用 openssl rand -base64 32 重新生成并妥善保管（丢失后无法解密存量数据）
+  sensitive-key: "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY="
+
 # ---------- 文件上传配置（阶段 0 预留，后续商品图等使用） ----------
 file:
   # 上传文件保存的根目录（本地开发用相对路径，部署时建议改为绝对路径）
@@ -44,9 +71,30 @@ file:
   # 单个文件大小上限（MB）
   max-size: 10
 
+# ---------- RocketMQ 配置（Phase 2：消息化与异步化） ----------
+rocketmq:
+  # NameServer 地址（本机 Docker 容器；生产为集群地址，逗号分隔）
+  name-server: 127.0.0.1:9876
+  # 生产者组名（同 JVM 内唯一；消费者组按 topic 职责拆分，见 mq/*Consumer）
+  producer-group: mall-producer
+  # 开关：false 时全部消息逻辑退化为"本地同步兜底"（不依赖 MQ，便于纯开发环境跑通）
+  enabled: true
+  # 消息发送超时（毫秒）
+  send-timeout-ms: 3000
+  # 各业务 Topic（消费者按 tag 或独立 topic 区分职责）
+  topics:
+    # 订单超时延迟消息（下单后发，到点消费检查并取消超时未支付订单）
+    order-timeout: mall-order-timeout
+    # 支付成功异步通知（记录购买行为 + 通知；重动作仍同步保证一致性）
+    pay-success: mall-pay-success
+    # 用户行为埋点（浏览/收藏/加购/购买，异步写 user_behaviors）
+    behavior: mall-behavior
+    # 缓存延迟删除（延迟消息替代本地定时线程，进程重启也不丢）
+    cache-evict: mall-cache-evict
+
 # ---------- 订单配置（阶段 5：超时未支付自动取消） ----------
 order:
-  # 待付款订单超时时间（分钟），超过后由 OrderTimeoutTask 自动取消并恢复库存
+  # 待付款订单超时时间（分钟），超过后由延迟消息/OrderTimeoutTask 自动取消并恢复库存
   timeout-minutes: 30
 
 # ---------- 支付配置（阶段 4 启用；本地开发默认 mock 模式，接入真实支付时置 false 并填商户配置） ----------
@@ -98,6 +146,19 @@ recommend:
 
 # ---------- AI 客服内部接口配置（阶段 11.4；供 Python AI 服务调用，须令牌+IP 白名单） ----------
 mall:
+  # ---------- 读写分离：从库数据源（Phase 3，DataSourceConfig 读取） ----------
+  # 属性前缀 mall.datasource.slave，@Value 手动读取绑定到从库连接池
+  datasource:
+    slave:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3308/mall_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&readOnly=true
+      username: root
+      password: Mall@2026Root
+      hikari:
+        # 从库承载绝大多数读请求（商品浏览/订单列表/搜索），连接数给足
+        maximum-pool-size: 20
+        minimum-idle: 4
+        connection-timeout: 30000
   internal:
     # 内部接口令牌：AI 服务调用 /api/internal/** 时须在请求头 X-Internal-Token 携带
     # （与 ai-service/.env 的 INTERNAL_API_TOKEN 保持一致）
@@ -114,4 +175,17 @@ mall:
     # 真实 LLM 生成慢，给足时间；本地无 Key 降级路径也远小于该值。
     connect-timeout-ms: 5000
     read-timeout-ms: 120000
+    # ---------- AI 服务自动启动（后端启动即拉起 uvicorn，关闭即回收；见 AiServiceAutoStartConfig） ----------
+    # 开启后：启动本后端会自动检查 8100 端口，未运行则用下方 Python 环境启动 ai-service
+    auto-start-enabled: true
+    # ai-service 虚拟环境的 Python 解释器（正斜杠路径，Windows 同样有效）
+    python-path: D:/myproject/here16/here16-ai/ai-service/.venv/Scripts/python.exe
+    # 工作目录必须是 ai-service 项目根目录（uvicorn 需在此才能 import app 包）
+    working-dir: D:/myproject/here16/here16-ai/ai-service
+    # 端口：用于探测是否已在运行、以及等待就绪
+    port: 8100
+    # 等待就绪超时（毫秒）：ai-service 启动要加载 ONNX 模型，给足 90 秒
+    startup-timeout-ms: 90000
+    # 子进程日志（相对后端运行目录；stdout/stderr 合并输出，排障看这里）
+    log-file: logs/ai-service.log
 

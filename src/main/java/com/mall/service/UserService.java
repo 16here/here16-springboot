@@ -1,6 +1,7 @@
 package com.mall.service;
 
 import com.mall.common.BusinessException;
+import com.mall.common.SensitiveUtil;
 import com.mall.dto.UpdateProfileDTO;
 import com.mall.dto.UserVO;
 import com.mall.entity.User;
@@ -20,6 +21,8 @@ import org.springframework.util.StringUtils;
 public class UserService {
 
     private final UserRepository userRepository;
+    // Phase 1：手机号加密存储（更新时加密、展示时解密）
+    private final SensitiveUtil sensitiveUtil;
 
     /**
      * 查询个人资料。
@@ -43,9 +46,10 @@ public class UserService {
     public UserVO updateProfile(Long userId, UpdateProfileDTO dto) {
         User user = requireUser(userId);
 
-        // 手机号若修改，需保持全局唯一（排除当前用户自身）
-        if (StringUtils.hasText(dto.getPhone()) && !dto.getPhone().equals(user.getPhone())) {
-            User exist = userRepository.findByPhone(dto.getPhone());
+        // 手机号若修改，需保持全局唯一（排除当前用户自身；
+        // 手机号加密存储，查重用加密后的密文等值匹配）
+        if (StringUtils.hasText(dto.getPhone()) && !dto.getPhone().equals(sensitiveUtil.decrypt(user.getPhone()))) {
+            User exist = userRepository.findByPhone(sensitiveUtil.encrypt(dto.getPhone()));
             if (exist != null && !exist.getId().equals(userId)) {
                 throw new BusinessException(2002, "手机号已被其他账号使用");
             }
@@ -54,7 +58,9 @@ public class UserService {
         // 空值策略：null 表示"不修改"，保留原值；字段有值时更新
         user.setEmail(StringUtils.hasText(dto.getEmail()) ? dto.getEmail() : user.getEmail());
         user.setAvatar(StringUtils.hasText(dto.getAvatar()) ? dto.getAvatar() : user.getAvatar());
-        user.setPhone(StringUtils.hasText(dto.getPhone()) ? dto.getPhone() : user.getPhone());
+        user.setPhone(StringUtils.hasText(dto.getPhone())
+                ? sensitiveUtil.encrypt(dto.getPhone())      // 新手机号加密存储
+                : user.getPhone());
 
         userRepository.updateProfile(user);
         log.info("用户资料更新成功: id={}", userId);
@@ -73,13 +79,13 @@ public class UserService {
     }
 
     /**
-     * 实体转 VO：剔除 password 等敏感字段。
+     * 实体转 VO：剔除 password 等敏感字段；手机号解密后返回（展示层明文）。
      */
     private UserVO toVO(User user) {
         UserVO vo = new UserVO();
         vo.setId(user.getId());
         vo.setUsername(user.getUsername());
-        vo.setPhone(user.getPhone());
+        vo.setPhone(sensitiveUtil.decrypt(user.getPhone()));
         vo.setEmail(user.getEmail());
         vo.setAvatar(user.getAvatar());
         vo.setStatus(user.getStatus());

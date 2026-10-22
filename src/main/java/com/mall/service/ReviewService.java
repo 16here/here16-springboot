@@ -187,7 +187,7 @@ public class ReviewService {
     private ReviewVO toVO(Review r) {
         ReviewVO vo = new ReviewVO();
         vo.setId(r.getId());
-        vo.setOrderId(r.getOrderId());
+        vo.setOrderId(r.getOrderId() == null ? null : String.valueOf(r.getOrderId()));
         vo.setOrderItemId(r.getOrderItemId());
         vo.setUserId(r.getUserId());
         vo.setProductId(r.getProductId());

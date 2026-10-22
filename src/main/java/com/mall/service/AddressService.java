@@ -1,6 +1,8 @@
 package com.mall.service;
 
+import com.mall.annotation.DS;
 import com.mall.common.BusinessException;
+import com.mall.common.SensitiveUtil;
 import com.mall.dto.AddressDTO;
 import com.mall.dto.AddressVO;
 import com.mall.entity.Address;
@@ -28,8 +30,11 @@ import java.util.List;
 public class AddressService {
 
     private final AddressRepository addressRepository;
+    // Phase 1：收货手机号加密存储（入库加密、展示解密，防库泄露）
+    private final SensitiveUtil sensitiveUtil;
 
-    /** 查询我的地址列表（默认排最前） */
+    /** 查询我的地址列表（默认排最前）。强制主库读：新增/设默认后立即进确认订单页要能看到。 */
+    @DS("master")
     public List<AddressVO> list(Long userId) {
         List<Address> addresses = addressRepository.selectByUserId(userId);
         List<AddressVO> vos = new ArrayList<>();
@@ -101,12 +106,12 @@ public class AddressService {
         addressRepository.setDefault(id, userId);
     }
 
-    /** 实体 → VO（拼接完整地址，前端直接展示） */
+    /** 实体 → VO（拼接完整地址，前端直接展示；手机号解密） */
     private AddressVO toVO(Address a) {
         AddressVO vo = new AddressVO();
         vo.setId(a.getId());
         vo.setReceiverName(a.getReceiverName());
-        vo.setReceiverPhone(a.getReceiverPhone());
+        vo.setReceiverPhone(sensitiveUtil.decrypt(a.getReceiverPhone()));
         vo.setProvince(a.getProvince());
         vo.setCity(a.getCity());
         vo.setDistrict(a.getDistrict());
@@ -125,7 +130,8 @@ public class AddressService {
 
     private void fill(Address a, AddressDTO dto) {
         a.setReceiverName(dto.getReceiverName());
-        a.setReceiverPhone(dto.getReceiverPhone());
+        // 收货手机号加密存储（Phase 1：库内不可见明文，展示时在 toVO 解密）
+        a.setReceiverPhone(sensitiveUtil.encrypt(dto.getReceiverPhone()));
         a.setProvince(dto.getProvince());
         a.setCity(dto.getCity());
         a.setDistrict(dto.getDistrict());

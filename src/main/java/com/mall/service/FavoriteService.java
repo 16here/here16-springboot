@@ -1,6 +1,8 @@
 package com.mall.service;
 
 import com.mall.common.BusinessException;
+import com.mall.common.ShardingRouter;
+import com.mall.config.ShardingTableManager;
 import com.mall.dto.ProductListVO;
 import com.mall.entity.Product;
 import com.mall.entity.ProductImage;
@@ -36,6 +38,7 @@ public class FavoriteService {
     private final UserBehaviorRepository behaviorRepository;
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final ShardingTableManager tableManager;
 
     /** 收藏行为类型（与 user_behaviors 表注释、推荐权重口径一致） */
     private static final String TYPE_FAVORITE = UserBehaviorRepository.TYPE_FAVORITE;
@@ -57,16 +60,22 @@ public class FavoriteService {
         behavior.setUserId(userId);
         behavior.setProductId(productId);
         behavior.setBehaviorType(TYPE_FAVORITE);
-        behaviorRepository.insert(behavior);
+        // Phase 3 分表：user_behaviors 按月分表，写入前确保当月分表存在并显式传表名
+        String suffix = ShardingRouter.currentMonthSuffix();
+        tableManager.ensureMonthTable(ShardingRouter.T_USER_BEHAVIORS, suffix.substring(1));
+        behaviorRepository.insert(ShardingRouter.tableName(ShardingRouter.T_USER_BEHAVIORS, suffix), behavior);
     }
 
     /**
      * 取消收藏（幂等）。
      *
      * <p>未收藏时删除 0 行，同样视为成功（前端心形按钮状态不会错乱）。
+     * Phase 3：user_behaviors 按月分表，删除需显式传当月表名。
      */
     public void remove(Long userId, Long productId) {
-        behaviorRepository.deleteByUserAndProductAndType(userId, productId, TYPE_FAVORITE);
+        behaviorRepository.deleteByUserAndProductAndType(
+                ShardingRouter.tableName(ShardingRouter.T_USER_BEHAVIORS, ShardingRouter.currentMonthSuffix()),
+                userId, productId, TYPE_FAVORITE);
     }
 
     /**
