@@ -1,2 +1,0 @@
-﻿captcha code=ctsW
-login code=200, phone=15555555555

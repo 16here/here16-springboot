@@ -1,4 +1,0 @@
-﻿login=200
-viewed-product=255
-addressId=5
-cart-items=1

@@ -1,8 +1,0 @@
-﻿== Step2b 双删（补 SKU 重试） ==
-  update前 keys: ['stock:product:225', 'cache:product:detail:255', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:255']
-  update resp=200 body={"code":400,"data":null,"message":"stock: 库存不能为空","timestamp":1792498242861}
-  update后 keys: ['stock:product:225', 'stock:product:10', 'rl:product:search:GUEST', 'stock:product:255']
-  双删结果: cache残留=[] （期望空/已删）
-== Step3b 链路② 支付回调 -> PURCHASE ==
-  订单总数=39 待付款=0
-  无待付款订单，跳过支付回调（可先下单）

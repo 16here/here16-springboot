@@ -1,4 +1,0 @@
-﻿item tables: (('order_items',), ('order_items_0',), ('order_items_1',), ('order_items_2',), ('order_items_3',))
-order_items_1 ((106377609566224384, 46, '电竞iQOO Pro 5G手机', 1), (106378054632210432, 46, '电竞iQOO Pro 5G手机', 1))
-  order: ()
-  order: ()

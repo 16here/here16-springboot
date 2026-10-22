@@ -1,5 +1,0 @@
-﻿db-phone-prefix: enc:v1:A
-list-cache-control=public, max-age=30
-detail-cache-exists=1
-category-cache-exists=1
-static-page-status=200 len=2378

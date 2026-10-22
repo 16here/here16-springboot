@@ -1,3 +1,0 @@
-﻿master inserted user id: 5
-slave read: (5, 'repl_test')
-REPLICATION OK

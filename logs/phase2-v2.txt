@@ -1,5 +1,0 @@
-﻿LOGIN user6 ok uid=
-BROWSE product 255 title=çº¢æ£è æ£è£500g
-STEP3-DONE (view behaviors expected async; check DB separately)
-LIST products cached ok total=
-REDIS-PRODUCT-KEYS: stock:product:10,stock:product:225,cache:product:detail:255,stock:product:255

@@ -1,7 +1,0 @@
-﻿[1] captcha cid=c153213516055006840 text=6vMt
-[2] admin login code=200 token=Y
-[3] admin list code=200 n=3 first_id=106367709909876736 type=str
-[4] admin detail code=200 status=0 id=106367709909876736 msg=success
-[5] user cart n=0
-[5b] add cart code=200 msg=success
-[6] create order code=400 id=None type=NoneType status=None msg=cartIds: 请选择要结算的商品

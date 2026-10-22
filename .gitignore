@@ -38,3 +38,12 @@ out/
 
 ### JVM crash log ###
 hs_err_pid*.log
+
+### 上传 GitHub 清理 ###
+# 调试脚本与运行日志（含敏感 token），不纳入版本控制
+logs/
+# 本地解压的 RocketMQ 二进制发行版（体积大且与源码无关）
+deploy/rocketmq-dist/
+# 编译/运行过程日志
+*.log
+build-compile.log
